@@ -1,0 +1,12 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(npx netlify *)",
+      "Read(//Users/Teddy/Desktop/MilitaryWealthCoach/sbp-defeater/**)",
+      "Read(//Users/Teddy/Desktop/MilitaryWealthCoach/bah-househacker/**)",
+      "Read(//Users/Teddy/Desktop/MilitaryWealthCoach/debt-dti-planner/**)",
+      "Read(//Users/Teddy/Desktop/MilitaryWealthCoach/war-chest-optimizer/**)",
+      "Read(//Users/Teddy/Desktop/MilitaryWealthCoach/ExpenseTracker/**)"
+    ]
+  }
+}

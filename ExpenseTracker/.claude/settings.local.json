@@ -1,0 +1,9 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(npx cap:*)",
+      "Bash(tee /tmp/capsync_out.txt)",
+      "Bash(echo \"EXIT:$?\")"
+    ]
+  }
+}

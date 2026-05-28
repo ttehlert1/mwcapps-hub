@@ -1,0 +1,848 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>TSP Optimizer — Military Wealth Coach</title>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4"></script>
+  <style>
+    *, *::before, *::after { box-sizing:border-box; margin:0; padding:0; }
+    :root {
+      --dark:#111111; --mid:#8B1515; --gold:#E8C200;
+      --bg:#F5F5F5; --card:#FFFFFF; --text:#1A1A1A;
+      --muted:#6B7280; --border:#DEDEDE; --green:#166534; --red:#991B1B;
+    }
+    body { font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;
+      background:var(--bg); color:var(--text); line-height:1.5; -webkit-font-smoothing:antialiased; }
+    header { background:var(--mid); padding:2rem 1rem 1.75rem; text-align:center; }
+    .eyebrow { font-size:.7rem; font-weight:700; letter-spacing:2px; text-transform:uppercase; color:rgba(255,255,255,.6); margin-bottom:.4rem; }
+    .title { font-size:clamp(1.6rem,5vw,2.4rem); font-weight:900; color:var(--gold); letter-spacing:-1px; }
+    .sub { font-size:.88rem; color:rgba(255,255,255,.6); margin-top:.4rem; }
+
+    .container { max-width:820px; margin:0 auto; padding:1.5rem 1rem 4rem; }
+    .card { background:var(--card); border-radius:16px; padding:1.5rem; margin-bottom:1.25rem;
+      border:1px solid var(--border); box-shadow:0 2px 10px rgba(0,0,0,.04); }
+    .sec { font-size:.68rem; font-weight:700; text-transform:uppercase; letter-spacing:1.2px;
+      color:var(--mid); margin-bottom:1.25rem; display:flex; align-items:center; gap:.6rem; }
+    .sec::after { content:''; flex:1; height:1px; background:var(--border); }
+
+    .fg { display:grid; grid-template-columns:1fr 1fr; gap:1rem; }
+    .s2 { grid-column:span 2; }
+    @media(max-width:520px){ .fg{grid-template-columns:1fr} .s2{grid-column:span 1} }
+    .field { display:flex; flex-direction:column; gap:.35rem; }
+    .field label { font-size:.72rem; font-weight:600; text-transform:uppercase; letter-spacing:.5px; color:var(--muted); }
+    select, input[type=number] { padding:.65rem .85rem; border:1.5px solid var(--border); border-radius:9px;
+      font-size:.95rem; color:var(--text); background:#fff; width:100%; transition:border-color .15s,box-shadow .15s; }
+    select { appearance:none; -webkit-appearance:none;
+      background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6'%3E%3Cpath d='M1 1l4 4 4-4' stroke='%236B7280' stroke-width='1.5' fill='none' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+      background-repeat:no-repeat; background-position:right .85rem center; padding-right:2.4rem; }
+    select:focus, input:focus { outline:none; border-color:var(--mid); box-shadow:0 0 0 3px rgba(139,21,21,.13); }
+
+    .prefix-wrap { position:relative; }
+    .prefix-wrap .prefix { position:absolute; left:11px; top:50%; transform:translateY(-50%);
+      font-size:.95rem; color:var(--muted); pointer-events:none; }
+    .field .prefix-wrap input { padding-left:26px; }
+
+    .tg { display:flex; gap:.5rem; }
+    .tb { flex:1; }
+    .tb input[type=radio] { display:none; }
+    .tb label { display:block; text-align:center; padding:.62rem .4rem; border:1.5px solid var(--border);
+      border-radius:9px; cursor:pointer; font-size:.78rem; font-weight:600; color:var(--muted);
+      text-transform:uppercase; letter-spacing:.3px; transition:all .15s; user-select:none; line-height:1.3; }
+    .tb input:checked + label { background:var(--dark); border-color:var(--dark); color:#fff; }
+
+    input[type=range] { flex:1; height:6px; padding:0; border:none; border-radius:3px;
+      background:var(--border); appearance:none; -webkit-appearance:none; cursor:pointer; }
+    input[type=range]::-webkit-slider-thumb { -webkit-appearance:none; width:22px; height:22px;
+      border-radius:50%; background:var(--dark); border:2.5px solid #fff; box-shadow:0 1px 5px rgba(0,0,0,.3); }
+    input[type=range]::-moz-range-thumb { width:22px; height:22px; border-radius:50%;
+      background:var(--dark); border:2.5px solid #fff; }
+
+    .slider-row { display:flex; align-items:center; gap:.75rem; margin-bottom:.5rem; }
+    .slider-lbl { font-size:.72rem; font-weight:600; text-transform:uppercase; letter-spacing:.5px; color:var(--muted); margin-bottom:.3rem; }
+    .slider-val { font-size:.9rem; font-weight:700; color:var(--dark); min-width:30px; text-align:right; }
+    .slider-ends { display:flex; justify-content:space-between; font-size:.67rem; color:var(--muted); margin-top:.15rem; }
+
+    .fund-row { display:grid; grid-template-columns:32px 1fr 46px; align-items:center; gap:.55rem; margin-bottom:.5rem; }
+    .fund-tag { font-size:.72rem; font-weight:700; text-transform:uppercase; letter-spacing:.5px; }
+    .fund-pct { font-size:.85rem; font-weight:700; color:var(--dark); text-align:right; }
+    .fund-total { font-size:.73rem; font-weight:700; text-align:right; margin-top:.3rem; }
+    .fund-total.ok { color:var(--green); } .fund-total.off { color:var(--red); }
+
+    .calc-btn { width:100%; padding:.9rem; margin-top:1.25rem; background:var(--dark); color:#fff;
+      border:none; border-radius:10px; font-size:.95rem; font-weight:700; letter-spacing:.6px;
+      text-transform:uppercase; cursor:pointer; transition:background .15s,transform .1s; }
+    .calc-btn:hover { background:var(--mid); }
+    .calc-btn:active { transform:scale(.99); }
+
+    #results { display:none; }
+
+    .mg { display:grid; grid-template-columns:1fr 1fr; gap:.75rem; }
+    @media(max-width:520px){ .mg{grid-template-columns:1fr} }
+    .m { background:var(--bg); border-radius:11px; padding:.9rem 1rem; border:1px solid var(--border); }
+    .ml { font-size:.68rem; font-weight:700; text-transform:uppercase; letter-spacing:.5px; color:var(--muted); margin-bottom:.2rem; }
+    .mv { font-size:1.4rem; font-weight:800; color:var(--dark); line-height:1.15; }
+    .ms { font-size:.73rem; color:var(--muted); margin-top:.15rem; }
+    .m.acc { background:var(--dark); } .m.acc .ml { color:rgba(255,255,255,.5); } .m.acc .mv { color:var(--gold); } .m.acc .ms { color:rgba(255,255,255,.45); }
+    .m.g { background:#F0FDF4; border-color:#BBF7D0; } .m.g .mv { color:var(--green); }
+
+    .legend { display:flex; flex-wrap:wrap; gap:.4rem .85rem; margin-bottom:.6rem; }
+    .leg-item { display:flex; align-items:center; gap:.35rem; font-size:.72rem; font-weight:600; color:var(--muted); }
+    .leg-dot { width:9px; height:9px; border-radius:50%; flex-shrink:0; }
+
+    .cpanel { background:var(--bg); border-radius:10px; padding:.75rem 1rem; margin-top:.65rem; min-height:60px; }
+    .cp-hint { font-size:.78rem; color:var(--muted); font-weight:600; }
+
+    .rv-toggle { display:flex; align-items:center; gap:.65rem; margin-top:.75rem; padding:.6rem .85rem;
+      background:var(--bg); border:1.5px solid var(--border); border-radius:9px; cursor:pointer; user-select:none; }
+    .rv-toggle input[type=checkbox] { width:15px; height:15px; accent-color:var(--mid); cursor:pointer; flex-shrink:0; }
+    .rv-toggle span { font-size:.82rem; font-weight:600; color:var(--muted); }
+    .rv-panel { display:none; margin-top:.65rem; }
+    .rv-panel.on { display:block; }
+    .scen-tabs { display:flex; flex-wrap:wrap; gap:.4rem; }
+    .scen-tab { padding:.38rem .8rem; border:1.5px solid var(--border); border-radius:7px;
+      font-size:.73rem; font-weight:600; cursor:pointer; color:var(--muted); background:#fff; transition:all .15s; }
+    .scen-tab.active { background:var(--dark); color:#fff; border-color:var(--dark); }
+
+    .out-table { width:100%; border-collapse:collapse; font-size:.82rem; }
+    .out-table th { background:var(--dark); color:#fff; padding:.55rem .75rem; text-align:left;
+      font-size:.66rem; text-transform:uppercase; letter-spacing:.5px; white-space:nowrap; }
+    .out-table th:not(:first-child) { text-align:right; }
+    .out-table td { padding:.55rem .75rem; border-bottom:1px solid var(--border); white-space:nowrap; }
+    .out-table td:not(:first-child) { text-align:right; font-weight:700; }
+    .out-table tr:last-child td { border-bottom:none; }
+    .out-table tr.rec-row td { background:#FEFCE8; }
+    .sname { display:flex; align-items:center; gap:.45rem; }
+    .sdot { width:8px; height:8px; border-radius:50%; flex-shrink:0; }
+
+    .cost-box { background:var(--dark); border-radius:12px; padding:1.25rem; text-align:center; }
+    .cost-box .lbl { font-size:.68rem; font-weight:700; text-transform:uppercase; letter-spacing:1.5px; color:rgba(255,255,255,.45); margin-bottom:.35rem; }
+    .cost-box .big { font-size:2rem; font-weight:900; color:var(--gold); line-height:1; }
+    .cost-box .sub { font-size:.8rem; color:rgba(255,255,255,.5); margin-top:.35rem; }
+
+    .insight { background:#FFF9E6; border:1.5px solid #E8C200; border-radius:10px; padding:.85rem 1rem;
+      font-size:.84rem; color:var(--text); margin-top:.75rem; line-height:1.55; }
+    .insight strong { color:var(--dark); }
+
+    .conv-row { display:grid; grid-template-columns:1fr 1fr; gap:.75rem; margin-top:.75rem; }
+    @media(max-width:400px){ .conv-row{grid-template-columns:1fr} }
+    .conv-col { background:var(--bg); border-radius:11px; padding:.9rem 1rem; border:1px solid var(--border); }
+    .conv-col.win { background:#F0FDF4; border-color:#BBF7D0; }
+    .conv-col .clbl { font-size:.66rem; font-weight:700; text-transform:uppercase; letter-spacing:.5px; color:var(--muted); margin-bottom:.2rem; }
+    .conv-col .cbig { font-size:1.35rem; font-weight:800; color:var(--dark); line-height:1.15; }
+    .conv-col.win .cbig { color:var(--green); }
+    .conv-col .csub { font-size:.72rem; color:var(--muted); margin-top:.15rem; }
+    .conv-diff { background:var(--dark); border-radius:10px; padding:.85rem 1rem; margin-top:.75rem; text-align:center; }
+    .conv-diff .big { font-size:1.5rem; font-weight:800; color:var(--gold); }
+    .conv-diff .sub { font-size:.77rem; color:rgba(255,255,255,.55); margin-top:.2rem; }
+
+    .rec-funds { display:grid; grid-template-columns:repeat(5,1fr); gap:.5rem; margin:.75rem 0; }
+    @media(max-width:360px){ .rec-funds{grid-template-columns:repeat(3,1fr)} }
+    .rec-fund { background:var(--bg); border-radius:10px; padding:.7rem .4rem; text-align:center; border:1px solid var(--border); }
+    .rec-fund .rpct { font-size:1.3rem; font-weight:800; color:var(--dark); line-height:1; }
+    .rec-fund .rfname { font-size:.65rem; font-weight:700; text-transform:uppercase; letter-spacing:.5px; color:var(--muted); margin-top:.25rem; }
+
+    .coaching-cta { background:var(--mid); border-radius:16px; padding:2rem 1.75rem; margin-top:1.5rem; }
+    .cta-inner { display:grid; grid-template-columns:1fr auto 1fr; gap:2rem; align-items:center; }
+    @media(max-width:600px){ .cta-inner{grid-template-columns:1fr} .cta-divider{display:none} }
+    .cta-eyebrow { font-size:.67rem; font-weight:700; letter-spacing:2.5px; text-transform:uppercase;
+      color:var(--gold); margin-bottom:.75rem; display:flex; align-items:center; gap:.6rem; }
+    .cta-eyebrow::before { content:''; width:2rem; height:1px; background:var(--gold); }
+    .cta-headline { font-size:clamp(1.55rem,3.5vw,2.1rem); font-weight:900; color:#fff; line-height:1.15; margin-bottom:.85rem; }
+    .cta-headline em { font-style:italic; color:var(--gold); font-weight:800; }
+    .cta-body { font-size:.88rem; color:rgba(255,255,255,.68); line-height:1.65; margin-bottom:1.25rem; }
+    .cta-row { display:flex; gap:.5rem; }
+    @media(max-width:480px){ .cta-row{flex-direction:column} }
+    .cta-row input[type=email] { flex:1; padding:.7rem .9rem; border:1.5px solid rgba(255,255,255,.25);
+      border-radius:9px; background:rgba(255,255,255,.08); color:#fff; font-size:.9rem; }
+    .cta-row input[type=email]::placeholder { color:rgba(255,255,255,.38); }
+    .cta-row input[type=email]:focus { outline:none; border-color:var(--gold); }
+    .cta-btn { padding:.7rem 1.3rem; background:var(--gold); color:var(--dark); border:none; border-radius:9px;
+      font-size:.88rem; font-weight:800; cursor:pointer; white-space:nowrap; letter-spacing:.2px; }
+    .cta-divider { width:1px; background:rgba(255,255,255,.2); align-self:stretch; }
+    .cta-quote { font-size:1.05rem; font-style:italic; color:rgba(255,255,255,.82); line-height:1.65; margin-bottom:1.25rem; }
+    .cta-person { display:flex; align-items:center; gap:.75rem; }
+    .cta-avatar { width:40px; height:40px; border-radius:50%; background:rgba(255,255,255,.15);
+      display:flex; align-items:center; justify-content:center; font-size:.95rem; font-weight:700;
+      color:rgba(255,255,255,.7); flex-shrink:0; }
+    .cta-name { font-size:.87rem; font-weight:700; color:#fff; }
+    .cta-branch { font-size:.73rem; color:rgba(255,255,255,.5); }
+
+    footer { text-align:center; padding:1.5rem 1rem; font-size:.71rem; color:var(--muted); line-height:1.7; }
+    footer a { color:var(--mid); text-decoration:none; }
+  </style>
+</head>
+<body>
+
+<header>
+  <div class="eyebrow">Military Wealth Coach</div>
+  <div class="title">Whole-Portfolio TSP Optimizer</div>
+  <div class="sub">Your TSP isn’t a silo. See it the way it was meant to be seen — inside your complete financial picture.</div>
+</header>
+
+<div class="container">
+
+  <div class="card">
+    <div class="sec">Your Profile</div>
+    <div class="fg">
+      <div class="field">
+        <label>Current Age</label>
+        <input type="number" id="age" min="17" max="58" value="25">
+      </div>
+      <div class="field">
+        <label>Pay Grade</label>
+        <select id="grade">
+          <optgroup label="Enlisted">
+            <option>E-1</option><option>E-2</option><option>E-3</option><option selected>E-4</option>
+            <option>E-5</option><option>E-6</option><option>E-7</option><option>E-8</option><option>E-9</option>
+          </optgroup>
+          <optgroup label="Warrant Officer">
+            <option>W-1</option><option>W-2</option><option>W-3</option><option>W-4</option><option>W-5</option>
+          </optgroup>
+          <optgroup label="Officer">
+            <option>O-1</option><option>O-2</option><option>O-3</option><option>O-4</option>
+            <option>O-5</option><option>O-6</option><option>O-7</option><option>O-8</option>
+            <option>O-9</option><option>O-10</option>
+          </optgroup>
+        </select>
+      </div>
+      <div class="field">
+        <label>Years of Service</label>
+        <input type="number" id="yos" min="0" max="40" value="4">
+      </div>
+      <div class="field">
+        <label>Years Until Military Retirement</label>
+        <input type="number" id="milRetYrs" min="1" max="40" value="16">
+      </div>
+      <div class="field s2">
+        <label>Retirement System</label>
+        <div class="tg">
+          <div class="tb"><input type="radio" name="rs" id="rsBRS" value="brs" checked><label for="rsBRS">BRS (Blended)</label></div>
+          <div class="tb"><input type="radio" name="rs" id="rsLeg" value="legacy"><label for="rsLeg">Legacy (High-3)</label></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="sec">Your TSP</div>
+    <div class="fg">
+      <div class="field">
+        <label>Roth TSP Balance</label>
+        <div class="prefix-wrap"><span class="prefix">$</span><input type="number" id="rothBal" min="0" value="0"></div>
+      </div>
+      <div class="field">
+        <label>Traditional TSP Balance</label>
+        <div class="prefix-wrap"><span class="prefix">$</span><input type="number" id="tradBal" min="0" value="5000"></div>
+      </div>
+      <div class="field">
+        <label>Contribution Rate (%)</label>
+        <input type="number" id="contribRate" min="1" max="100" value="5">
+      </div>
+      <div class="field">
+        <label>Your Marginal Tax Rate (%)</label>
+        <input type="number" id="taxRate" min="0" max="37" value="22">
+      </div>
+    </div>
+    <div style="margin-top:1rem;">
+      <div class="slider-lbl">Current TSP Fund Allocation</div>
+      <div style="font-size:.72rem;color:var(--muted);margin-bottom:.65rem;">Move any slider — the others auto-adjust to stay at 100%.</div>
+      <div class="fund-row"><span class="fund-tag" style="color:#6B7280;">G</span><input type="range" id="fG" min="0" max="100" value="0" oninput="normSlider('G')"><span class="fund-pct" id="pG">0%</span></div>
+      <div class="fund-row"><span class="fund-tag" style="color:#3B82F6;">F</span><input type="range" id="fF" min="0" max="100" value="0" oninput="normSlider('F')"><span class="fund-pct" id="pF">0%</span></div>
+      <div class="fund-row"><span class="fund-tag" style="color:#8B1515;">C</span><input type="range" id="fC" min="0" max="100" value="70" oninput="normSlider('C')"><span class="fund-pct" id="pC">70%</span></div>
+      <div class="fund-row"><span class="fund-tag" style="color:#166534;">S</span><input type="range" id="fS" min="0" max="100" value="20" oninput="normSlider('S')"><span class="fund-pct" id="pS">20%</span></div>
+      <div class="fund-row"><span class="fund-tag" style="color:#0891B2;">I</span><input type="range" id="fI" min="0" max="100" value="10" oninput="normSlider('I')"><span class="fund-pct" id="pI">10%</span></div>
+      <div class="fund-total ok" id="fundTotal">Total: 100%</div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="sec">Your Full Portfolio</div>
+    <div class="fg">
+      <div class="field">
+        <label>HYSA Balance</label>
+        <div class="prefix-wrap"><span class="prefix">$</span><input type="number" id="hysaBal" min="0" value="10000"></div>
+      </div>
+      <div class="field">
+        <label>HYSA Monthly Contribution</label>
+        <div class="prefix-wrap"><span class="prefix">$</span><input type="number" id="hysaMo" min="0" value="200"></div>
+      </div>
+      <div class="field">
+        <label>Cash Savings (beyond HYSA)</label>
+        <div class="prefix-wrap"><span class="prefix">$</span><input type="number" id="cashBal" min="0" value="0"></div>
+      </div>
+      <div class="field">
+        <label>Taxable Brokerage Balance</label>
+        <div class="prefix-wrap"><span class="prefix">$</span><input type="number" id="brokerBal" min="0" value="0"></div>
+      </div>
+      <div class="field s2">
+        <label>Brokerage Monthly Contribution</label>
+        <div class="prefix-wrap"><span class="prefix">$</span><input type="number" id="brokerMo" min="0" value="0"></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="sec">Your Risk Profile</div>
+    <div style="margin-bottom:1.25rem;">
+      <div class="slider-lbl">Risk Tolerance — How do you react when markets drop?</div>
+      <div class="slider-row">
+        <input type="range" id="riskTol" min="1" max="5" step="1" value="3" oninput="updateRisk()">
+        <span class="slider-val" id="tolVal">3</span>
+      </div>
+      <div class="slider-ends"><span>I panic and sell</span><span>I buy the dip</span></div>
+    </div>
+    <div>
+      <div class="slider-lbl">Risk Capacity — Can you afford short-term losses?</div>
+      <div class="slider-row">
+        <input type="range" id="riskCap" min="1" max="5" step="1" value="3" oninput="updateRisk()">
+        <span class="slider-val" id="capVal">3</span>
+      </div>
+      <div class="slider-ends"><span>Can’t afford a 5% drop</span><span>Fine losing 20%+ now</span></div>
+    </div>
+    <div style="margin-top:.9rem;font-size:.82rem;color:var(--muted);font-weight:600;">
+      Composite score: <span id="compScore" style="color:var(--dark);font-size:.9rem;">3.0</span> / 5.0
+    </div>
+  </div>
+
+  <button class="calc-btn" onclick="recalc()">Calculate My TSP Strategy</button>
+
+  <div id="results">
+
+    <div class="card" style="margin-top:1.25rem;">
+      <div class="sec">Your Recommended TSP Allocation</div>
+      <div class="rec-funds" id="recFunds"></div>
+      <div class="insight" id="recInsight"></div>
+    </div>
+
+    <div class="card">
+      <div class="sec">30-Year Projection to Age 59½</div>
+      <div class="legend" id="legend"></div>
+      <div style="position:relative;">
+        <canvas id="mainChart" height="300"></canvas>
+      </div>
+      <div class="cpanel" id="cpanel"><div class="cp-hint">Hover the chart or drag the slider to explore.</div></div>
+      <input type="range" id="chSlider" min="0" max="1" step="0.002" value="0"
+        style="width:100%;margin-top:.6rem;"
+        oninput="sliderMoved(this.value)">
+      <label class="rv-toggle" for="rvCheck" onclick="toggleRiskView()">
+        <input type="checkbox" id="rvCheck">
+        <span>Risk View — Show Monte Carlo probability range (1,000 simulations)</span>
+      </label>
+      <div class="rv-panel" id="rvPanel">
+        <div style="font-size:.77rem;color:var(--muted);margin-bottom:.55rem;">Select a scenario to see its probability band:</div>
+        <div class="scen-tabs" id="scenTabs"></div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="sec">At Age 59½ — What Each Scenario Delivers</div>
+      <div style="overflow-x:auto;"><table class="out-table" id="outTable"></table></div>
+    </div>
+
+    <div class="card">
+      <div class="sec">What the Lifecycle Fund is Costing You</div>
+      <div class="cost-box" id="costBox"></div>
+      <div class="insight" id="costInsight"></div>
+    </div>
+
+    <div class="card">
+      <div class="sec">Your Roth Conversion Opportunity</div>
+      <div class="conv-row" id="convRow"></div>
+      <div class="conv-diff" id="convDiff"></div>
+      <div class="insight" id="convInsight"></div>
+    </div>
+
+    <div class="coaching-cta">
+      <div class="cta-inner">
+        <div>
+          <div class="cta-eyebrow">Last Call</div>
+          <div class="cta-headline">Fortune Favors<br>the BOLD. <em>Get<br>Coaching Now.</em></div>
+          <p class="cta-body">Already know where you want to go, but can’t figure out how to get there? This isn’t Land Nav: the path to wealth has no bright red boxes and no pre-plotted azimuths. To reach your goals you need a Personal Plan. Take your bias for action and schedule a free initial consultation today.</p>
+          <div class="cta-row">
+            <input type="email" id="ctaEmail" placeholder="your@email.mil">
+            <button class="cta-btn" onclick="submitCTA()">Schedule Now &rarr;</button>
+          </div>
+        </div>
+        <div class="cta-divider"></div>
+        <div>
+          <div class="cta-quote">&ldquo;If I was Commandant for a day, I’d make Service and Wealth required reading for every Marine &mdash; and I’d make every Marine sit down with the Military Wealth Coach. Period.&rdquo;</div>
+          <div class="cta-person">
+            <div class="cta-avatar">S</div>
+            <div>
+              <div class="cta-name">Capt Dan D.</div>
+              <div class="cta-branch">U.S. Marine Corps</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div><!-- /results -->
+</div><!-- /container -->
+
+<footer>
+  L-Fund allocations sourced from TSP.gov (early 2026). Pay tables: DoD 2026 rates. &nbsp;&bull;&nbsp;
+  Not financial advice. Projections use historical averages; actual returns will vary. &nbsp;&bull;&nbsp;
+  <a href="https://militarywealthcoach.com">MilitaryWealthCoach.com</a>
+</footer>
+
+<script>
+// ── Static Data ───────────────────────────────────────────────────────────────
+const PAY_TABLE = {
+  'E-1':[[0,1833]],'E-2':[[0,2055]],
+  'E-3':[[0,2161],[2,2239],[3,2322]],
+  'E-4':[[0,2393],[2,2507],[4,2636],[6,2695]],
+  'E-5':[[0,2610],[2,2783],[4,2886],[6,3029],[8,3184],[10,3225]],
+  'E-6':[[0,2849],[2,3147],[4,3262],[6,3422],[8,3554],[10,3682],[12,3787],[14,3900]],
+  'E-7':[[0,3294],[4,3532],[6,3651],[8,3832],[10,3998],[12,4098],[14,4271],[16,4378],[18,4534],[20,4748],[22,4948],[24,5135],[26,5285]],
+  'E-8':[[0,4740],[6,4861],[8,5049],[10,5258],[12,5428],[14,5579],[16,5838],[18,6074],[20,6259],[22,6467],[24,6718]],
+  'E-9':[[10,6199],[12,6408],[14,6614],[16,6922],[18,7130],[20,7478],[22,7733],[24,7951],[26,8399]],
+  'W-1':[[0,3399],[2,3712],[3,3818],[4,3924],[6,4091]],
+  'W-2':[[0,3914],[2,4178],[3,4286],[4,4395],[6,4543],[8,4742]],
+  'W-3':[[0,4504],[2,4761],[3,4870],[4,5022],[6,5179],[8,5374],[10,5528],[12,5716]],
+  'W-4':[[0,4944],[2,5400],[4,5603],[6,5841],[8,6035],[10,6251],[12,6511],[14,6762]],
+  'W-5':[[0,7201],[2,7550],[4,7770],[6,7979],[8,8203],[10,8491],[12,8727],[14,9047]],
+  'O-1':[[0,3637],[2,3784],[4,4587]],
+  'O-2':[[0,4187],[2,4771],[3,5469],[4,5571],[6,5718]],
+  'O-3':[[0,4836],[2,5474],[3,5896],[4,6117],[6,6414],[8,6744],[10,6967],[12,7186]],
+  'O-4':[[0,5473],[2,6336],[4,7590],[6,8082],[8,8390],[10,8617],[12,9054],[14,9209],[16,9316]],
+  'O-5':[[0,6387],[2,7203],[4,7687],[6,8469],[8,9281],[10,9617],[12,9932],[14,10266],[16,10456],[18,10659],[20,10793]],
+  'O-6':[[0,7654],[2,8415],[4,8981],[7,9781],[10,11025],[12,11447],[14,11857],[16,12359],[18,12893],[20,13352],[22,13761],[24,14159]],
+  'O-7':[[0,11329],[2,11750],[4,12071],[6,12425],[8,12938],[10,13387],[12,13804],[14,14218],[16,14636],[18,14972],[20,15280],[22,15597],[24,16093],[26,16507]],
+  'O-8':[[0,13698],[2,14155],[4,14513],[6,14856],[8,15197],[10,15539],[12,15880],[14,16222],[16,16563],[18,17153],[20,17532]],
+  'O-9':[[0,15952],[6,17469],[8,18114],[10,18532]],
+  'O-10':[[0,16974],[4,17892],[8,19762],[10,20072]]
+};
+
+const PROMO = {
+  E:{g:['E-1','E-2','E-3','E-4','E-5','E-6','E-7','E-8','E-9'],y:[0,1,2,3,5,11,17,23,27]},
+  W:{g:['W-1','W-2','W-3','W-4','W-5'],y:[7,9,12,16,21]},
+  O:{g:['O-1','O-2','O-3','O-4','O-5','O-6','O-7','O-8','O-9','O-10'],y:[0,2,4,10,16,22,28,32,36,40]}
+};
+
+// L-Fund allocations (TSP.gov, early 2026). tgt = years from 2026 to target date.
+const LF = {
+  Income:{G:.739,F:.060,C:.127,S:.033,I:.041,tgt:0},
+  L2030: {G:.340,F:.068,C:.336,S:.087,I:.169,tgt:4},
+  L2035: {G:.270,F:.067,C:.374,S:.096,I:.193,tgt:9},
+  L2040: {G:.207,F:.065,C:.407,S:.105,I:.216,tgt:14},
+  L2045: {G:.153,F:.063,C:.436,S:.112,I:.236,tgt:19},
+  L2050: {G:.116,F:.059,C:.455,S:.118,I:.252,tgt:24},
+  L2055: {G:.067,F:.053,C:.481,S:.124,I:.275,tgt:29},
+  L2060: {G:.065,F:.053,C:.483,S:.124,I:.275,tgt:34},
+  L2065: {G:.064,F:.053,C:.484,S:.124,I:.275,tgt:39}
+};
+
+const FR = {G:.025,F:.04,C:.108,S:.115,I:.075};
+const FS = {G:.005,F:.055,C:.16, S:.19, I:.17};
+const IRS_CAP = 23500;
+const ALLOC = [
+  {s:1.0,G:.20,F:.20,C:.45,S:.05,I:.10},
+  {s:1.5,G:.10,F:.15,C:.50,S:.10,I:.15},
+  {s:2.0,G:.05,F:.10,C:.55,S:.15,I:.15},
+  {s:2.5,G:.00,F:.05,C:.60,S:.20,I:.15},
+  {s:3.0,G:.00,F:.00,C:.65,S:.20,I:.15},
+  {s:3.5,G:.00,F:.00,C:.65,S:.22,I:.13},
+  {s:4.0,G:.00,F:.00,C:.60,S:.27,I:.13},
+  {s:4.5,G:.00,F:.00,C:.55,S:.32,I:.13},
+  {s:5.0,G:.00,F:.00,C:.50,S:.38,I:.12}
+];
+const SCEN = [
+  {key:'pLF', label:'Lifecycle (Default)',  color:'#9CA3AF', rgb:'156,163,175', dash:[5,3]},
+  {key:'pCon',label:'Conservative (60% C)', color:'#3B82F6', rgb:'59,130,246',  dash:[]},
+  {key:'pRec',label:'Recommended',          color:'#E8C200', rgb:'232,194,0',   dash:[]},
+  {key:'pAgg',label:'Aggressive (80% C)',   color:'#166534', rgb:'22,101,52',   dash:[]},
+  {key:'pFull',label:'Full System',         color:'#8B1515', rgb:'139,21,21',   dash:[]}
+];
+
+// ── Helpers ───────────────────────────────────────────────────────────────────
+function getBasePay(g,y){const t=PAY_TABLE[g]||[];let p=t[0]?.[1]||0;for(const[a,v]of t){if(y>=a)p=v;}return p;}
+function getTrack(g){return g[0]==='E'?'E':g[0]==='W'?'W':'O';}
+function getGradeAtYOS(sg,sy,fy){
+  const{g,y}=PROMO[getTrack(sg)];const si=g.indexOf(sg);if(si<0)return sg;
+  let ci=si;for(let i=si;i<g.length-1;i++){if(fy>=y[i+1])ci=i+1;else break;}return g[ci];
+}
+function bret(a){return a.G*FR.G+a.F*FR.F+a.C*FR.C+a.S*FR.S+a.I*FR.I;}
+function bsig(a){return Math.sqrt(a.G**2*FS.G**2+a.F**2*FS.F**2+a.C**2*FS.C**2+a.S**2*FS.S**2+a.I**2*FS.I**2);}
+function selLF(yrs){
+  const ks=['L2030','L2035','L2040','L2045','L2050','L2055','L2060','L2065'];
+  let b=ks[0],d=Infinity;for(const k of ks){const dd=Math.abs(yrs-LF[k].tgt);if(dd<d){d=dd;b=k;}}return b;
+}
+function lfAlloc(name,yr){
+  const f=LF[name],inc=LF.Income;if(f.tgt<=0)return inc;
+  const t=Math.min(yr/f.tgt,1);
+  return{G:f.G+(inc.G-f.G)*t,F:f.F+(inc.F-f.F)*t,C:f.C+(inc.C-f.C)*t,S:f.S+(inc.S-f.S)*t,I:f.I+(inc.I-f.I)*t};
+}
+function recAlloc(tol,cap){
+  const c=(tol+cap)/2;let b=ALLOC[0],d=Infinity;
+  for(const r of ALLOC){const dd=Math.abs(c-r.s);if(dd<d){d=dd;b=r;}}return b;
+}
+function fmtB(n){if(n>=1e6)return'$'+(n/1e6).toFixed(2)+'M';if(n>=1e5)return'$'+Math.round(n/1e3)+'K';return'$'+Math.round(n).toLocaleString();}
+function fmtD(n){return'$'+Math.round(n).toLocaleString('en-US');}
+function randn(){const u1=Math.random(),u2=Math.random();return Math.sqrt(-2*Math.log(u1))*Math.cos(2*Math.PI*u2);}
+
+// ── State ─────────────────────────────────────────────────────────────────────
+let G={chart:null,pts:null,mcCache:{},riskView:false,riskScen:0,ages:[]};
+
+// ── Fund sliders ──────────────────────────────────────────────────────────────
+const FID=['G','F','C','S','I'];
+function normSlider(moved){
+  const v={};for(const f of FID)v[f]=+document.getElementById('f'+f).value||0;
+  const total=FID.reduce((a,f)=>a+v[f],0);
+  const surplus=total-100;
+  if(Math.abs(surplus)<0.5){renderPcts(v);return;}
+  const others=FID.filter(f=>f!==moved);
+  const os=others.reduce((a,f)=>a+v[f],0);
+  if(os>0){for(const f of others)v[f]=Math.max(0,v[f]-surplus*(v[f]/os));}
+  else{const sh=surplus/others.length;for(const f of others)v[f]=Math.max(0,v[f]-sh);}
+  const rnd={};for(const f of FID)rnd[f]=Math.round(v[f]);
+  const diff=100-FID.reduce((a,f)=>a+rnd[f],0);
+  if(diff!==0){const adj=others.filter(f=>rnd[f]>0).sort((a,b)=>rnd[b]-rnd[a])[0]||others[0];if(adj)rnd[adj]+=diff;}
+  for(const f of FID){if(f!==moved)document.getElementById('f'+f).value=rnd[f];}
+  renderPcts(rnd);
+}
+function renderPcts(v){
+  for(const f of FID)document.getElementById('p'+f).textContent=(v[f]||0)+'%';
+  const tot=FID.reduce((a,f)=>a+(+v[f]||0),0);
+  const el=document.getElementById('fundTotal');
+  el.textContent='Total: '+Math.round(tot)+'%';
+  el.className='fund-total '+(Math.abs(tot-100)<1?'ok':'off');
+}
+(()=>{const v={};for(const f of FID)v[f]=+document.getElementById('f'+f).value||0;renderPcts(v);})();
+
+function updateRisk(){
+  const t=+document.getElementById('riskTol').value,c=+document.getElementById('riskCap').value;
+  document.getElementById('tolVal').textContent=t;
+  document.getElementById('capVal').textContent=c;
+  document.getElementById('compScore').textContent=((t+c)/2).toFixed(1);
+}
+
+// ── Input reader ──────────────────────────────────────────────────────────────
+function inp(){
+  return{
+    age:+document.getElementById('age').value||25,
+    grade:document.getElementById('grade').value,
+    yos:+document.getElementById('yos').value||0,
+    milRetYrs:+document.getElementById('milRetYrs').value||20,
+    brs:document.getElementById('rsBRS').checked,
+    rothBal:+document.getElementById('rothBal').value||0,
+    tradBal:+document.getElementById('tradBal').value||0,
+    contribRate:+document.getElementById('contribRate').value||5,
+    taxRate:(+document.getElementById('taxRate').value||22)/100,
+    fundAlloc:{G:(+document.getElementById('fG').value||0)/100,F:(+document.getElementById('fF').value||0)/100,
+               C:(+document.getElementById('fC').value||0)/100,S:(+document.getElementById('fS').value||0)/100,
+               I:(+document.getElementById('fI').value||0)/100},
+    hysaBal:+document.getElementById('hysaBal').value||0,
+    hysaMo:+document.getElementById('hysaMo').value||0,
+    cashBal:+document.getElementById('cashBal').value||0,
+    brokerBal:+document.getElementById('brokerBal').value||0,
+    brokerMo:+document.getElementById('brokerMo').value||0,
+    tol:+document.getElementById('riskTol').value||3,
+    cap:+document.getElementById('riskCap').value||3
+  };
+}
+
+// ── Projection engine ─────────────────────────────────────────────────────────
+function projTSP(startBal,grade,yos,rate,brs,yrs,allocFn){
+  const CAP=IRS_CAP/12;let bal=startBal;const pts=[bal];
+  for(let y=0;y<yrs;y++){
+    const fy=yos+y,g=getGradeAtYOS(grade,yos,fy),bp=getBasePay(g,fy);
+    const mMo=Math.min(bp*(rate/100),CAP),xMo=brs?bp*0.05:0,totMo=mMo+xMo;
+    const alloc=typeof allocFn==='function'?allocFn(y):allocFn;
+    const r=bret(alloc)/12;
+    for(let m=0;m<12;m++)bal=bal*(1+r)+totMo;
+    pts.push(bal);
+  }
+  return pts;
+}
+function projAcct(bal,mo,ann,yrs){
+  const r=ann/12;const pts=[bal];
+  for(let y=0;y<yrs;y++){for(let m=0;m<12;m++)bal=bal*(1+r)+mo;pts.push(bal);}
+  return pts;
+}
+function compute(i){
+  const yrs=Math.max(1,Math.ceil(60-i.age));
+  const lfName=selLF(60-i.age);
+  const ra=recAlloc(i.tol,i.cap);
+  const sb=i.rothBal+i.tradBal;
+  const pLF  =projTSP(sb,i.grade,i.yos,i.contribRate,i.brs,yrs,y=>lfAlloc(lfName,y));
+  const pCon =projTSP(sb,i.grade,i.yos,i.contribRate,i.brs,yrs,{G:0,F:.4,C:.6,S:0,I:0});
+  const pRec =projTSP(sb,i.grade,i.yos,i.contribRate,i.brs,yrs,ra);
+  const pAgg =projTSP(sb,i.grade,i.yos,i.contribRate,i.brs,yrs,{G:0,F:0,C:.8,S:.2,I:0});
+  const pH   =projAcct(i.hysaBal,i.hysaMo,.045,yrs);
+  const pB   =projAcct(i.brokerBal,i.brokerMo,.108,yrs);
+  const pFull=pRec.map((v,j)=>v+pH[j]+pB[j]);
+  return{pLF,pCon,pRec,pAgg,pFull,pH,pB,yrs,lfName,ra,sb,i};
+}
+
+// ── Monte Carlo ───────────────────────────────────────────────────────────────
+function runMC(sb,grade,yos,rate,brs,yrs,allocFn,N=1000){
+  const CAP=IRS_CAP/12;
+  const paths=Array.from({length:N},()=>new Float64Array(yrs+1));
+  for(let sim=0;sim<N;sim++){
+    let bal=sb;paths[sim][0]=bal;
+    for(let y=0;y<yrs;y++){
+      const fy=yos+y,g=getGradeAtYOS(grade,yos,fy),bp=getBasePay(g,fy);
+      const mMo=Math.min(bp*(rate/100),CAP),xMo=brs?bp*0.05:0,totMo=mMo+xMo;
+      const alloc=typeof allocFn==='function'?allocFn(y):allocFn;
+      const mu=bret(alloc),sig=bsig(alloc);
+      const lmu=Math.log(1+mu)-sig*sig/2;
+      const ar=Math.exp(lmu+sig*randn())-1,r=ar/12;
+      for(let m=0;m<12;m++)bal=bal*(1+r)+totMo;
+      paths[sim][y+1]=bal;
+    }
+  }
+  const p10=[],p50=[],p90=[];
+  for(let y=0;y<=yrs;y++){
+    const col=Array.from({length:N},(_,s)=>paths[s][y]).sort((a,b)=>a-b);
+    p10.push(col[Math.floor(N*.1)]);p50.push(col[Math.floor(N*.5)]);p90.push(col[Math.floor(N*.9)]);
+  }
+  return{p10,p50,p90};
+}
+
+// ── Chart plugins ─────────────────────────────────────────────────────────────
+const xhairPlugin={
+  id:'xhair',
+  afterDatasetsDraw(chart){
+    if(chart._chAge==null)return;
+    const{ctx,chartArea:ca,scales:sc}=chart;
+    const x=sc.x.getPixelForValue(chart._chAge);
+    if(x<ca.left||x>ca.right)return;
+    ctx.save();
+    ctx.beginPath();ctx.moveTo(x,ca.top);ctx.lineTo(x,ca.bottom);
+    ctx.strokeStyle='rgba(0,0,0,.22)';ctx.lineWidth=1;ctx.setLineDash([4,3]);ctx.stroke();ctx.setLineDash([]);
+    chart.data.datasets.forEach((ds,i)=>{
+      if(ds._band)return;
+      if(chart.getDatasetMeta(i).hidden)return;
+      const lbl=chart.data.labels;let yv=null;
+      for(let j=0;j<lbl.length-1;j++){
+        if(chart._chAge>=lbl[j]&&chart._chAge<=lbl[j+1]){
+          const t=(chart._chAge-lbl[j])/(lbl[j+1]-lbl[j]);yv=ds.data[j]+(ds.data[j+1]-ds.data[j])*t;break;
+        }
+      }
+      if(yv==null)return;
+      const yp=sc.y.getPixelForValue(yv);
+      ctx.beginPath();ctx.arc(x,yp,5,0,Math.PI*2);
+      ctx.fillStyle='#fff';ctx.fill();ctx.strokeStyle=ds.borderColor;ctx.lineWidth=2.5;ctx.stroke();
+    });
+    ctx.restore();
+  }
+};
+const annotPlugin={
+  id:'annot',
+  afterDatasetsDraw(chart){
+    const ma=chart._milAge;if(!ma)return;
+    const{ctx,chartArea:ca,scales:sc}=chart;
+    if(ma<=sc.x.min||ma>=sc.x.max)return;
+    const x=sc.x.getPixelForValue(ma);
+    ctx.save();
+    ctx.beginPath();ctx.moveTo(x,ca.top);ctx.lineTo(x,ca.bottom);
+    ctx.strokeStyle='rgba(232,194,0,.65)';ctx.lineWidth=1.5;ctx.setLineDash([6,3]);ctx.stroke();ctx.setLineDash([]);
+    ctx.fillStyle='#E8C200';ctx.font='bold 10px -apple-system,sans-serif';
+    const left=x<(ca.left+ca.right)/2;
+    ctx.textAlign=left?'left':'right';ctx.fillText('Mil. Retirement',left?x+5:x-5,ca.top+13);
+    ctx.restore();
+  }
+};
+
+// ── Crosshair interaction ─────────────────────────────────────────────────────
+function toAge(e){
+  const c=G.chart,r=c.canvas.getBoundingClientRect();
+  const cx=e.touches?e.touches[0].clientX:e.clientX;
+  return Math.max(c.scales.x.min,Math.min(c.scales.x.max,c.scales.x.getValueForPixel(cx-r.left)));
+}
+function updateXhair(age,sync){
+  const c=G.chart;if(!c)return;
+  c._chAge=age;c.update('none');
+  if(sync){const s=document.getElementById('chSlider');s.value=((age-c.scales.x.min)/(c.scales.x.max-c.scales.x.min)).toFixed(3);}
+  const pts=G.pts;if(!pts)return;
+  const idx=Math.max(0,Math.min(pts.yrs,Math.round(age-pts.i.age)));
+  const vals=SCEN.map(s=>pts[s.key]?.[idx]||0);
+  document.getElementById('cpanel').innerHTML=`
+    <div style="font-size:.72rem;color:var(--muted);font-weight:600;margin-bottom:.4rem;">Age ${Math.round(age)} &mdash; ${idx} year${idx===1?'':'s'} from now</div>
+    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:.35rem .5rem;">
+      ${SCEN.map((s,i)=>`<div>
+        <div style="font-size:.61rem;font-weight:700;text-transform:uppercase;letter-spacing:.3px;color:${s.color};white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">${s.label}</div>
+        <div style="font-size:.92rem;font-weight:800;color:var(--dark);">${fmtB(vals[i])}</div>
+      </div>`).join('')}
+    </div>`;
+}
+function sliderMoved(v){
+  const c=G.chart;if(!c)return;
+  const age=c.scales.x.min+(c.scales.x.max-c.scales.x.min)*+v;
+  updateXhair(age,false);
+}
+
+// ── Build chart ───────────────────────────────────────────────────────────────
+function buildChart(pts){
+  const{i,yrs}=pts;
+  const ages=[];for(let y=0;y<=yrs;y++)ages.push(i.age+y);
+  G.ages=ages;
+  const datasets=SCEN.map(s=>({
+    label:s.label,data:pts[s.key]||[],borderColor:s.color,
+    borderWidth:s.key==='pRec'?2.5:s.key==='pFull'?2:1.5,
+    borderDash:s.dash,pointRadius:0,tension:.3,fill:false
+  }));
+  const cv=document.getElementById('mainChart');
+  if(G.chart)G.chart.destroy();
+  G.chart=new Chart(cv,{
+    type:'line',data:{labels:ages,datasets},
+    options:{
+      responsive:true,maintainAspectRatio:false,animation:{duration:350},
+      plugins:{legend:{display:false},tooltip:{enabled:false}},
+      scales:{
+        x:{type:'linear',min:i.age,max:i.age+yrs,
+          ticks:{callback:v=>'Age '+Math.round(v),maxTicksLimit:8,font:{size:10}},
+          grid:{color:'rgba(0,0,0,.04)'}},
+        y:{ticks:{callback:v=>fmtB(v),maxTicksLimit:6,font:{size:10}},grid:{color:'rgba(0,0,0,.06)'}}
+      }
+    },
+    plugins:[xhairPlugin,annotPlugin]
+  });
+  G.chart._milAge=i.age+i.milRetYrs;
+  G.chart._chAge=null;
+  cv.onmousemove=e=>{updateXhair(toAge(e),false);};
+  cv.ontouchmove=e=>{e.preventDefault();updateXhair(toAge(e),true);};
+  cv.onmouseleave=()=>{G.chart._chAge=null;G.chart.update('none');document.getElementById('cpanel').innerHTML='<div class="cp-hint">Hover the chart or drag the slider to explore.</div>';};
+  document.getElementById('chSlider').value=0;
+  document.getElementById('legend').innerHTML=SCEN.map(s=>
+    `<div class="leg-item"><div class="leg-dot" style="background:${s.color};${s.dash.length?'opacity:.55':''}"></div>${s.label}</div>`
+  ).join('');
+  document.getElementById('scenTabs').innerHTML=SCEN.map((s,i)=>
+    `<button class="scen-tab${i===G.riskScen?' active':''}" onclick="pickRiskScen(${i})">${s.label}</button>`
+  ).join('');
+}
+
+// ── Risk View ─────────────────────────────────────────────────────────────────
+function toggleRiskView(){
+  G.riskView=document.getElementById('rvCheck').checked;
+  document.getElementById('rvPanel').classList.toggle('on',G.riskView);
+  applyRV();
+}
+function pickRiskScen(idx){
+  G.riskScen=idx;
+  document.querySelectorAll('.scen-tab').forEach((t,j)=>t.classList.toggle('active',j===idx));
+  G.mcCache={};applyRV();
+}
+function getScenAllocFn(idx,pts){
+  if(idx===0)return y=>lfAlloc(pts.lfName,y);
+  if(idx===1)return{G:0,F:.4,C:.6,S:0,I:0};
+  if(idx===2)return pts.ra;
+  if(idx===3)return{G:0,F:0,C:.8,S:.2,I:0};
+  return pts.ra;
+}
+function applyRV(){
+  const c=G.chart;if(!c||!G.pts)return;
+  c.data.datasets=c.data.datasets.filter(d=>!d._band);
+  if(!G.riskView){c.update();return;}
+  const pts=G.pts,meta=SCEN[G.riskScen];
+  if(G.mcCache[G.riskScen]){drawBands(G.mcCache[G.riskScen],meta);return;}
+  setTimeout(()=>{
+    const mc=runMC(pts.sb,pts.i.grade,pts.i.yos,pts.i.contribRate,pts.i.brs,pts.yrs,getScenAllocFn(G.riskScen,pts),1000);
+    // Full System (index 4): offset every percentile by the deterministic HYSA + brokerage paths
+    if(G.riskScen===4){
+      mc.p10=mc.p10.map((v,j)=>v+pts.pH[j]+pts.pB[j]);
+      mc.p50=mc.p50.map((v,j)=>v+pts.pH[j]+pts.pB[j]);
+      mc.p90=mc.p90.map((v,j)=>v+pts.pH[j]+pts.pB[j]);
+    }
+    G.mcCache[G.riskScen]=mc;drawBands(mc,meta);
+  },10);
+}
+function drawBands(mc,meta){
+  const c=G.chart;
+  const bg=`rgba(${meta.rgb},.18)`;
+  c.data.datasets.push(
+    {label:'p10',data:mc.p10,borderColor:'transparent',borderWidth:0,pointRadius:0,fill:false,_band:true,tension:.3},
+    {label:'p90',data:mc.p90,borderColor:'transparent',borderWidth:0,backgroundColor:bg,pointRadius:0,
+     fill:{target:'-1',above:bg,below:bg},_band:true,tension:.3},
+    {label:'p50',data:mc.p50,borderColor:meta.color,borderWidth:2.5,borderDash:[],pointRadius:0,fill:false,_band:true,tension:.3}
+  );
+  c.update();
+}
+
+// ── Render results ────────────────────────────────────────────────────────────
+function renderResults(pts){
+  const{i,yrs,ra,sb}=pts;
+  const tv=SCEN.map(s=>pts[s.key]?.[yrs]||0);
+  const [vLF,vCon,vRec,vAgg,vFull]=tv;
+  const mo4=v=>v*.04/12;
+
+  // Scenario table
+  document.getElementById('outTable').innerHTML=`
+    <thead><tr><th>Scenario</th><th>Balance at 59½</th><th>Monthly Income*</th></tr></thead>
+    <tbody>${SCEN.map((s,j)=>`<tr${j===2?' class="rec-row"':''}>
+      <td><div class="sname"><div class="sdot" style="background:${s.color}"></div>${s.label}${j===2?' ★':''}</div></td>
+      <td>${fmtB(tv[j])}</td><td>${fmtD(mo4(tv[j]))}/mo</td>
+    </tr>`).join('')}</tbody>
+    <tfoot><tr><td colspan="3" style="font-size:.66rem;color:var(--muted);padding:.45rem .75rem;">
+      *4% withdrawal rule applied at age 59½. Full System includes HYSA + brokerage.
+    </td></tr></tfoot>`;
+
+  // Lifecycle cost
+  const lcGap=vRec-vLF,lcMo=mo4(vRec)-mo4(vLF);
+  document.getElementById('costBox').innerHTML=`
+    <div class="lbl">Lifecycle Fund Opportunity Cost</div>
+    <div class="big">${fmtB(lcGap)}</div>
+    <div class="sub">That’s ${fmtD(lcMo)}/month less retirement income — every single month.</div>`;
+  document.getElementById('costInsight').innerHTML=`<strong>Why this happens:</strong> The Lifecycle Fund shifts your money into bonds and G Fund years before you need it — appropriate for someone at retirement age, harmful for someone with ${yrs} years of runway. The G Fund earns 2.5%. The C Fund earns 10.8%. The difference compounds for decades.`;
+
+  // Roth conversion
+  const roMo=mo4(vRec),trMo=mo4(vRec)*(1-i.taxRate),diff=roMo-trMo,txOwed=i.tradBal*i.taxRate;
+  document.getElementById('convRow').innerHTML=`
+    <div class="conv-col"><div class="clbl">Keep Traditional TSP</div>
+      <div class="cbig">${fmtD(trMo)}<span style="font-size:.88rem;">/mo</span></div>
+      <div class="csub">After ${Math.round(i.taxRate*100)}% tax on every withdrawal</div></div>
+    <div class="conv-col win"><div class="clbl">Convert to Roth Now ✓</div>
+      <div class="cbig">${fmtD(roMo)}<span style="font-size:.88rem;">/mo</span></div>
+      <div class="csub">Tax-free — every dollar is yours</div></div>`;
+  document.getElementById('convDiff').innerHTML=`
+    <div class="big">+${fmtD(diff)}/month</div>
+    <div class="sub">The Roth advantage${txOwed>0?`. Conversion tax bill: ${fmtD(txOwed)} — pay from HYSA or cash, not from your TSP`:''}.</div>`;
+  document.getElementById('convInsight').innerHTML=i.tradBal>0
+    ?`<strong>The case is simple:</strong> ${fmtD(i.tradBal)} in Traditional TSP converts to ${fmtD(i.tradBal)} in Roth (taxes of ${fmtD(txOwed)} paid from outside funds). After ${yrs} years of tax-free compounding, every dollar you pull out is yours. Even at today’s rates — and especially if rates rise — the conversion wins.`
+    :`<strong>You’re already set up correctly.</strong> Your TSP is fully in Roth. Continue contributing to Roth to preserve this advantage for the next ${yrs} years.`;
+
+  // Recommendation
+  const FC=[['G','#6B7280'],['F','#3B82F6'],['C','#8B1515'],['S','#166534'],['I','#0891B2']];
+  document.getElementById('recFunds').innerHTML=FC.map(([f,c])=>`
+    <div class="rec-fund">
+      <div class="rpct" style="color:${ra[f]>=.4?c:'var(--dark)'};">${Math.round(ra[f]*100)}%</div>
+      <div class="rfname">${f} Fund</div>
+    </div>`).join('');
+  const comp=(i.tol+i.cap)/2;
+  const hysaMos=i.hysaBal>0?Math.round(i.hysaBal/(getBasePay(i.grade,i.yos)*.7)):0;
+  document.getElementById('recInsight').innerHTML=comp<=2
+    ?`<strong>Your risk score is cautious — but your HYSA is already doing the conservative work.</strong> With roughly ${hysaMos} months of expenses in your HYSA, your short-term risk is covered. Your TSP doesn’t need to double-cover it. This allocation still leans heavily into equities because that’s what ${yrs} years of runway demands.`
+    :comp<=3.5
+    ?`<strong>This allocation is calibrated to your full financial picture.</strong> Your HYSA handles short-term stability. Your TSP is free to focus on what it does best: long-run compounding. This is the mathematical sweet spot for your profile.`
+    :`<strong>Full throttle.</strong> You understand that a long horizon eliminates the case for bonds in a retirement account. Your HYSA buffers downside. Your TSP is pure growth. This is the allocation your future self will thank you for.`;
+
+}
+
+// ── Main entry ────────────────────────────────────────────────────────────────
+function recalc(){
+  const i=inp();
+  if(i.age>=59){alert('This tool projects to age 59½. Please enter an age below 59.');return;}
+  const pts=compute(i);
+  G.pts=pts;G.mcCache={};G.riskView=false;
+  document.getElementById('rvCheck').checked=false;
+  document.getElementById('rvPanel').classList.remove('on');
+  buildChart(pts);
+  renderResults(pts);
+  document.getElementById('results').style.display='block';
+  requestAnimationFrame(()=>document.getElementById('results').scrollIntoView({behavior:'smooth',block:'start'}));
+}
+
+function submitCTA(){
+  const v=document.getElementById('ctaEmail').value.trim();
+  if(!v||!v.includes('@')){document.getElementById('ctaEmail').focus();return;}
+  document.querySelector('.coaching-cta').innerHTML=`
+    <div style="text-align:center;padding:1rem 0;">
+      <div style="color:var(--gold);font-size:1.15rem;font-weight:800;margin-bottom:.4rem;">You're in. We'll be in touch.</div>
+      <div style="color:rgba(255,255,255,.6);font-size:.87rem;">Expect a scheduling link within one business day.</div>
+    </div>`;
+}
+</script>
+</body>
+</html>

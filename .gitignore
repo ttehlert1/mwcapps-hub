@@ -1,0 +1,17 @@
+# macOS
+.DS_Store
+.AppleDouble
+*.icloud
+
+# Aliases / zero-byte Mac shortcuts
+*.pdf
+*.png
+
+# Node
+node_modules/
+
+# Netlify
+.netlify/
+
+# Claude Code local settings
+.claude/settings.local.json
