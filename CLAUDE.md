@@ -33,20 +33,64 @@ npx netlify deploy --prod
 
 ## Brand / Visual System
 
-All tools share the same CSS variables — do not deviate from these:
-```css
---dark: #111111    /* backgrounds, slider thumbs, table headers */
---mid:  #8B1515    /* crimson — primary accent, borders, buttons */
---gold: #E8C200    /* hero numbers, header text */
---bg:   #F5F5F5
---card: #FFFFFF
---text: #1A1A1A
---muted: #6B7280
---border: #DEDEDE
---green: #166534
---red:   #991B1B
+All tools share one editorial system that matches militarywealthcoach.com.
+Cream page, white cards, ONE loud color (crimson). Big numbers are gold serif on
+near-black panels. See `BRAND-SPEC.md` for the full component CSS; the shipped tools
+(`tsp-optimizer/`, `sbp-defeater/`, `bah-househacker/`) are the spec made real — read
+them as reference before building a new tool.
+
+**Fonts** (load in `<head>` before `<style>`):
+- Newsreader (serif) — headings + all big numbers, weight 600, letter-spacing -0.01em
+- Manrope (sans) — body, inputs, buttons; base 16px / line-height 1.55
+- JetBrains Mono — eyebrows, field labels, table headers, tags (always uppercase + tracked)
+
+```html
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;0,6..72,700;1,6..72,500;1,6..72,600&family=Manrope:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
 ```
-The site header uses `background: var(--mid)` with `color: var(--gold)` text.
+
+**Palette** — keep the variable NAMES exactly (scripts inject `var(--muted)` etc. inline);
+only these values are the brand. Note `--mid` is the crimson and `--gold` is muted, not neon.
+
+```css
+:root {
+  --dark:    #1A1A1A;   /* top bar, dark hero/stat panels, table headers, slider context */
+  --mid:     #A6182C;   /* crimson — primary accent, buttons, eyebrows, focus ring, borders */
+  --gold:    #C9A24B;   /* muted gold — hero/stat numbers ON DARK, accent rules */
+  --bg:      #F7F3EB;   /* warm cream — page background, inset boxes */
+  --bg-2:    #EFE9DD;   /* deeper cream — neutral tints */
+  --card:    #FFFFFF;
+  --text:    #1A1A1A;
+  --ink-2:   #3D3833;   /* secondary body text */
+  --muted:   #6C645B;   /* labels, captions */
+  --border:  #E3DCCC;   /* hairline borders */
+  --green:   #2F6B43;   /* positive / winning */
+  --red:     #7A1020;   /* negative / loss */
+  --gold-soft:#E7D9B0;  /* highlighted/recommended table rows, gold tags */
+}
+```
+
+**Geometry:** `border-radius:2px` everywhere (cards, buttons, inputs, tags). Hairline
+`1px solid var(--border)`. Almost no shadow (`0 1px 2px rgba(26,26,26,.03)` on cards).
+Insight boxes use `border-left:3px solid var(--gold)` on `--bg`.
+
+**Required chrome on every tool:**
+- A dark `.topbar` above the header: "Military Wealth Coach" (links to site root) on the left,
+  "← All Tools" (links to `https://militarywealthcoach.com/apps`) on the right — both JetBrains Mono.
+- Cream left-aligned header: mono crimson eyebrow with a 24px leading rule → Newsreader serif title → sub.
+- Section labels: mono crimson, uppercase, with a trailing hairline rule (`flex:1;height:1px`).
+- Primary button: crimson `--mid` fill, white text, NOT uppercase, 2px corners, hover → `--red`.
+- Inputs: crimson focus ring `box-shadow:0 0 0 3px rgba(166,24,44,.12)`.
+- The headline result lives on a dark panel as a gold Newsreader number.
+
+**Chart.js:** green `#2F6B43` = positive series, crimson `#A6182C` = cost/loss series,
+gold `#C9A24B` = annotation/crosshair dashed lines, grid `rgba(26,26,26,0.06)`,
+ticks `--muted` in Manrope. Keep the SBP-pattern continuous `type:'linear'` x-axis +
+local crosshair/annotation plugins.
+
+**Do NOT** reintroduce `#8B1515`, `#E8C200`, 16px corners, 1.5px borders, or system/Segoe/Roboto
+fonts. Never use neon blue/orange/yellow for chart categories — derive a muted slate (`#4A6B86`) instead.
 
 ## Chart Architecture (SBP Defeater Pattern — reuse in all tools)
 
