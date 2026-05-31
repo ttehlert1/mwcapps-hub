@@ -104,7 +104,7 @@ All interactive charts follow the pattern established in `sbp-defeater/index.htm
 - **`updateCrosshair(yr, syncSlider)`** — sets `_chYr`, calls `chart.update('none')`, optionally syncs the range input, then rebuilds `#cpanel` innerHTML with `.cp-row1` / `.cp-row2` / `.cp-verdict` structure.
 - **`sliderMoved(val)`** — calls `updateCrosshair(parseFloat(val), true)`.
 - Mouse events: `onmousemove` → `updateCrosshair(yr, false)` (don't move slider); `ontouchmove` → `updateCrosshair(yr, true)` (sync slider); `onmouseleave` → set `_chYr = undefined`, redraw.
-- Fill between lines: `fill: { target: 1, above: 'rgba(22,101,52,0.12)', below: 'rgba(139,21,21,0.10)' }` on dataset 0.
+- Fill between lines: `fill: { target: 1, above: 'rgba(47,107,67,0.12)', below: 'rgba(166,24,44,0.10)' }` on dataset 0.
 
 ### cpanel HTML structure
 ```html
@@ -120,12 +120,12 @@ All interactive charts follow the pattern established in `sbp-defeater/index.htm
 
 ### Slider CSS (use verbatim)
 ```css
-input[type=range] { flex:1; height:6px; padding:0; border:none; border-radius:3px;
+input[type=range] { flex:1; height:4px; padding:0; border:none; border-radius:2px;
   background:var(--border); appearance:none; -webkit-appearance:none; cursor:pointer; }
-input[type=range]::-webkit-slider-thumb { -webkit-appearance:none; width:22px; height:22px;
-  border-radius:50%; background:var(--dark); border:2.5px solid #fff; box-shadow:0 1px 5px rgba(0,0,0,.3); }
-input[type=range]::-moz-range-thumb { width:22px; height:22px; border-radius:50%;
-  background:var(--dark); border:2.5px solid #fff; }
+input[type=range]::-webkit-slider-thumb { -webkit-appearance:none; width:20px; height:20px;
+  border-radius:50%; background:var(--mid); border:3px solid #fff; box-shadow:0 1px 4px rgba(26,26,26,.28); }
+input[type=range]::-moz-range-thumb { width:20px; height:20px; border-radius:50%;
+  background:var(--mid); border:3px solid #fff; }
 ```
 
 ## BAH House-Hack Data
