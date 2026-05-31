@@ -268,6 +268,11 @@
             <option value="E-7" selected>E-7</option>
             <option value="E-8">E-8</option><option value="E-9">E-9</option>
           </optgroup>
+          <optgroup label="── Warrant Officers ──">
+            <option value="W-1">W-1</option><option value="W-2">W-2</option>
+            <option value="W-3">W-3</option><option value="W-4">W-4</option>
+            <option value="W-5">W-5</option>
+          </optgroup>
           <optgroup label="── Officers ──">
             <option value="O-1">O-1</option><option value="O-2">O-2</option>
             <option value="O-3">O-3</option><option value="O-4">O-4</option>
@@ -390,6 +395,11 @@ const PAY_TABLE = {
          [16,5838],[18,6074],[20,6259],[22,6467],[24,6718]],
   'E-9':[[10,6199],[12,6408],[14,6614],[16,6922],[18,7130],
          [20,7478],[22,7733],[24,7951],[26,8399]],
+  'W-1':[[0,3639],[2,4057],[3,4286],[4,4528],[6,4667],[8,4812],[10,4953],[12,5116],[14,5285],[16,5432]],
+  'W-2':[[0,4187],[2,4748],[4,4959],[6,5234],[8,5470],[10,5699],[12,5934],[14,6184],[16,6443]],
+  'W-3':[[0,4797],[2,5338],[3,5532],[4,5744],[6,6021],[8,6333],[10,6638],[12,6914],[14,7186],[16,7453],[18,7708],[20,7947],[22,8173]],
+  'W-4':[[0,5296],[2,5815],[4,6026],[6,6292],[8,6590],[10,6942],[12,7282],[14,7589],[16,7892],[18,8237],[20,8577],[22,8873],[24,9143]],
+  'W-5':[[0,7506],[4,7801],[6,8106],[8,8447],[10,8761],[12,9139],[14,9503],[16,9887],[18,10248],[20,10637],[22,11024],[24,11425]],
   'O-1':[[0,3637],[2,3784],[4,4587]],
   'O-2':[[0,4187],[2,4771],[3,5469],[4,5571],[6,5718]],
   'O-3':[[0,4836],[2,5474],[3,5896],[4,6117],[6,6414],[8,6744],[10,6967],[12,7186]],
@@ -438,7 +448,8 @@ function fmtT(n){
 function autoFillAge(){
   const g=document.getElementById('grade').value;
   const y=parseInt(document.getElementById('yos').value)||20;
-  const a=(isOfficer(g)?22:18)+y;
+  const base = g.startsWith('O') ? 22 : g.startsWith('W') ? 20 : 18;
+  const a=base+y;
   document.getElementById('retireAge').value=a;
   document.getElementById('spouseAge').value=a;
 }
