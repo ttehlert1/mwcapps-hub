@@ -1,0 +1,1617 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Debt Trap Escape Planner + DTI Mortgage Qualifier | Military Wealth Coach</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;0,6..72,700;1,6..72,500;1,6..72,600&family=Manrope:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+<style>
+:root {
+  --dark:     #1A1A1A;
+  --mid:      #A6182C;
+  --gold:     #C9A24B;
+  --bg:       #F7F3EB;
+  --bg-2:     #EFE9DD;
+  --card:     #FFFFFF;
+  --text:     #1A1A1A;
+  --ink-2:    #3D3833;
+  --muted:    #6C645B;
+  --border:   #E3DCCC;
+  --green:    #2F6B43;
+  --red:      #7A1020;
+  --gold-soft:#E7D9B0;
+  --slate:    #4A6B86;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Manrope',sans-serif;font-size:16px;line-height:1.55;background:var(--bg);color:var(--text)}
+a{color:var(--mid);text-decoration:none}
+
+/* TOPBAR */
+.topbar{background:var(--dark)}
+.topbar-inner{max-width:900px;margin:0 auto;padding:.55rem 1.25rem;display:flex;align-items:center;justify-content:space-between;gap:1rem}
+.topbar a{color:#fff;text-decoration:none}
+.topbar-brand{font-family:'JetBrains Mono',monospace;font-size:.66rem;letter-spacing:.22em;text-transform:uppercase;font-weight:600;color:rgba(255,255,255,.82)}
+.topbar-back{font-family:'JetBrains Mono',monospace;font-size:.66rem;letter-spacing:.18em;text-transform:uppercase;font-weight:600;display:inline-flex;align-items:center;gap:.45rem;color:rgba(255,255,255,.62);transition:color .15s}
+.topbar-back:hover{color:var(--gold)}
+
+/* HEADER */
+header{background:var(--bg);padding:40px 20px 32px;border-bottom:1px solid var(--border)}
+header .inner{max-width:900px;margin:0 auto}
+.eyebrow{font-family:'JetBrains Mono',monospace;font-size:.68rem;font-weight:600;letter-spacing:.22em;text-transform:uppercase;color:var(--mid);margin-bottom:12px;display:inline-flex;align-items:center;gap:.65rem}
+.eyebrow::before{content:'';width:24px;height:1px;background:var(--mid)}
+.site-title{font-family:'Newsreader',Georgia,serif;font-size:clamp(1.9rem,5vw,2.9rem);font-weight:600;color:var(--text);letter-spacing:-.015em;line-height:1.06}
+.site-sub{font-size:1rem;color:var(--ink-2);margin-top:10px;max-width:620px}
+
+/* MAIN */
+main{max-width:900px;margin:0 auto;padding:0 1.25rem 3rem}
+
+/* SECTION LABEL */
+.sec{font-family:'JetBrains Mono',monospace;font-size:.7rem;font-weight:600;letter-spacing:.18em;text-transform:uppercase;color:var(--mid);margin-bottom:14px;display:flex;align-items:center;gap:.75rem}
+.sec::after{content:'';flex:1;height:1px;background:var(--border)}
+
+/* CARD */
+.card{background:var(--card);border:1px solid var(--border);border-radius:2px;padding:1.5rem;box-shadow:0 1px 2px rgba(26,26,26,.03);margin-bottom:1rem}
+
+/* INPUTS */
+.field{display:flex;flex-direction:column;gap:.4rem}
+.field label{font-family:'JetBrains Mono',monospace;font-size:.66rem;font-weight:500;letter-spacing:.12em;text-transform:uppercase;color:var(--muted)}
+input[type=text],input[type=number],input[type=email],select{padding:.7rem .9rem;border:1px solid var(--border);border-radius:2px;font-family:'Manrope',sans-serif;font-size:.95rem;background:#fff;color:var(--text);width:100%;transition:border-color .15s,box-shadow .15s;-webkit-appearance:none;appearance:none}
+input[type=text]:focus,input[type=number]:focus,input[type=email]:focus,select:focus{outline:none;border-color:var(--mid);box-shadow:0 0 0 3px rgba(166,24,44,.12)}
+.prefix-wrap{position:relative}
+.prefix-wrap .prefix{position:absolute;left:11px;top:50%;transform:translateY(-50%);color:var(--muted);font-family:'Manrope',sans-serif;font-size:.95rem;pointer-events:none;z-index:1}
+.field .prefix-wrap input{padding-left:28px}
+.suffix-wrap{position:relative}
+.suffix-wrap input{padding-right:32px}
+.suffix-wrap .suffix{position:absolute;right:11px;top:50%;transform:translateY(-50%);color:var(--muted);font-family:'Manrope',sans-serif;font-size:.95rem;pointer-events:none}
+
+/* GRIDS */
+.grid-2{display:grid;grid-template-columns:1fr 1fr;gap:1rem}
+.grid-3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:1rem}
+@media(max-width:640px){.grid-2,.grid-3{grid-template-columns:1fr}}
+
+/* INCOME SUM */
+.income-sum{background:var(--dark);border-radius:2px;padding:.75rem 1rem;display:flex;align-items:center;justify-content:space-between;margin-top:.75rem}
+.income-sum-label{font-family:'JetBrains Mono',monospace;font-size:.62rem;letter-spacing:.16em;text-transform:uppercase;color:rgba(255,255,255,.55)}
+.income-sum-val{font-family:'Newsreader',serif;font-size:1.45rem;font-weight:600;color:var(--gold)}
+
+/* BUTTONS */
+.btn-calc{width:100%;padding:1rem;background:var(--mid);color:#fff;font-family:'Manrope',sans-serif;font-size:.95rem;font-weight:700;letter-spacing:.02em;border:none;border-radius:2px;cursor:pointer;transition:background .15s;margin-top:.5rem}
+.btn-calc:hover{background:var(--red)}
+.btn-calc:active{transform:scale(.99)}
+.btn-calc.secondary{background:var(--dark)}
+.btn-calc.secondary:hover{background:#2d2d2d}
+.btn-sm{padding:.45rem .9rem;font-family:'Manrope',sans-serif;font-size:.8rem;font-weight:600;border-radius:2px;border:1px solid var(--border);background:#fff;color:var(--ink-2);cursor:pointer;transition:background .12s}
+.btn-sm:hover{background:var(--bg-2)}
+.btn-add{display:inline-flex;align-items:center;gap:.4rem;padding:.55rem 1rem;font-family:'Manrope',sans-serif;font-size:.85rem;font-weight:700;color:var(--mid);border:1.5px dashed var(--mid);border-radius:2px;background:transparent;cursor:pointer;transition:background .12s;margin-top:.75rem}
+.btn-add:hover{background:rgba(166,24,44,.05)}
+
+/* INSIGHT / NUDGE */
+.insight{background:var(--bg);border:1px solid var(--border);border-left:3px solid var(--gold);border-radius:2px;padding:1rem 1.15rem;color:var(--ink-2);line-height:1.65;font-size:.93rem}
+.insight strong{color:var(--dark);font-weight:700}
+.nudge-box{background:rgba(201,162,75,.1);border:1px solid rgba(201,162,75,.4);border-radius:2px;padding:.85rem 1.1rem;font-size:.88rem;color:var(--ink-2);line-height:1.65;margin-top:.65rem}
+.nudge-box strong{color:var(--dark)}
+.warn-box{background:rgba(122,16,32,.06);border:1px solid rgba(122,16,32,.25);border-left:3px solid var(--red);border-radius:2px;padding:.85rem 1.1rem;font-size:.88rem;color:var(--ink-2);line-height:1.65;margin-top:.65rem}
+
+/* PHASE HEADERS */
+.phase-hd{margin:2rem 0 1rem;display:flex;align-items:center;gap:.75rem}
+.phase-hd h2{font-family:'Newsreader',serif;font-size:1.55rem;font-weight:600;color:var(--text);letter-spacing:-.01em}
+.phase-num{font-family:'JetBrains Mono',monospace;font-size:.66rem;font-weight:700;letter-spacing:.18em;text-transform:uppercase;background:var(--mid);color:#fff;padding:.25rem .55rem;border-radius:2px}
+
+/* PHASE GATE (divider between payoff and mortgage) */
+.phase-gate{border-top:2px solid var(--border);margin:2rem 0 1.5rem;padding-top:1.75rem;display:flex;flex-direction:column;align-items:center;text-align:center;gap:.85rem}
+.phase-gate-eyebrow{font-family:'JetBrains Mono',monospace;font-size:.66rem;letter-spacing:.2em;text-transform:uppercase;color:var(--muted)}
+.phase-gate-title{font-family:'Newsreader',serif;font-size:1.45rem;font-weight:600;color:var(--text);letter-spacing:-.01em}
+.phase-gate-sub{font-size:.9rem;color:var(--ink-2);max-width:480px;line-height:1.6}
+
+/* CAR CARD */
+.car-card{border-left:3px solid var(--gold)}
+.car-grid{display:grid;grid-template-columns:1fr auto 1fr;gap:1.25rem;align-items:start;margin-top:1rem}
+@media(max-width:600px){.car-grid{grid-template-columns:1fr}}
+.car-vs{display:flex;align-items:center;justify-content:center;font-family:'Newsreader',serif;font-size:1.5rem;font-weight:600;color:var(--border);padding-top:1.5rem}
+@media(max-width:600px){.car-vs{display:none}}
+.car-alt-side{background:var(--bg);border-radius:2px;padding:1rem}
+
+/* DEBT ROW */
+.debt-row{display:grid;grid-template-columns:1.6fr 1fr 1fr 1fr 1.2fr auto;gap:.6rem;align-items:end;padding:.75rem 0;border-bottom:1px solid var(--border)}
+.debt-row:last-child{border-bottom:none}
+@media(max-width:700px){.debt-row{grid-template-columns:1fr 1fr;row-gap:.5rem}}
+.debt-row .remove-btn{background:none;border:none;cursor:pointer;color:var(--muted);font-size:1.1rem;line-height:1;padding:.5rem .3rem;border-radius:2px;align-self:flex-end;transition:color .12s}
+.debt-row .remove-btn:hover{color:var(--red)}
+.deferred-row{display:flex;align-items:center;gap:.45rem;font-size:.83rem;color:var(--muted);margin-top:.35rem;padding-left:2px}
+.deferred-row input[type=checkbox]{width:15px;height:15px;accent-color:var(--mid);cursor:pointer}
+
+/* PAYMENT APPROACH */
+.pay-approach-section .radio-group{margin-bottom:.75rem}
+.pay-approach-hint{font-size:.82rem;color:var(--muted);margin-top:.35rem}
+
+/* RADIO TOGGLE */
+.radio-group{display:flex;flex-wrap:wrap;gap:.5rem}
+.radio-group label{display:flex;align-items:center;gap:.35rem;font-size:.88rem;color:var(--ink-2);cursor:pointer;padding:.4rem .75rem;border:1px solid var(--border);border-radius:2px;background:#fff;transition:border-color .12s,background .12s;font-family:'Manrope',sans-serif;line-height:1.3}
+.radio-group label:has(input:checked){border-color:var(--mid);background:rgba(166,24,44,.06);color:var(--mid);font-weight:700}
+.radio-group label.recommended:has(input:checked){border-color:var(--green);background:rgba(47,107,67,.07);color:var(--green)}
+.radio-group label.recommended{border-color:rgba(47,107,67,.3)}
+.radio-group input[type=radio]{width:0;height:0;opacity:0;position:absolute}
+
+/* TOGGLE */
+.toggle{position:relative;display:inline-block;width:38px;height:21px}
+.toggle input{opacity:0;width:0;height:0}
+.slider-toggle{position:absolute;inset:0;background:var(--border);border-radius:21px;cursor:pointer;transition:background .2s}
+.slider-toggle::before{content:'';position:absolute;width:15px;height:15px;left:3px;top:3px;background:#fff;border-radius:50%;transition:transform .2s}
+.toggle input:checked + .slider-toggle{background:var(--mid)}
+.toggle input:checked + .slider-toggle::before{transform:translateX(17px)}
+
+/* RANGE SLIDER */
+input[type=range]{flex:1;height:4px;padding:0;border:none;border-radius:2px;background:var(--border);appearance:none;-webkit-appearance:none;cursor:pointer}
+input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:20px;height:20px;border-radius:50%;background:var(--mid);border:3px solid #fff;box-shadow:0 1px 4px rgba(26,26,26,.28)}
+input[type=range]::-moz-range-thumb{width:20px;height:20px;border-radius:50%;background:var(--mid);border:3px solid #fff}
+
+/* CHART */
+.chart-wrap{position:relative;cursor:crosshair}
+.chart-slider-row{display:flex;align-items:center;gap:.75rem;padding:.75rem 0 .25rem;font-family:'JetBrains Mono',monospace;font-size:.66rem;letter-spacing:.1em;text-transform:uppercase;color:var(--muted)}
+.cpanel{min-height:56px;padding:.6rem .5rem;border-top:1px solid var(--border);margin-top:.25rem}
+.cp-row1{font-family:'JetBrains Mono',monospace;font-size:.7rem;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin-bottom:.4rem}
+.cp-row2{display:flex;align-items:flex-end;justify-content:space-between;gap:.5rem;flex-wrap:wrap}
+.cp-val-label{font-family:'JetBrains Mono',monospace;font-size:.6rem;letter-spacing:.1em;text-transform:uppercase;color:var(--muted)}
+.cp-val-num{font-family:'Newsreader',serif;font-size:1.35rem;font-weight:600;line-height:1.1}
+.cp-event{font-size:.8rem;color:var(--green);font-weight:700;text-align:center;background:rgba(47,107,67,.08);padding:.2rem .5rem;border-radius:2px;flex-basis:100%;margin-top:.25rem}
+
+/* STRATEGY CARDS */
+.strategy-cards{display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin-bottom:1rem}
+@media(max-width:560px){.strategy-cards{grid-template-columns:1fr}}
+.strategy-card{border-top:3px solid var(--border)}
+.strategy-card.snow-card{border-top-color:var(--slate)}
+.strategy-card.fall-card{border-top-color:var(--green)}
+.strat-label{font-family:'JetBrains Mono',monospace;font-size:.66rem;letter-spacing:.18em;text-transform:uppercase;font-weight:700;margin-bottom:.75rem;display:flex;align-items:center;gap:.5rem}
+.strat-label.snow{color:var(--slate)}
+.strat-label.fall{color:var(--green)}
+.rec-badge{font-family:'JetBrains Mono',monospace;font-size:.58rem;letter-spacing:.1em;text-transform:uppercase;background:var(--green);color:#fff;padding:.15rem .4rem;border-radius:2px}
+.strat-big{font-family:'Newsreader',serif;font-size:2rem;font-weight:600;letter-spacing:-.01em;line-height:1}
+.strat-sub{font-size:.83rem;color:var(--muted);margin-top:.2rem}
+.strat-rows{display:flex;flex-direction:column;gap:.5rem;margin-top:1rem;border-top:1px solid var(--border);padding-top:.75rem}
+.strat-row{display:flex;justify-content:space-between;font-size:.88rem;align-items:baseline}
+.strat-row span:first-child{color:var(--muted)}
+.strat-row span:last-child{font-weight:700;text-align:right}
+
+/* STRATEGY CHOICE */
+.strategy-choice{margin-top:1.25rem}
+.strategy-choice .sec{margin-bottom:.85rem}
+.strategy-choice-intro{font-size:.9rem;color:var(--ink-2);margin-bottom:.85rem;line-height:1.6}
+
+/* STRATEGY INSTRUCTIONS */
+.strategy-instr{background:var(--bg);border:1px solid var(--border);border-left:3px solid var(--mid);border-radius:2px;padding:1rem 1.15rem;margin-top:.85rem}
+.instr-heading{font-family:'JetBrains Mono',monospace;font-size:.66rem;letter-spacing:.16em;text-transform:uppercase;color:var(--mid);font-weight:700;margin-bottom:.75rem}
+.instr-step{display:flex;gap:.75rem;margin-bottom:.65rem;align-items:flex-start}
+.instr-step:last-child{margin-bottom:0}
+.instr-num{flex-shrink:0;width:22px;height:22px;border-radius:50%;background:var(--mid);color:#fff;font-family:'JetBrains Mono',monospace;font-size:.65rem;font-weight:700;display:flex;align-items:center;justify-content:center;margin-top:.15rem}
+.instr-step-text{font-size:.9rem;color:var(--ink-2);line-height:1.6}
+.instr-step-text em{color:var(--dark);font-style:italic;font-weight:700}
+.instr-step-text strong{color:var(--dark)}
+.instr-zero-extra{font-size:.88rem;color:var(--muted);font-style:italic;padding:.65rem 0}
+
+/* HERO PANEL */
+.hero-card{background:var(--dark);border-radius:2px;padding:2rem 1.75rem;text-align:center;margin:1.25rem 0}
+.hero-label{font-family:'JetBrains Mono',monospace;font-size:.66rem;letter-spacing:.22em;text-transform:uppercase;color:var(--gold);margin-bottom:10px}
+.hero-number{font-family:'Newsreader',serif;font-size:clamp(2.4rem,7vw,3.8rem);font-weight:600;color:var(--gold);line-height:1}
+.hero-sub{font-size:.88rem;color:rgba(255,255,255,.65);margin-top:8px}
+.hero-row{display:flex;justify-content:center;gap:2rem;margin-top:1.25rem;flex-wrap:wrap}
+.hero-stat{text-align:center}
+.hero-stat-val{font-family:'Newsreader',serif;font-size:1.4rem;font-weight:600;color:rgba(255,255,255,.9)}
+.hero-stat-lbl{font-family:'JetBrains Mono',monospace;font-size:.58rem;letter-spacing:.1em;text-transform:uppercase;color:rgba(255,255,255,.45);margin-top:2px}
+
+/* DTI GAUGE */
+.dti-gauge-wrap{margin:1rem 0}
+.dti-gauge-bar{position:relative;height:22px;background:var(--bg-2);border-radius:2px;overflow:hidden;border:1px solid var(--border)}
+.dti-fill{height:100%;border-radius:2px;transition:width .4s}
+.dti-thresholds-row{display:grid;grid-template-columns:1fr 1fr 1fr;gap:.5rem;margin-top:.75rem}
+.dti-thresh-cell{padding:.6rem;border-radius:2px;border:1px solid var(--border);text-align:center}
+.dti-thresh-cell.ok{background:rgba(47,107,67,.07);border-color:rgba(47,107,67,.25)}
+.dti-thresh-cell.warn{background:rgba(201,162,75,.1);border-color:rgba(201,162,75,.35)}
+.dti-thresh-cell.over{background:rgba(122,16,32,.07);border-color:rgba(122,16,32,.25)}
+.dti-thresh-pct{font-family:'Newsreader',serif;font-size:1.25rem;font-weight:600}
+.dti-thresh-name{font-family:'JetBrains Mono',monospace;font-size:.58rem;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin-top:2px}
+.dti-thresh-yours{font-size:.78rem;color:var(--ink-2);margin-top:3px}
+.dti-gauge-markers{display:flex;position:relative;height:14px;margin-top:.2rem}
+.dti-marker-tick{position:absolute;transform:translateX(-50%);font-family:'JetBrains Mono',monospace;font-size:.56rem;color:var(--muted);letter-spacing:.04em}
+
+/* MILESTONE TIMELINE */
+.milestones-scroll{display:flex;gap:.65rem;overflow-x:auto;padding:.25rem 0 .75rem;-webkit-overflow-scrolling:touch;scrollbar-width:none}
+.milestones-scroll::-webkit-scrollbar{display:none}
+.ms-chip{flex:0 0 auto;padding:.55rem 1rem;border-radius:2px;border:1px solid var(--border);background:#fff;cursor:pointer;font-family:'Manrope',sans-serif;transition:border-color .12s,background .12s;text-align:center;min-width:130px}
+.ms-chip.active{border-color:var(--mid);background:rgba(166,24,44,.05)}
+.ms-chip.final-chip{border-color:var(--green);background:rgba(47,107,67,.04)}
+.ms-chip.final-chip.active{background:rgba(47,107,67,.10)}
+.ms-chip-top{font-family:'JetBrains Mono',monospace;font-size:.58rem;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin-bottom:.25rem}
+.ms-chip-name{font-size:.85rem;font-weight:700;color:var(--text);line-height:1.2}
+.ms-chip-date{font-size:.78rem;color:var(--muted);margin-top:.15rem}
+.ms-detail{background:var(--bg);border:1px solid var(--border);border-left:3px solid var(--mid);border-radius:2px;padding:1rem 1.15rem;margin-top:.75rem;animation:slideIn .2s ease}
+.ms-detail.final{border-left-color:var(--green)}
+@keyframes slideIn{from{opacity:0;transform:translateY(-6px)}to{opacity:1;transform:translateY(0)}}
+.ms-detail-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:.75rem;margin-top:.75rem}
+@media(max-width:560px){.ms-detail-grid{grid-template-columns:1fr 1fr}}
+.ms-stat{border-right:1px solid var(--border);padding-right:.75rem}
+.ms-stat:last-child{border-right:none}
+.ms-stat-val{font-family:'Newsreader',serif;font-size:1.3rem;font-weight:600;color:var(--text)}
+.ms-stat-val.green{color:var(--green)}
+.ms-stat-lbl{font-family:'JetBrains Mono',monospace;font-size:.58rem;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin-top:2px}
+.ms-unlock{background:rgba(47,107,67,.08);border:1px solid rgba(47,107,67,.2);border-radius:2px;padding:.6rem .85rem;margin-top:.65rem;font-size:.88rem;color:var(--green);font-weight:700}
+.ms-fe-note{font-size:.8rem;color:var(--muted);margin-top:.5rem;font-style:italic}
+
+/* COUNTERFACTUAL */
+.ctf-cards{display:grid;grid-template-columns:1fr 1fr;gap:1rem}
+@media(max-width:560px){.ctf-cards{grid-template-columns:1fr}}
+.ctf-card{padding:1.1rem;border-radius:2px;border:1px solid var(--border);background:var(--bg)}
+.ctf-eyebrow{font-family:'JetBrains Mono',monospace;font-size:.6rem;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);margin-bottom:.5rem}
+.ctf-headline{font-family:'Newsreader',serif;font-size:1.45rem;font-weight:600;color:var(--green);line-height:1.1}
+.ctf-delta{font-size:.83rem;color:var(--ink-2);margin-top:.35rem}
+.ctf-card.zero-debt{border-left:3px solid var(--green)}
+.ctf-card.cash-car{border-left:3px solid var(--gold)}
+
+/* FEAR STATE */
+.fear-card{border-left:4px solid var(--red);background:#fff}
+.fear-icon{font-size:2rem;margin-bottom:.75rem}
+.fear-title{font-family:'Newsreader',serif;font-size:1.5rem;font-weight:600;color:var(--red);margin-bottom:.5rem}
+.fear-body{color:var(--ink-2);line-height:1.7}
+
+/* FOOTNOTE */
+.footnote{font-size:.78rem;color:var(--muted);margin-top:.5rem;line-height:1.55}
+
+/* MORTGAGE SETTINGS INSIDE RESULTS */
+.mortgage-gate{margin-top:.5rem}
+
+/* EMAIL CAPTURE */
+.email-section{background:var(--dark);border-radius:2px;padding:2.5rem 2rem;margin-top:2rem}
+.email-eyebrow{font-family:'JetBrains Mono',monospace;font-size:.66rem;letter-spacing:.22em;text-transform:uppercase;color:var(--gold);margin-bottom:14px}
+.email-title{font-family:'Newsreader',serif;font-size:clamp(1.5rem,4vw,2.1rem);font-weight:600;color:#fff;letter-spacing:-.01em;line-height:1.15;margin-bottom:.5rem}
+.email-title em{color:var(--gold);font-style:italic}
+.email-body{font-size:.93rem;color:rgba(255,255,255,.72);margin-bottom:1.25rem;max-width:500px;line-height:1.65}
+.email-form{display:flex;gap:.65rem;flex-wrap:wrap}
+.email-form input[type=email]{flex:1 1 220px;padding:.75rem 1rem;border-radius:2px;border:1px solid rgba(255,255,255,.2);background:rgba(255,255,255,.1);color:#fff;font-family:'Manrope',sans-serif;font-size:.95rem}
+.email-form input[type=email]::placeholder{color:rgba(255,255,255,.45)}
+.email-form input[type=email]:focus{outline:none;border-color:var(--gold);box-shadow:0 0 0 2px rgba(201,162,75,.25)}
+.email-btn{padding:.75rem 1.5rem;background:var(--gold);color:var(--dark);font-family:'Manrope',sans-serif;font-size:.88rem;font-weight:800;border:none;border-radius:2px;cursor:pointer;white-space:nowrap;transition:opacity .15s}
+.email-btn:hover{opacity:.88}
+.email-offer{display:inline-flex;align-items:center;gap:.5rem;background:rgba(201,162,75,.15);border:1px solid rgba(201,162,75,.3);border-radius:2px;padding:.5rem .85rem;font-size:.82rem;color:rgba(255,255,255,.78);margin-bottom:1rem}
+
+/* FOOTER */
+footer{text-align:center;padding:2rem 1.25rem 2.5rem;font-size:.72rem;color:var(--muted);border-top:1px solid var(--border);line-height:1.8;max-width:900px;margin:0 auto}
+footer a{color:var(--mid);font-weight:600}
+
+/* STICKY BANNER */
+.sticky-banner{position:fixed;bottom:0;left:0;right:0;background:var(--dark);border-top:2px solid var(--gold);z-index:99;padding:.7rem 1.25rem;display:none}
+.sticky-inner{max-width:900px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;gap:1rem;flex-wrap:wrap}
+.sticky-inner span{font-size:.88rem;color:rgba(255,255,255,.82)}
+.sticky-cta{padding:.45rem 1rem;background:var(--gold);color:var(--dark);font-family:'Manrope',sans-serif;font-size:.82rem;font-weight:800;border:none;border-radius:2px;cursor:pointer;white-space:nowrap}
+
+/* LEGEND */
+.chart-legend{display:flex;gap:1.25rem;flex-wrap:wrap;padding:.5rem 0 .25rem}
+.legend-item{display:flex;align-items:center;gap:.4rem;font-size:.82rem}
+.legend-swatch{width:18px;height:3px;border-radius:2px;display:inline-block}
+</style>
+</head>
+<body>
+
+<!-- STICKY BANNER -->
+<div class="sticky-banner" id="sticky-banner">
+  <div class="sticky-inner">
+    <span>Enter your monthly income above to unlock your mortgage eligibility &uarr;</span>
+    <button class="sticky-cta" onclick="scrollToIncome()">Add Income</button>
+  </div>
+</div>
+
+<!-- TOPBAR -->
+<div class="topbar">
+  <div class="topbar-inner">
+    <a class="topbar-brand" href="https://militarywealthcoach.com">Military Wealth Coach</a>
+    <a class="topbar-back" href="https://militarywealthcoach.com/apps"><span aria-hidden="true">&larr;</span> All Tools</a>
+  </div>
+</div>
+
+<!-- HEADER -->
+<header>
+  <div class="inner">
+    <div class="eyebrow">Debt &amp; Finance</div>
+    <h1 class="site-title">Debt Trap Escape Planner<br>+ DTI Mortgage Qualifier</h1>
+    <p class="site-sub">See exactly what your debt is costing you in home-buying power &mdash; and build a payoff plan that unlocks your future.</p>
+  </div>
+</header>
+
+<main>
+
+  <!-- ===== STEP 1: INPUTS ===== -->
+  <div class="phase-hd">
+    <span class="phase-num">Step 1</span>
+    <h2>Your Financial Picture</h2>
+  </div>
+
+  <!-- INCOME -->
+  <div class="card">
+    <div class="sec">Monthly Income</div>
+    <div class="grid-3">
+      <div class="field">
+        <label for="income-base">Base Pay / Wages</label>
+        <div class="prefix-wrap">
+          <span class="prefix">$</span>
+          <input type="number" id="income-base" min="0" step="100" placeholder="2,400" oninput="onIncomeChange()">
+        </div>
+      </div>
+      <div class="field">
+        <label for="income-partner">BAH + BAS (or Partner Income)</label>
+        <div class="prefix-wrap">
+          <span class="prefix">$</span>
+          <input type="number" id="income-partner" min="0" step="100" placeholder="1,600" oninput="onIncomeChange()">
+        </div>
+      </div>
+      <div class="field">
+        <label for="income-other">Other Regular Income</label>
+        <div class="prefix-wrap">
+          <span class="prefix">$</span>
+          <input type="number" id="income-other" min="0" step="100" placeholder="0" oninput="onIncomeChange()">
+        </div>
+      </div>
+    </div>
+    <div class="income-sum">
+      <span class="income-sum-label">Total Monthly Gross Income</span>
+      <span class="income-sum-val" id="income-sum">$0</span>
+    </div>
+  </div>
+
+  <!-- CAR CARD -->
+  <div class="card car-card">
+    <div class="sec">Your Vehicle &mdash; The Hidden Cost</div>
+    <div class="insight" style="margin-bottom:1rem">
+      <strong>The car payment that blocks a house.</strong> Every $100/month in car payments reduces your mortgage eligibility by roughly $20,000. Enter your car loan below and the cash alternative you could have chosen &mdash; you’ll see the exact cost in your results.
+    </div>
+    <div class="car-grid">
+      <div>
+        <div style="font-family:'JetBrains Mono',monospace;font-size:.66rem;letter-spacing:.18em;text-transform:uppercase;color:var(--muted);margin-bottom:.85rem">Your Current Car Loan</div>
+        <div style="display:flex;flex-direction:column;gap:.65rem">
+          <div class="field">
+            <label for="car-name">Vehicle / Loan Label</label>
+            <input type="text" id="car-name" placeholder='e.g. "Ford F-150 Loan"' value="Car Loan">
+          </div>
+          <div class="grid-2">
+            <div class="field">
+              <label for="car-bal">Outstanding Balance</label>
+              <div class="prefix-wrap">
+                <span class="prefix">$</span>
+                <input type="number" id="car-bal" min="0" step="100" placeholder="28,000" oninput="updateStickyBanner()">
+              </div>
+            </div>
+            <div class="field">
+              <label for="car-pmt">Monthly Payment</label>
+              <div class="prefix-wrap">
+                <span class="prefix">$</span>
+                <input type="number" id="car-pmt" min="0" step="10" placeholder="580" oninput="updateStickyBanner()">
+              </div>
+            </div>
+          </div>
+          <div class="field">
+            <label for="car-rate">Interest Rate (APR %)</label>
+            <div class="suffix-wrap">
+              <input type="number" id="car-rate" min="0" max="36" step="0.1" value="7.5">
+              <span class="suffix">%</span>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="car-vs">vs</div>
+      <div class="car-alt-side">
+        <div style="font-family:'JetBrains Mono',monospace;font-size:.66rem;letter-spacing:.18em;text-transform:uppercase;color:var(--muted);margin-bottom:.85rem">The Alternative</div>
+        <div class="field">
+          <label for="car-cash-alt">Cash Price You Could Have Paid</label>
+          <div class="prefix-wrap">
+            <span class="prefix">$</span>
+            <input type="number" id="car-cash-alt" min="0" step="500" value="8000">
+          </div>
+        </div>
+        <p style="font-size:.82rem;color:var(--muted);margin-top:.65rem;line-height:1.5">This is the reliable used car you could have bought outright. Adjust to match your situation. You’ll see how this single choice affected your mortgage eligibility.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- OTHER DEBTS -->
+  <div class="card">
+    <div class="sec">Other Debts</div>
+    <div style="font-size:.88rem;color:var(--muted);margin-bottom:1rem">Add credit cards, student loans, personal loans, and any existing mortgage. Don’t include the car loan above.</div>
+    <div id="debt-list"></div>
+    <button class="btn-add" onclick="addDebt()">+ Add Debt</button>
+  </div>
+
+  <!-- PAYMENT APPROACH -->
+  <div class="card pay-approach-section">
+    <div class="sec">Your Payment Approach</div>
+    <div class="field" style="margin-bottom:.75rem">
+      <label>Right now, I am&hellip;</label>
+      <div class="radio-group" id="pay-approach-group">
+        <label><input type="radio" name="pay-approach" value="min" onchange="onPayApproachChange()"> Paying the minimums on everything</label>
+        <label><input type="radio" name="pay-approach" value="extra" checked onchange="onPayApproachChange()"> Paying extra each month</label>
+        <label><input type="radio" name="pay-approach" value="full" onchange="onPayApproachChange()"> Paying revolving cards in full</label>
+      </div>
+    </div>
+    <div id="extra-field-wrap">
+      <div class="field">
+        <label for="extra">Extra Monthly Payment (above all minimums)</label>
+        <div class="prefix-wrap">
+          <span class="prefix">$</span>
+          <input type="number" id="extra" min="0" step="25" placeholder="200" value="0" oninput="updateStickyBanner()">
+        </div>
+        <span style="font-size:.78rem;color:var(--muted)">This is applied on top of all minimum payments. Even $50/month accelerates payoff significantly.</span>
+      </div>
+    </div>
+    <div id="pay-approach-nudge" style="display:none"></div>
+  </div>
+
+  <button class="btn-calc" onclick="calculatePayoff()">Calculate My Payoff Plan &rarr;</button>
+
+  <!-- ===== PHASE 2A: PAYOFF RESULTS ===== -->
+  <div id="phase-2a" style="display:none">
+
+    <div class="phase-hd" style="margin-top:2rem">
+      <span class="phase-num">Step 2</span>
+      <h2>Your Debt &amp; Payoff Picture</h2>
+    </div>
+
+    <!-- DTI OVERVIEW -->
+    <div class="card" id="dti-overview-card">
+      <div class="sec">Current Debt-to-Income Ratio</div>
+      <div class="dti-gauge-wrap">
+        <div style="position:relative;margin-bottom:28px">
+          <div class="dti-gauge-bar">
+            <div class="dti-fill" id="dti-fill" style="width:0%;background:var(--green)"></div>
+          </div>
+          <div class="dti-gauge-markers">
+            <div class="dti-marker-tick" style="left:28%">28%</div>
+            <div class="dti-marker-tick" style="left:41%">41%</div>
+            <div class="dti-marker-tick" style="left:50%">50%</div>
+          </div>
+        </div>
+        <div class="dti-thresholds-row" id="dti-thresholds-row"></div>
+      </div>
+    </div>
+
+    <!-- FEAR STATE -->
+    <div class="card fear-card" id="fear-state" style="display:none">
+      <div class="fear-icon">&#x26A0;</div>
+      <div class="fear-title">Your Debt Load Is Already Too High to Qualify for a Mortgage</div>
+      <p class="fear-body">Your current minimum debt payments consume <strong id="fear-dti-pct"></strong> of your gross income &mdash; above the 43% threshold where most lenders will not approve additional financing. Taking on more leverage at this debt level is considered extremely high risk.<br><br>The payoff plan below is exactly how you get out. Every dollar of debt you eliminate frees up future home-buying power.</p>
+    </div>
+
+    <!-- NORMAL RESULTS -->
+    <div id="normal-results">
+
+      <!-- CHART -->
+      <div class="card" style="margin-top:.5rem">
+        <div class="sec">Balance Over Time</div>
+        <div class="chart-wrap" id="chart-wrap">
+          <canvas id="payoff-chart"></canvas>
+        </div>
+        <div class="chart-slider-row">
+          <span id="slider-lo">Mo 0</span>
+          <input type="range" id="chart-slider" min="0" max="360" step="1" value="0" oninput="sliderMoved(this.value)">
+          <span id="slider-hi">Mo 360</span>
+        </div>
+        <div class="cpanel" id="cpanel">
+          <div style="font-size:.83rem;color:var(--muted)">Hover or drag the slider to explore your payoff timeline.</div>
+        </div>
+        <div class="chart-legend">
+          <span class="legend-item"><span class="legend-swatch" style="background:var(--slate)"></span><span style="color:var(--slate)">Debt Snowball</span></span>
+          <span class="legend-item"><span class="legend-swatch" style="background:var(--green)"></span><span style="color:var(--green)">Debt Waterfall</span></span>
+        </div>
+      </div>
+
+      <!-- STRATEGY CARDS -->
+      <div class="strategy-cards">
+        <div class="card strategy-card snow-card">
+          <div class="strat-label snow">Debt Snowball</div>
+          <div class="strat-big" id="snow-interest">$&mdash;</div>
+          <div class="strat-sub">Total interest paid</div>
+          <div class="strat-rows">
+            <div class="strat-row"><span>Debt-free in</span><span id="snow-months">&mdash;</span></div>
+            <div class="strat-row"><span>Payoff date</span><span id="snow-date">&mdash;</span></div>
+            <div class="strat-row"><span>First target</span><span id="snow-first">&mdash;</span></div>
+            <div class="strat-row"><span>vs. minimums only</span><span id="snow-vs-min" style="color:var(--green)">&mdash;</span></div>
+          </div>
+        </div>
+        <div class="card strategy-card fall-card">
+          <div class="strat-label fall">Debt Waterfall <span class="rec-badge">Recommended</span></div>
+          <div class="strat-big" id="fall-interest">$&mdash;</div>
+          <div class="strat-sub">Total interest paid</div>
+          <div class="strat-rows">
+            <div class="strat-row"><span>Debt-free in</span><span id="fall-months">&mdash;</span></div>
+            <div class="strat-row"><span>Payoff date</span><span id="fall-date">&mdash;</span></div>
+            <div class="strat-row"><span>First target</span><span id="fall-first">&mdash;</span></div>
+            <div class="strat-row"><span>vs. minimums only</span><span id="fall-vs-min" style="color:var(--green)">&mdash;</span></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- STRATEGY CHOICE -->
+      <div class="card strategy-choice">
+        <div class="sec">Choose Your Strategy</div>
+        <p class="strategy-choice-intro" id="strategy-choice-intro">Pay off fastest or save the most interest &mdash; select the path that fits your mindset.</p>
+        <div class="radio-group">
+          <label><input type="radio" name="chosen-strat" value="snowball" onchange="selectStrategy('snowball')"> Debt Snowball &mdash; <span style="font-size:.82rem;color:var(--muted)">smallest balance first</span></label>
+          <label class="recommended"><input type="radio" name="chosen-strat" value="waterfall" checked onchange="selectStrategy('waterfall')"> Debt Waterfall &mdash; <span style="font-size:.82rem;color:var(--green);font-weight:700">&#x2605; recommended</span> <span style="font-size:.82rem;color:var(--muted)">highest rate first</span></label>
+        </div>
+        <div id="strategy-instructions"></div>
+      </div>
+
+      <!-- MORTGAGE GATE -->
+      <div class="phase-gate" id="mortgage-gate" style="display:none">
+        <div class="phase-gate-eyebrow">Next Step</div>
+        <div class="phase-gate-title">See What Your Debt Payoff Means for Your Home</div>
+        <div class="phase-gate-sub">Enter your mortgage preferences below and calculate how much home you qualify for today &mdash; and how that changes as each debt is eliminated.</div>
+      </div>
+
+      <!-- MORTGAGE SETTINGS (appears after payoff calc) -->
+      <div class="card mortgage-gate" id="mortgage-settings-card" style="display:none">
+        <div class="sec">Mortgage Settings</div>
+        <div class="grid-2" style="gap:1rem;margin-bottom:1rem">
+          <div class="field">
+            <label for="mort-rate">Current Mortgage Rate</label>
+            <div class="suffix-wrap">
+              <input type="number" id="mort-rate" min="1" max="15" step="0.125" value="6.5">
+              <span class="suffix">%</span>
+            </div>
+          </div>
+          <div class="field">
+            <label for="tax-ins">Est. Property Tax + Insurance / mo</label>
+            <div class="prefix-wrap">
+              <span class="prefix">$</span>
+              <input type="number" id="tax-ins" min="0" step="25" value="300">
+            </div>
+          </div>
+        </div>
+        <div class="field" style="margin-bottom:.85rem">
+          <label>Loan Type</label>
+          <div class="radio-group">
+            <label><input type="radio" name="loan-type" value="va" checked onchange="onLoanTypeChange()"> VA (0% down)</label>
+            <label><input type="radio" name="loan-type" value="fha" onchange="onLoanTypeChange()"> FHA (3.5%)</label>
+            <label><input type="radio" name="loan-type" value="conv" onchange="onLoanTypeChange()"> Conventional (20%)</label>
+            <label><input type="radio" name="loan-type" value="other" onchange="onLoanTypeChange()"> Other</label>
+          </div>
+        </div>
+        <div id="down-pct-row" style="display:none" class="field" style="margin-bottom:.85rem">
+          <label for="down-pct">Down Payment %</label>
+          <div class="suffix-wrap">
+            <input type="number" id="down-pct" min="0" max="100" step="1" value="10">
+            <span class="suffix">%</span>
+          </div>
+        </div>
+        <div class="field">
+          <label>Conforming Loan Limit Area</label>
+          <div class="radio-group">
+            <label><input type="radio" name="conf-limit" value="standard" checked> Standard ($766,550)</label>
+            <label><input type="radio" name="conf-limit" value="highcost"> High-Cost ($1,149,825)</label>
+          </div>
+        </div>
+        <p class="footnote" style="margin-top:.85rem">High-cost areas include coastal metros, Hawaii, and Alaska. Check FHFA.gov to confirm your county’s limit.</p>
+      </div>
+
+      <button class="btn-calc secondary" id="btn-calc-mortgage" style="display:none" onclick="calculateMortgage()">Calculate My Mortgage Eligibility &rarr;</button>
+
+    </div><!-- /normal-results -->
+
+  </div><!-- /phase-2a -->
+
+  <!-- ===== PHASE 2B: MORTGAGE RESULTS ===== -->
+  <div id="phase-2b" style="display:none">
+
+    <div class="phase-hd">
+      <span class="phase-num">Step 3</span>
+      <h2>Your Mortgage Picture</h2>
+    </div>
+
+    <!-- MORTGAGE HERO -->
+    <div id="mortgage-lock" style="display:none">
+      <div class="insight">Enter your monthly income in Step 1 to unlock your mortgage eligibility.</div>
+    </div>
+    <div id="mortgage-content">
+      <div class="hero-card" id="mortgage-hero">
+        <div class="hero-label" id="hero-lbl">You Currently Qualify For</div>
+        <div class="hero-number" id="hero-amt">$&mdash;</div>
+        <div class="hero-sub" id="hero-sub">Based on VA 41% DTI guideline &bull; 30-year fixed</div>
+        <div class="hero-row">
+          <div class="hero-stat">
+            <div class="hero-stat-val" id="hero-fe">$&mdash;</div>
+            <div class="hero-stat-lbl">At 28% Front-End</div>
+          </div>
+          <div class="hero-stat">
+            <div class="hero-stat-val" id="hero-be41">$&mdash;</div>
+            <div class="hero-stat-lbl">At 41% VA Guideline</div>
+          </div>
+          <div class="hero-stat">
+            <div class="hero-stat-val" id="hero-be50">$&mdash;</div>
+            <div class="hero-stat-lbl">At 50% Fannie Cap</div>
+          </div>
+        </div>
+      </div>
+      <div id="fe-binding-note" style="display:none" class="insight" style="margin-bottom:.75rem"></div>
+      <p class="footnote" style="margin-bottom:1rem">Home price estimates assume a 30-year fixed mortgage. Actual approval depends on loan type, lender underwriting, credit profile, and compensating factors. VA borrowers may qualify above 41% DTI with strong residual income. Fannie Mae’s 50% hard cap applies to agency-backed conventional loans. This tool is for educational planning only &mdash; not a mortgage commitment.</p>
+
+      <!-- MILESTONES -->
+      <div class="sec" style="margin-top:1.25rem">Payoff Milestones &mdash; Click to See Your Mortgage Unlock</div>
+      <div class="milestones-scroll" id="milestones-scroll"></div>
+      <div id="ms-detail-panel"></div>
+
+      <!-- COUNTERFACTUAL -->
+      <div class="sec" style="margin-top:1.5rem">What If?</div>
+      <div class="ctf-cards" id="ctf-cards"></div>
+      <div class="insight" style="margin-top:1rem" id="ctf-insight"></div>
+    </div>
+
+    <!-- EMAIL CAPTURE -->
+    <div class="email-section">
+      <div class="email-eyebrow">Free Bonus Resource</div>
+      <h2 class="email-title">Get the <em>Military Debt Escape Worksheet</em></h2>
+      <p class="email-body">A printable tracker to follow your payoff plan month by month &mdash; and watch your mortgage eligibility grow as each debt falls. Pairs directly with this tool and the debt chapter in the book.</p>
+      <div class="email-offer">&#x1F4CB; Instant download &bull; Printable PDF &bull; No spam</div>
+      <form class="email-form" onsubmit="submitEmail(event)">
+        <input type="email" placeholder="your.email@example.com" required>
+        <button type="submit" class="email-btn">Send Me the Worksheet</button>
+      </form>
+    </div>
+
+  </div><!-- /phase-2b -->
+
+</main>
+
+<footer>
+  &copy; 2026 Military Wealth Coach &bull; <a href="https://militarywealthcoach.com">militarywealthcoach.com</a><br>
+  This tool is for educational purposes only and does not constitute financial, legal, or mortgage advice. Consult a licensed financial advisor and mortgage professional before making borrowing decisions.
+</footer>
+
+<script>
+'use strict';
+
+// ============ STATE ============
+const G = {
+  income: 0,
+  extra: 0,
+  car: { name:'Car Loan', balance:0, rate:7.5, minPayment:0, cashAlt:8000 },
+  debts: [],
+  mortgageRate: 6.5,
+  loanType: 'va',
+  downPct: 0,
+  taxIns: 300,
+  conformingLimit: 766550
+};
+
+let nextId = 1;
+let snowResult = null, fallResult = null, minResult = null;
+let payoffChart = null;
+let milestones = [];
+let activeMilestone = 0;
+
+// ============ UTILS ============
+const fmt$ = v => '$' + Math.max(0, Math.round(v)).toLocaleString('en-US');
+const fmtK = v => {
+  const n = Math.max(0, Math.round(v));
+  if (n >= 1000000) return '$' + (n/1000000).toFixed(2) + 'M';
+  if (n >= 1000)    return '$' + (n/1000).toFixed(0) + 'K';
+  return fmt$(n);
+};
+const fmtPct  = v => (v * 100).toFixed(1) + '%';
+const monthLabel = m => {
+  const d = new Date();
+  d.setMonth(d.getMonth() + m);
+  return d.toLocaleDateString('en-US', {month:'short', year:'numeric'});
+};
+const monthsLabel = m => m === 1 ? '1 month' : m + ' months';
+
+function effectiveMin(d) {
+  if (d.type === 'student' && d.deferred) return d.balance * 0.05 / 12;
+  return d.minPayment || 0;
+}
+
+function readState() {
+  const base    = parseFloat(document.getElementById('income-base').value)    || 0;
+  const partner = parseFloat(document.getElementById('income-partner').value) || 0;
+  const other   = parseFloat(document.getElementById('income-other').value)   || 0;
+  G.income = base + partner + other;
+
+  const approach = document.querySelector('input[name="pay-approach"]:checked')?.value;
+  G.extra = (approach === 'min') ? 0 : (parseFloat(document.getElementById('extra').value) || 0);
+
+  G.car.name       = document.getElementById('car-name').value || 'Car Loan';
+  G.car.balance    = parseFloat(document.getElementById('car-bal').value)  || 0;
+  G.car.minPayment = parseFloat(document.getElementById('car-pmt').value)  || 0;
+  G.car.rate       = parseFloat(document.getElementById('car-rate').value) || 0;
+  G.car.cashAlt    = parseFloat(document.getElementById('car-cash-alt').value) || 8000;
+
+  G.debts = [];
+  document.querySelectorAll('.debt-row').forEach(row => {
+    const id   = parseInt(row.dataset.id);
+    const name = row.querySelector('.d-name').value || 'Debt';
+    const bal  = parseFloat(row.querySelector('.d-bal').value)  || 0;
+    const rate = parseFloat(row.querySelector('.d-rate').value) || 0;
+    const pmt  = parseFloat(row.querySelector('.d-pmt').value)  || 0;
+    const type = row.querySelector('.d-type').value;
+    const def  = row.querySelector('.d-deferred')?.checked || false;
+    if (bal > 0 || pmt > 0) G.debts.push({id, name, balance:bal, rate, minPayment:pmt, type, deferred:def});
+  });
+}
+
+function readMortgageState() {
+  G.mortgageRate     = parseFloat(document.getElementById('mort-rate').value) || 6.5;
+  G.taxIns           = parseFloat(document.getElementById('tax-ins').value)   || 300;
+  G.loanType         = document.querySelector('input[name="loan-type"]:checked')?.value || 'va';
+  const confVal      = document.querySelector('input[name="conf-limit"]:checked')?.value;
+  G.conformingLimit  = confVal === 'highcost' ? 1149825 : 766550;
+
+  if (G.loanType === 'va')        G.downPct = 0;
+  else if (G.loanType === 'fha')  G.downPct = 0.035;
+  else if (G.loanType === 'conv') G.downPct = 0.20;
+  else G.downPct = (parseFloat(document.getElementById('down-pct').value) || 10) / 100;
+}
+
+function getAllDebts() {
+  const all = [];
+  if (G.car.balance > 0 || G.car.minPayment > 0) {
+    all.push({id:'car', name:G.car.name, balance:G.car.balance,
+              rate:G.car.rate, minPayment:G.car.minPayment, type:'other', deferred:false});
+  }
+  G.debts.forEach(d => all.push(d));
+  return all;
+}
+
+function totalMinPayments(debts) {
+  return debts.reduce((s,d) => s + effectiveMin(d), 0);
+}
+
+// ============ SIMULATION ============
+function simulate(debtsInput, extraPayment, strategy) {
+  if (!debtsInput || !debtsInput.length) return {monthlyData:[], totalInterest:0, monthsToPayoff:0, milestones:[]};
+
+  let debts = debtsInput
+    .filter(d => d.balance > 0)
+    .map(d => ({
+      name:        d.name,
+      balance:     d.balance,
+      monthlyRate: (d.rate / 100) / 12,
+      minPmt:      effectiveMin(d),
+      paidOff:     false,
+      paidOffMonth: 0
+    }));
+
+  if (!debts.length) return {monthlyData:[], totalInterest:0, monthsToPayoff:0, milestones:[]};
+
+  // Sort priority: snowball = smallest balance first; waterfall = highest rate first
+  // Within ties, secondary sort ensures deterministic order
+  if (strategy === 'snowball') {
+    debts.sort((a,b) => a.balance - b.balance || b.monthlyRate - a.monthlyRate);
+  } else {
+    debts.sort((a,b) => b.monthlyRate - a.monthlyRate || a.balance - b.balance);
+  }
+
+  let poolExtra     = extraPayment;
+  let totalInterest = 0;
+  const monthlyData = [];
+  const evts        = [];
+  const MAX         = 600;
+
+  for (let m = 1; m <= MAX; m++) {
+    if (debts.every(d => d.balance <= 0)) break;
+
+    // 1. Accrue interest on all active balances
+    for (const d of debts) {
+      if (d.balance > 0) {
+        const interest = d.balance * d.monthlyRate;
+        totalInterest += interest;
+        d.balance += interest;
+      }
+    }
+
+    // 2. Apply minimums; capture surplus when balance < minimum
+    let surplus = 0;
+    for (const d of debts) {
+      if (d.balance > 0) {
+        const pay = Math.min(d.minPmt, d.balance);
+        d.balance = Math.max(0, d.balance - pay);
+        if (pay < d.minPmt) surplus += d.minPmt - pay;
+      }
+    }
+
+    // 3. Apply (poolExtra + surplus) to top-priority target
+    let remaining = poolExtra + surplus;
+    for (const d of debts) {
+      if (d.balance > 0 && remaining > 0) {
+        const pay = Math.min(remaining, d.balance);
+        d.balance = Math.max(0, d.balance - pay);
+        remaining -= pay;
+        break; // only one debt gets the extra
+      }
+    }
+
+    // 4. Detect newly paid-off debts and roll their minimums into the pool
+    for (const d of debts) {
+      if (d.balance < 0.01 && !d.paidOff) {
+        d.balance = 0;
+        d.paidOff = true;
+        d.paidOffMonth = m;
+        poolExtra += d.minPmt; // roll freed minimum permanently
+        evts.push({month:m, debtName:d.name, freedPayment:d.minPmt});
+      }
+    }
+
+    const totalBal = debts.reduce((s,d) => s + d.balance, 0);
+    monthlyData.push({month:m, balance:Math.max(0, totalBal)});
+    if (totalBal < 0.01) break;
+  }
+
+  return {monthlyData, totalInterest, monthsToPayoff:monthlyData.length, milestones:evts};
+}
+
+// ============ MORTGAGE CALC ============
+function calcMortgage(debtPmts) {
+  if (!G.income || G.income <= 0) return null;
+  const r  = (G.mortgageRate / 100) / 12;
+  const n  = 360;
+  const lf = r > 0 ? (1 - Math.pow(1+r,-n)) / r : n;
+
+  const maxHousingFE  = 0.28 * G.income;
+  const maxPI_FE      = Math.max(0, maxHousingFE - G.taxIns);
+
+  const headroom41    = Math.max(0, 0.41 * G.income - debtPmts);
+  const maxPI_41raw   = Math.max(0, headroom41 - G.taxIns);
+  const maxPI_41      = Math.min(maxPI_41raw, maxPI_FE);
+
+  const headroom50    = Math.max(0, 0.50 * G.income - debtPmts);
+  const maxPI_50raw   = Math.max(0, headroom50 - G.taxIns);
+  const maxPI_50      = Math.min(maxPI_50raw, maxPI_FE);
+
+  const rawLoan41 = Math.min(maxPI_41 * lf, G.conformingLimit);
+  const rawLoan50 = Math.min(maxPI_50 * lf, G.conformingLimit);
+  const rawLoanFE = Math.min(maxPI_FE * lf, G.conformingLimit);
+
+  function loanToPrice(loan) {
+    if (loan <= 0) return 0;
+    if (G.loanType === 'va')   return loan / 1.0215;
+    if (G.loanType === 'fha')  return loan / (1 - 0.035);
+    return loan / (1 - G.downPct);
+  }
+
+  // Is front-end the binding constraint? True when FE < BE41 ceiling
+  const feIsBound = maxPI_FE <= maxPI_41raw;
+
+  return {
+    debtPmts,
+    backDTI:    debtPmts / G.income,
+    feIsBound,
+    fePrice:    loanToPrice(rawLoanFE),
+    price41:    loanToPrice(rawLoan41),
+    price50:    loanToPrice(rawLoan50),
+    maxHousingFE,
+    maxPI_FE, maxPI_41, maxPI_50
+  };
+}
+
+// Rough payoff estimate for one debt given total monthly payment to it
+function estPayoffMonths(debt, totalPmt) {
+  if (totalPmt <= 0) return null;
+  const r = (debt.rate / 100) / 12;
+  if (r === 0) return Math.ceil(debt.balance / totalPmt);
+  const numer = r * debt.balance;
+  if (numer >= totalPmt) return null; // payment can't cover interest
+  const n = -Math.log(1 - numer / totalPmt) / Math.log(1 + r);
+  return isFinite(n) && n > 0 ? Math.ceil(n) : null;
+}
+
+// ============ BUILD MILESTONES ============
+function buildMilestones(simEvts, allDebts) {
+  const ms = [];
+  let remaining = allDebts.map(d => ({...d}));
+
+  ms.push({
+    idx:0, label:'Today', month:0,
+    debtName:null, freed:0,
+    debtPmts: totalMinPayments(remaining),
+    mortgage: calcMortgage(totalMinPayments(remaining)),
+    isFinal: false
+  });
+
+  for (const evt of simEvts) {
+    const paid = remaining.find(d => d.name === evt.debtName);
+    if (!paid) continue;
+    remaining = remaining.filter(d => d.name !== evt.debtName);
+    const dPmts = totalMinPayments(remaining);
+    ms.push({
+      idx: ms.length,
+      label: evt.debtName + ' paid off',
+      month: evt.month,
+      debtName: evt.debtName,
+      freed: evt.freedPayment,
+      debtPmts: dPmts,
+      mortgage: calcMortgage(dPmts),
+      isFinal: remaining.length === 0
+    });
+  }
+
+  // Final: fully debt-free (only add if not already captured)
+  const lastMs = ms[ms.length - 1];
+  if (!lastMs.isFinal) {
+    ms.push({
+      idx: ms.length,
+      label: 'Debt Free',
+      month: simEvts.length ? simEvts[simEvts.length-1].month : 0,
+      debtName: null, freed: totalMinPayments(allDebts),
+      debtPmts: 0,
+      mortgage: calcMortgage(0),
+      isFinal: true
+    });
+  }
+
+  return ms;
+}
+
+// ============ STRATEGY INSTRUCTIONS ============
+function getStrategyInstructions(strategy) {
+  if (!snowResult || !fallResult) return '';
+  const allDebts = getAllDebts().filter(d => d.balance > 0);
+  if (!allDebts.length) return '';
+
+  if (G.extra <= 0) {
+    return `<div class="strategy-instr"><p class="instr-zero-extra">Set an extra monthly payment above to see your personalized action plan. Even $25/month more changes your payoff date &mdash; try it.</p></div>`;
+  }
+
+  let sorted;
+  if (strategy === 'snowball') {
+    sorted = [...allDebts].sort((a,b) => a.balance - b.balance || b.rate - a.rate);
+  } else {
+    sorted = [...allDebts].sort((a,b) => b.rate - a.rate || a.balance - b.balance);
+  }
+
+  const first  = sorted[0];
+  const second = sorted[1];
+  const firstMin    = effectiveMin(first);
+  const totalToFirst = firstMin + G.extra;
+  const payoffMo    = estPayoffMonths(first, totalToFirst);
+  const payoffStr   = payoffMo ? '~' + payoffMo + ' months' : 'varies';
+
+  const stratName  = strategy === 'snowball' ? 'Debt Snowball' : 'Debt Waterfall';
+  const targetDesc = strategy === 'snowball'
+    ? `smallest balance — ${fmt$(first.balance)}`
+    : `highest interest rate — ${first.rate}% APR`;
+
+  let html = `<div class="strategy-instr">
+    <div class="instr-heading">${stratName} Action Plan</div>
+    <div class="instr-step">
+      <span class="instr-num">1</span>
+      <span class="instr-step-text">Send your full extra <strong>${fmt$(G.extra)}/month</strong> to <strong>${first.name}</strong> (${targetDesc}).
+        Pay the ${fmt$(firstMin)}/month minimum plus ${fmt$(G.extra)} extra = <strong>${fmt$(totalToFirst)}/month total</strong>.
+        Estimated payoff: <strong>${payoffStr}</strong>.</span>
+    </div>`;
+
+  if (second) {
+    html += `<div class="instr-step">
+      <span class="instr-num">2</span>
+      <span class="instr-step-text">Once <strong>${first.name}</strong> is paid off, roll the freed <strong>${fmt$(totalToFirst)}/month</strong> directly into <strong>${second.name}</strong>.
+        <em>Don’t spend the difference — every dollar freed rolls forward to the next debt.</em></span>
+    </div>`;
+  }
+
+  if (sorted.length > 2) {
+    html += `<div class="instr-step">
+      <span class="instr-num">3</span>
+      <span class="instr-step-text">Continue rolling freed payments through each remaining debt until you’re clear. Your monthly payment never decreases — the targets do.</span>
+    </div>`;
+  }
+
+  html += '</div>';
+  return html;
+}
+
+function selectStrategy(strategy) {
+  document.getElementById('strategy-instructions').innerHTML = getStrategyInstructions(strategy);
+}
+
+// ============ CHART ============
+const crosshairPlugin = {
+  id:'xhair',
+  afterDatasetsDraw(ch) {
+    const mo = ch._chMo;
+    if (mo == null) return;
+    const {ctx, scales:{x,y}, chartArea:ca} = ch;
+    const px = x.getPixelForValue(mo);
+
+    ctx.save();
+    ctx.strokeStyle = 'rgba(201,162,75,.75)';
+    ctx.lineWidth   = 1.5;
+    ctx.setLineDash([4,4]);
+    ctx.beginPath(); ctx.moveTo(px,ca.top); ctx.lineTo(px,ca.bottom); ctx.stroke();
+    ctx.setLineDash([]);
+
+    const colors = ['#4A6B86','#2F6B43'];
+    ch.data.datasets.forEach((ds,i) => {
+      if (!ds.data?.length) return;
+      const data = ds.data;
+      let lo = null, hi = null;
+      for (let j = 0; j < data.length; j++) {
+        if (data[j].x <= mo) lo = data[j];
+        if (data[j].x >= mo && hi === null) hi = data[j];
+      }
+      if (!lo) lo = data[0];
+      if (!hi) hi = data[data.length-1];
+      let yv;
+      if (!lo || !hi || lo.x === hi.x) yv = lo?.y ?? 0;
+      else yv = lo.y + (mo-lo.x)/(hi.x-lo.x)*(hi.y-lo.y);
+      const py = y.getPixelForValue(yv);
+
+      ctx.beginPath(); ctx.arc(px,py,6,0,Math.PI*2);
+      ctx.fillStyle='#fff'; ctx.fill();
+      ctx.strokeStyle=colors[i]; ctx.lineWidth=2.5; ctx.stroke();
+    });
+    ctx.restore();
+  }
+};
+
+function buildChart(snowData, fallData, initialBal) {
+  const canvas = document.getElementById('payoff-chart');
+  if (payoffChart) { payoffChart.destroy(); payoffChart = null; }
+
+  const maxMo = Math.max(
+    snowData.length ? snowData[snowData.length-1].month : 0,
+    fallData.length ? fallData[fallData.length-1].month : 0,
+    1
+  );
+
+  const snowPts = [{x:0,y:initialBal}, ...snowData.map(p=>({x:p.month,y:p.balance}))];
+  const fallPts = [{x:0,y:initialBal}, ...fallData.map(p=>({x:p.month,y:p.balance}))];
+
+  const sl = document.getElementById('chart-slider');
+  sl.max = maxMo; sl.value = 0;
+  document.getElementById('slider-lo').textContent = 'Mo 0';
+  document.getElementById('slider-hi').textContent = 'Mo ' + maxMo;
+
+  payoffChart = new Chart(canvas, {
+    type:'line',
+    plugins:[crosshairPlugin],
+    data:{
+      datasets:[
+        {label:'Snowball', data:snowPts, borderColor:'#4A6B86', borderWidth:2,
+         pointRadius:0, tension:.3,
+         fill:{target:1, above:'rgba(74,107,134,.13)', below:'rgba(47,107,67,.08)'}},
+        {label:'Waterfall', data:fallPts, borderColor:'#2F6B43', borderWidth:2,
+         pointRadius:0, tension:.3, fill:false}
+      ]
+    },
+    options:{
+      responsive:true, animation:false,
+      interaction:{mode:'index',intersect:false},
+      plugins:{legend:{display:false},tooltip:{enabled:false}},
+      scales:{
+        x:{type:'linear', min:0, max:maxMo,
+           grid:{color:'rgba(26,26,26,.05)'},
+           ticks:{color:'#6C645B',font:{family:'Manrope',size:11},
+                  callback:v => v%12===0?'Yr '+(v/12|0):null, maxRotation:0}},
+        y:{grid:{color:'rgba(26,26,26,.05)'},
+           ticks:{color:'#6C645B',font:{family:'Manrope',size:11},callback:v=>fmtK(v)},
+           beginAtZero:true}
+      }
+    }
+  });
+
+  canvas.onmousemove = e => {
+    const mo = canvasToMonth(e);
+    payoffChart._chMo = mo;
+    payoffChart.update('none');
+    document.getElementById('chart-slider').value = mo;
+    renderCpanel(mo);
+  };
+  canvas.onmouseleave = () => {
+    payoffChart._chMo = undefined;
+    payoffChart.update('none');
+    document.getElementById('cpanel').innerHTML =
+      '<div style="font-size:.83rem;color:var(--muted)">Hover or drag the slider to explore your payoff timeline.</div>';
+  };
+  canvas.addEventListener('touchmove', e => {
+    e.preventDefault();
+    const mo = canvasToMonth(e);
+    payoffChart._chMo = mo;
+    payoffChart.update('none');
+    document.getElementById('chart-slider').value = mo;
+    renderCpanel(mo);
+  }, {passive:false});
+}
+
+function canvasToMonth(e) {
+  const rect = payoffChart.canvas.getBoundingClientRect();
+  const cx   = e.touches ? e.touches[0].clientX : e.clientX;
+  const mo   = payoffChart.scales.x.getValueForPixel(cx - rect.left);
+  const max  = parseInt(document.getElementById('chart-slider').max) || 360;
+  return Math.max(0, Math.min(max, mo));
+}
+
+function sliderMoved(val) {
+  if (!payoffChart) return;
+  const mo = parseFloat(val);
+  payoffChart._chMo = mo;
+  payoffChart.update('none');
+  renderCpanel(mo);
+}
+
+function getBalAt(data, mo) {
+  if (!data?.length) return 0;
+  const m  = Math.round(mo);
+  const pt = data.find(p => p.month === m);
+  if (pt)  return pt.balance;
+  if (m <= 0) return data[0].balance;
+  return 0;
+}
+
+function renderCpanel(mo) {
+  const m        = Math.round(mo);
+  const snowBal  = getBalAt(snowResult?.monthlyData, m);
+  const fallBal  = getBalAt(fallResult?.monthlyData, m);
+  const dateStr  = monthLabel(m);
+
+  const snowEvts = (snowResult?.milestones||[]).filter(e => e.month === m);
+  const fallEvts = (fallResult?.milestones||[]).filter(e => e.month === m);
+  const allEvtNames = [...new Set([...snowEvts.map(e=>e.debtName),...fallEvts.map(e=>e.debtName)])];
+
+  let html = `<div class="cp-row1">Month ${m} &middot; ${dateStr}</div><div class="cp-row2">`;
+  html += `<div><div class="cp-val-label">Snowball</div><div class="cp-val-num" style="color:#4A6B86">${fmt$(snowBal)}</div></div>`;
+  if (allEvtNames.length) {
+    html += `<div class="cp-event">&#x1F3AF; ${allEvtNames.join(' &amp; ')} paid off!</div>`;
+  }
+  html += `<div style="text-align:right"><div class="cp-val-label">Waterfall</div><div class="cp-val-num" style="color:var(--green)">${fmt$(fallBal)}</div></div>`;
+  html += '</div>';
+  document.getElementById('cpanel').innerHTML = html;
+}
+
+// ============ DTI OVERVIEW ============
+function renderDTIOverview(allDebts) {
+  const dPmts = totalMinPayments(allDebts);
+  const dti   = G.income > 0 ? dPmts / G.income : 0;
+  const pct   = Math.min(dti * 100, 100);
+
+  const fill = document.getElementById('dti-fill');
+  let col = 'var(--green)';
+  if (pct >= 41) col = 'var(--gold)';
+  if (pct >= 50) col = 'var(--red)';
+  fill.style.width    = pct + '%';
+  fill.style.background = col;
+
+  function cellClass(t) {
+    if (dti < t - 0.001) return 'ok';
+    if (dti < t + 0.05)  return 'warn';
+    return 'over';
+  }
+  function cellColor(t) {
+    const c = cellClass(t);
+    return c === 'ok' ? 'var(--green)' : c === 'warn' ? 'var(--gold)' : 'var(--red)';
+  }
+
+  const your = G.income > 0
+    ? 'Your debt-only DTI: ' + fmtPct(dti)
+    : 'Enter income to see your DTI';
+
+  document.getElementById('dti-thresholds-row').innerHTML = `
+    <div class="dti-thresh-cell ${cellClass(.28)}">
+      <div class="dti-thresh-pct" style="color:${cellColor(.28)}">${fmtPct(.28)}</div>
+      <div class="dti-thresh-name">Front-End Target</div>
+      <div class="dti-thresh-yours">${your}</div>
+    </div>
+    <div class="dti-thresh-cell ${cellClass(.41)}">
+      <div class="dti-thresh-pct" style="color:${cellColor(.41)}">${fmtPct(.41)}</div>
+      <div class="dti-thresh-name">VA Soft Cap</div>
+      <div class="dti-thresh-yours">VA back-end guideline</div>
+    </div>
+    <div class="dti-thresh-cell ${cellClass(.50)}">
+      <div class="dti-thresh-pct" style="color:${cellColor(.50)}">${fmtPct(.50)}</div>
+      <div class="dti-thresh-name">Fannie Mae Hard Cap</div>
+      <div class="dti-thresh-yours">Absolute agency ceiling</div>
+    </div>`;
+
+  return {dPmts, dti};
+}
+
+// ============ MILESTONES RENDER ============
+function renderMilestones() {
+  const scroll = document.getElementById('milestones-scroll');
+  scroll.innerHTML = '';
+  milestones.forEach((ms, i) => {
+    const chip = document.createElement('div');
+    chip.className = 'ms-chip' + (i===activeMilestone?' active':'') + (ms.isFinal?' final-chip':'');
+    chip.innerHTML = `
+      <div class="ms-chip-top">${ms.isFinal ? 'Goal' : 'Milestone'}</div>
+      <div class="ms-chip-name">${ms.label}</div>
+      <div class="ms-chip-date">${ms.month===0 ? 'Now' : monthLabel(ms.month)}</div>`;
+    chip.onclick = () => setActiveMilestone(i);
+    scroll.appendChild(chip);
+  });
+  setActiveMilestone(0);
+}
+
+function setActiveMilestone(idx) {
+  activeMilestone = idx;
+  document.querySelectorAll('.ms-chip').forEach((c,i) =>
+    c.classList.toggle('active', i===idx));
+
+  const ms   = milestones[idx];
+  const prev = idx > 0 ? milestones[idx-1] : null;
+  const panel = document.getElementById('ms-detail-panel');
+
+  if (!ms?.mortgage) {
+    panel.innerHTML = '';
+    return;
+  }
+
+  const mort  = ms.mortgage;
+  const pMort = prev?.mortgage;
+  const delta41 = pMort ? mort.price41 - pMort.price41 : 0;
+
+  // Front-end binding note
+  const feNote = mort.feIsBound
+    ? `<div class="ms-fe-note">Your income (${fmt$(G.income)}/month) makes the 28% front-end ratio the binding limit here &mdash; even eliminating more debt won’t increase this number until your income grows.</div>`
+    : '';
+
+  const dtiDisplay = G.income > 0
+    ? fmtPct(ms.debtPmts / G.income)
+    : '—';
+
+  panel.innerHTML = `
+    <div class="ms-detail ${ms.isFinal?'final':''}">
+      <div style="font-family:'JetBrains Mono',monospace;font-size:.68rem;letter-spacing:.14em;text-transform:uppercase;color:var(--${ms.isFinal?'green':'mid'});font-weight:700;margin-bottom:.25rem">${ms.label}</div>
+      <div class="ms-detail-grid">
+        <div class="ms-stat">
+          <div class="ms-stat-val">${dtiDisplay}</div>
+          <div class="ms-stat-lbl">Debt-Only DTI</div>
+        </div>
+        <div class="ms-stat">
+          <div class="ms-stat-val">${fmt$(ms.freed)}/mo</div>
+          <div class="ms-stat-lbl">Cash Freed This Milestone</div>
+        </div>
+        <div class="ms-stat">
+          <div class="ms-stat-val green">${fmt$(mort.price41)}</div>
+          <div class="ms-stat-lbl">Home Price at 41% DTI</div>
+        </div>
+      </div>
+      ${delta41 > 100 ? `<div class="ms-unlock">&#x1F3E0; This milestone unlocks <strong>${fmt$(delta41)} more</strong> in home-buying power.</div>` : ''}
+      ${feNote}
+    </div>`;
+
+  // Update hero
+  updateHero(ms);
+}
+
+function updateHero(ms) {
+  if (!ms?.mortgage || G.income <= 0) return;
+  const mort = ms.mortgage;
+  const hasExistingMort = G.debts.some(d => d.type === 'mortgage');
+
+  document.getElementById('hero-lbl').textContent =
+    hasExistingMort ? 'Additional Mortgage You Qualify For' : 'Home You Currently Qualify For';
+  document.getElementById('hero-amt').textContent  = fmt$(mort.price41);
+  document.getElementById('hero-fe').textContent   = fmt$(mort.fePrice);
+  document.getElementById('hero-be41').textContent = fmt$(mort.price41);
+  document.getElementById('hero-be50').textContent = fmt$(mort.price50);
+
+  const typeLabel = G.loanType==='va'   ? 'VA · 2.15% funding fee financed' :
+                    G.loanType==='fha'  ? 'FHA · 3.5% down' :
+                    G.loanType==='conv' ? 'Conventional · 20% down' :
+                    'Custom down payment';
+  document.getElementById('hero-sub').textContent =
+    typeLabel + ' · VA 41% DTI guideline · 30-year fixed';
+
+  // Front-end binding note below hero
+  const feNoteEl = document.getElementById('fe-binding-note');
+  if (mort.feIsBound) {
+    feNoteEl.style.display = '';
+    feNoteEl.innerHTML = `<strong>Why all three scenarios show the same home price:</strong> Your income (${fmt$(G.income)}/month) means the 28% front-end ratio is the binding constraint &mdash; not your debt level. Your max monthly housing budget is ${fmt$(mort.maxHousingFE)}/month regardless of how much debt you carry. Eliminating debt increases your DTI headroom but doesn’t change this number. Growing your income is the lever.`;
+  } else {
+    feNoteEl.style.display = 'none';
+  }
+}
+
+// ============ COUNTERFACTUALS ============
+function renderCounterfactuals(allDebts) {
+  if (G.income <= 0) {
+    document.getElementById('ctf-cards').innerHTML = '<p style="color:var(--muted);font-size:.88rem">Enter income above to see counterfactual scenarios.</p>';
+    document.getElementById('ctf-insight').innerHTML = '';
+    return;
+  }
+
+  const carDebt     = allDebts.find(d => d.id === 'car');
+  const noCar       = allDebts.filter(d => d.id !== 'car');
+  const mortCurrent = calcMortgage(totalMinPayments(allDebts));
+  const mortNoCar   = calcMortgage(totalMinPayments(noCar));
+  const mortNone    = calcMortgage(0);
+
+  const deltaCarA = mortNoCar.price41 - mortCurrent.price41;
+  const deltaFull = mortNone.price41  - mortCurrent.price41;
+
+  let carHtml = '';
+  if (carDebt && carDebt.minPayment > 0) {
+    carHtml = `
+      <div class="ctf-card cash-car">
+        <div class="ctf-eyebrow">If you’d paid <strong>${fmt$(G.car.cashAlt)}</strong> cash instead</div>
+        <div class="ctf-headline">${fmt$(mortNoCar.price41)}</div>
+        <div class="ctf-delta">${deltaCarA > 50 ? '+'+fmt$(deltaCarA)+' more home-buying power' : 'Same as current (income is the binding limit)'}<br>
+          <span style="font-size:.78rem;color:var(--muted)">Removing your ${G.car.name} frees ${fmt$(effectiveMin(carDebt))}/mo of DTI headroom</span>
+        </div>
+      </div>`;
+  } else {
+    carHtml = `
+      <div class="ctf-card cash-car">
+        <div class="ctf-eyebrow">No car loan entered</div>
+        <div class="ctf-headline" style="font-size:1.1rem;color:var(--muted)">Add your car loan details above to see this scenario</div>
+      </div>`;
+  }
+
+  document.getElementById('ctf-cards').innerHTML = carHtml + `
+    <div class="ctf-card zero-debt">
+      <div class="ctf-eyebrow">If you had zero bad debt today</div>
+      <div class="ctf-headline">${fmt$(mortNone.price41)}</div>
+      <div class="ctf-delta">${deltaFull > 50 ? '+'+fmt$(deltaFull)+' more than your current situation' : 'Same as current (income is the binding limit)'}<br>
+        <span style="font-size:.78rem;color:var(--muted)">This is your finish line. Every debt eliminated moves you here.</span>
+      </div>
+    </div>`;
+
+  const blocking = fmt$(mortCurrent.price41);
+  const unlocked = fmt$(mortNone.price41);
+  if (deltaFull > 100) {
+    document.getElementById('ctf-insight').innerHTML =
+      `<strong>The choice your debt made for you:</strong> At your current debt load you qualify for a <strong>${blocking}</strong> home. Eliminate all non-mortgage debt and you qualify for a <strong>${unlocked}</strong> home — a difference of <strong>${fmt$(deltaFull)}</strong>. That gap is the real cost of your debt.`;
+  } else {
+    document.getElementById('ctf-insight').innerHTML =
+      `<strong>Your income is currently the primary constraint on your mortgage eligibility</strong> — not just your debt. Eliminating all debt would unlock <strong>${fmt$(deltaFull)}</strong> in additional eligibility. Increasing your income is the most powerful lever available to you right now.`;
+  }
+}
+
+// ============ CALCULATE PAYOFF ============
+function calculatePayoff() {
+  readState();
+  const allDebts    = getAllDebts();
+  const initialBal  = allDebts.reduce((s,d) => s + d.balance, 0);
+  const dPmts       = totalMinPayments(allDebts);
+  const dti         = G.income > 0 ? dPmts / G.income : 0;
+
+  document.getElementById('phase-2a').style.display = '';
+
+  renderDTIOverview(allDebts);
+
+  const fearActive = G.income > 0 && dti >= 0.43;
+  document.getElementById('fear-state').style.display     = fearActive ? '' : 'none';
+  document.getElementById('normal-results').style.display = fearActive ? 'none' : '';
+
+  if (fearActive) {
+    document.getElementById('fear-dti-pct').textContent = fmtPct(dti);
+    document.getElementById('phase-2a').scrollIntoView({behavior:'smooth', block:'start'});
+    return;
+  }
+
+  // Run simulations
+  snowResult = simulate(allDebts, G.extra, 'snowball');
+  fallResult = simulate(allDebts, G.extra, 'waterfall');
+  minResult  = simulate(allDebts, 0,       'waterfall'); // baseline: minimums only
+
+  // Chart
+  buildChart(snowResult.monthlyData, fallResult.monthlyData, initialBal);
+
+  // Strategy card values
+  const snowSaved = Math.max(0, (minResult?.totalInterest||0) - snowResult.totalInterest);
+  const fallSaved = Math.max(0, (minResult?.totalInterest||0) - fallResult.totalInterest);
+  const minMo     = minResult?.monthsToPayoff || 0;
+
+  document.getElementById('snow-interest').textContent = fmt$(snowResult.totalInterest);
+  document.getElementById('snow-months').textContent   = monthsLabel(snowResult.monthsToPayoff);
+  document.getElementById('snow-date').textContent     = monthLabel(snowResult.monthsToPayoff);
+  document.getElementById('snow-vs-min').textContent   =
+    G.extra > 0 && minMo > snowResult.monthsToPayoff
+      ? (minMo - snowResult.monthsToPayoff) + ' months faster'
+      : '—';
+
+  // First target for each strategy
+  const snowDebts = [...allDebts].filter(d=>d.balance>0).sort((a,b)=>a.balance-b.balance||b.rate-a.rate);
+  const fallDebts = [...allDebts].filter(d=>d.balance>0).sort((a,b)=>b.rate-a.rate||a.balance-b.balance);
+  document.getElementById('snow-first').textContent = snowDebts[0]?.name || '—';
+  document.getElementById('fall-first').textContent = fallDebts[0]?.name || '—';
+
+  document.getElementById('fall-interest').textContent = fmt$(fallResult.totalInterest);
+  document.getElementById('fall-months').textContent   = monthsLabel(fallResult.monthsToPayoff);
+  document.getElementById('fall-date').textContent     = monthLabel(fallResult.monthsToPayoff);
+  document.getElementById('fall-vs-min').textContent   =
+    G.extra > 0 && minMo > fallResult.monthsToPayoff
+      ? (minMo - fallResult.monthsToPayoff) + ' months faster'
+      : '—';
+
+  // Strategy choice insight
+  const saved = snowResult.totalInterest - fallResult.totalInterest;
+  const fasterMo = snowResult.monthsToPayoff - fallResult.monthsToPayoff;
+  let introText = '';
+  if (G.extra <= 0) {
+    introText = 'Add an extra monthly payment to see the difference between strategies — without extra payments, both plans are identical.';
+  } else if (Math.abs(saved) < 50) {
+    introText = 'For your specific debt mix, both strategies perform nearly identically — pick the one that keeps you motivated.';
+  } else {
+    introText = `Waterfall saves you <strong>${fmt$(saved)}</strong> in interest${fasterMo > 0 ? ' and gets you debt-free <strong>'+fasterMo+' months sooner</strong>' : ''}. Snowball gives you quicker wins by clearing small balances first. Both work — the best strategy is the one you actually follow.`;
+  }
+  document.getElementById('strategy-choice-intro').innerHTML = introText;
+
+  // Render strategy instructions (waterfall default)
+  document.getElementById('strategy-instructions').innerHTML = getStrategyInstructions('waterfall');
+  // Make sure waterfall radio is checked
+  const fallRadio = document.querySelector('input[name="chosen-strat"][value="waterfall"]');
+  if (fallRadio) fallRadio.checked = true;
+
+  // Show mortgage gate
+  document.getElementById('mortgage-gate').style.display        = '';
+  document.getElementById('mortgage-settings-card').style.display = '';
+  document.getElementById('btn-calc-mortgage').style.display      = '';
+
+  updateStickyBanner();
+  document.getElementById('phase-2a').scrollIntoView({behavior:'smooth', block:'start'});
+}
+
+// ============ CALCULATE MORTGAGE ============
+function calculateMortgage() {
+  readMortgageState();
+  const allDebts = getAllDebts();
+
+  const hasIncome = G.income > 0;
+  document.getElementById('mortgage-lock').style.display    = hasIncome ? 'none' : '';
+  document.getElementById('mortgage-content').style.display = hasIncome ? '' : 'none';
+
+  document.getElementById('phase-2b').style.display = '';
+
+  if (hasIncome) {
+    milestones = buildMilestones(fallResult.milestones, allDebts);
+    renderMilestones();
+    renderCounterfactuals(allDebts);
+  }
+
+  document.getElementById('phase-2b').scrollIntoView({behavior:'smooth', block:'start'});
+}
+
+// ============ DEBT LIST UI ============
+function addDebt() {
+  const id   = nextId++;
+  const list = document.getElementById('debt-list');
+  const row  = document.createElement('div');
+  row.className  = 'debt-row';
+  row.dataset.id = id;
+  row.innerHTML = `
+    <div class="field">
+      <label>Debt Name</label>
+      <input type="text" class="d-name" placeholder='e.g. "Discover Card"'>
+    </div>
+    <div class="field">
+      <label>Balance</label>
+      <div class="prefix-wrap"><span class="prefix">$</span>
+        <input type="number" class="d-bal" min="0" step="100" placeholder="5,000" oninput="updateStickyBanner()">
+      </div>
+    </div>
+    <div class="field">
+      <label>Rate %</label>
+      <div class="suffix-wrap">
+        <input type="number" class="d-rate" min="0" max="40" step="0.1" placeholder="21.9">
+        <span class="suffix">%</span>
+      </div>
+    </div>
+    <div class="field">
+      <label>Min Payment</label>
+      <div class="prefix-wrap"><span class="prefix">$</span>
+        <input type="number" class="d-pmt" min="0" step="5" placeholder="150" oninput="updateStickyBanner()">
+      </div>
+    </div>
+    <div class="field">
+      <label>Type</label>
+      <select class="d-type" onchange="onDebtTypeChange(this)">
+        <option value="revolving">Revolving (Credit Card)</option>
+        <option value="student">Student Loan</option>
+        <option value="mortgage">Existing Mortgage</option>
+        <option value="other">Other (Auto / Personal)</option>
+      </select>
+    </div>
+    <button class="remove-btn" onclick="removeDebt(${id})" title="Remove">&times;</button>`;
+  list.appendChild(row);
+}
+
+function removeDebt(id) {
+  const row = document.querySelector(`.debt-row[data-id="${id}"]`);
+  if (row) row.remove();
+  updateStickyBanner();
+}
+
+function onDebtTypeChange(sel) {
+  const row      = sel.closest('.debt-row');
+  const existing = row.querySelector('.deferred-row');
+  if (sel.value === 'student') {
+    if (!existing) {
+      const dr = document.createElement('div');
+      dr.className = 'deferred-row';
+      dr.innerHTML = `<input type="checkbox" class="d-deferred" id="def-${row.dataset.id}">
+        <label for="def-${row.dataset.id}">Currently deferred? (uses 5% rule for DTI)</label>`;
+      sel.closest('.field').after(dr);
+    }
+  } else {
+    if (existing) existing.remove();
+  }
+}
+
+function onLoanTypeChange() {
+  const val = document.querySelector('input[name="loan-type"]:checked')?.value;
+  document.getElementById('down-pct-row').style.display = val === 'other' ? '' : 'none';
+}
+
+function onPayApproachChange() {
+  const val      = document.querySelector('input[name="pay-approach"]:checked')?.value;
+  const extraWrap = document.getElementById('extra-field-wrap');
+  const nudge     = document.getElementById('pay-approach-nudge');
+
+  if (val === 'min') {
+    extraWrap.style.display = 'none';
+    nudge.style.display     = '';
+    nudge.innerHTML = `<div class="nudge-box"><strong>You’re on the slow track.</strong> Paying only minimums keeps you in debt longer and costs you the most in interest. The payoff plans below will show you exactly how adding even $50/month changes your outcome. Don’t skip this.</div>`;
+  } else if (val === 'full') {
+    extraWrap.style.display = '';
+    nudge.style.display     = '';
+    nudge.innerHTML = `<div class="nudge-box">Great habit on revolving debt. Balances paid in full each month don’t accrue interest, but the minimum payment still counts toward your DTI when qualifying for a mortgage. Enter any extra payment you apply to other debts.</div>`;
+  } else {
+    extraWrap.style.display = '';
+    nudge.style.display     = 'none';
+    nudge.innerHTML         = '';
+  }
+  updateStickyBanner();
+}
+
+function onIncomeChange() {
+  const base    = parseFloat(document.getElementById('income-base').value)    || 0;
+  const partner = parseFloat(document.getElementById('income-partner').value) || 0;
+  const other   = parseFloat(document.getElementById('income-other').value)   || 0;
+  const total   = base + partner + other;
+  document.getElementById('income-sum').textContent =
+    total > 0 ? fmt$(total) + '/mo' : '$0';
+  updateStickyBanner();
+}
+
+function updateStickyBanner() {
+  const base    = parseFloat(document.getElementById('income-base').value)    || 0;
+  const partner = parseFloat(document.getElementById('income-partner').value) || 0;
+  const other   = parseFloat(document.getElementById('income-other').value)   || 0;
+  const income  = base + partner + other;
+  const banner  = document.getElementById('sticky-banner');
+  banner.style.display = (hasAnyDebt() && income <= 0) ? 'block' : 'none';
+}
+
+function hasAnyDebt() {
+  const carBal = parseFloat(document.getElementById('car-bal').value) || 0;
+  const carPmt = parseFloat(document.getElementById('car-pmt').value) || 0;
+  if (carBal > 0 || carPmt > 0) return true;
+  for (const row of document.querySelectorAll('.debt-row')) {
+    if ((parseFloat(row.querySelector('.d-bal')?.value)||0) > 0 ||
+        (parseFloat(row.querySelector('.d-pmt')?.value)||0) > 0) return true;
+  }
+  return false;
+}
+
+function scrollToIncome() {
+  document.getElementById('income-base').scrollIntoView({behavior:'smooth', block:'center'});
+  document.getElementById('income-base').focus();
+}
+
+// ============ EMAIL ============
+function submitEmail(e) {
+  e.preventDefault();
+  const btn = e.target.querySelector('button');
+  btn.textContent  = 'You’re on the list!';
+  btn.style.background = 'var(--green)';
+  btn.style.color  = '#fff';
+  btn.disabled     = true;
+  e.target.querySelector('input').disabled = true;
+}
+
+// ============ INIT ============
+document.addEventListener('DOMContentLoaded', () => {
+  addDebt();
+  onLoanTypeChange();
+  onPayApproachChange();
+  document.getElementById('income-sum').textContent = '$0';
+});
+</script>
+</body>
+</html>
