@@ -727,7 +727,7 @@ function calculate(){
   renderSOP({savingsRate,debtTyp,esfPct,wcPct,tspAmt,available});
   renderChart(esfData,wcData,esfTgt,wcTgt,horizon,esfFunded,wcFunded,goals,freeCash,available);
   renderAllocation(freeCash,esfFunded,wcFunded,isTrap,esfPct,wcPct,curESF,curWC,esfTgt,wcTgt);
-  renderMessages({isTrap,hysaInt,curESF,curWC,goals,esfPct,wcPct,esfFunded,wcFunded,tspAmt,freeCash,available,debtTyp});
+  renderMessages({isTrap,hysaInt,curESF,curWC,esfTgt,wcTgt,goals,esfPct,wcPct,esfFunded,wcFunded,tspAmt,freeCash,available,debtTyp});
 
   document.getElementById('results').style.display='block';
   setTimeout(()=>document.getElementById('results').scrollIntoView({behavior:'smooth',block:'start'}),50);
@@ -821,7 +821,7 @@ function renderAllocation(monthly,esfFunded,wcFunded,isTrap,esfPct,wcPct,curESF,
 }
 
 // ── Render: Messages ──────────────────────────────────────────────────────
-function renderMessages({isTrap,hysaInt,curESF,curWC,goals,esfPct,wcPct,esfFunded,wcFunded,tspAmt,freeCash,available,debtTyp}){
+function renderMessages({isTrap,hysaInt,curESF,curWC,esfTgt,wcTgt,goals,esfPct,wcPct,esfFunded,wcFunded,tspAmt,freeCash,available,debtTyp}){
   let html='';
   if(isTrap)
     html+='<div class="insight debt-trap"><strong>The Debt Trap Warning:</strong> Without a funded ESF, every dollar you put toward debt is at risk. One unexpected expense forces you back into debt. Splitting 50/50 between ESF and debt paydown breaks the cycle.</div>';
