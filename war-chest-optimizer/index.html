@@ -778,7 +778,12 @@ function renderSOP({savingsRate,debtTyp,esfPct,wcPct,tspAmt,available}){
 
 // ── Render: Allocation ────────────────────────────────────────────────────
 function renderAllocation(monthly,esfFunded,wcFunded,isTrap,esfPct,wcPct,curESF,curWC,esfTgt,wcTgt){
-  const esfDone=esfPct>=1, wcDone=wcPct>=1;
+  // Use a tiny tolerance so floating-point near-1 values don't slip through
+  const esfDone = esfPct>=1 || (esfTgt>0 && curESF>=esfTgt-0.01) || esfTgt<=0;
+  const wcDone  = wcPct >=1 || (wcTgt >0 && curWC >=wcTgt -0.01) || wcTgt <=0;
+  // esfFunded/wcFunded can be 0 (already funded at start), so use !== null, not truthy
+  const efLabel = esfFunded===null ? null : esfFunded===0 ? 'ESF already funded' : moLabel(esfFunded)+' for ESF';
+  const wfLabel = wcFunded===null  ? null : wcFunded===0  ? 'War Chest already funded' : moLabel(wcFunded)+' to reach War Chest target';
   let html='';
 
   if(monthly<=0){
@@ -791,22 +796,22 @@ function renderAllocation(monthly,esfFunded,wcFunded,isTrap,esfPct,wcPct,curESF,
       '<div class="alloc-note">Direct all available savings toward income-generating assets. Visit the BAH House-Hack Wealth Builder to see what you can afford.</div></div>';
   } else if(isTrap&&!esfDone){
     const half=fmt(monthly*0.5);
-    const tl = esfFunded&&wcFunded ? 'ESF funded '+moLabel(esfFunded)+' · War Chest ready '+moLabel(wcFunded)+'.' : esfFunded ? 'ESF funded '+moLabel(esfFunded)+'.' : 'Timeline depends on savings rate.';
+    const tl = efLabel&&wfLabel ? efLabel+' · '+wfLabel+'.' : efLabel ? efLabel+'.' : 'Timeline depends on savings rate.';
     html='<div class="alloc-split">'+
       '<div class="alloc-split-item"><div class="alloc-tag">Emergency Savings Fund</div><div class="alloc-amt">'+half+'/mo</div><div class="alloc-note">50% until fully funded</div></div>'+
-      '<div class="alloc-split-item"><div class="alloc-tag debt-tag">Accelerated Debt Paydown</div><div class="alloc-amt">'+half+'/mo</div><div class="alloc-note">50% toward highest-rate balance first</div></div>'+
+      '<div class="alloc-split-item"><div class="alloc-tag">Accelerated Debt Paydown</div><div class="alloc-amt">'+half+'/mo</div><div class="alloc-note">50% toward highest-rate balance first</div></div>'+
     '</div>'+
     '<div class="alloc-timeline">'+tl+'</div>'+
     '<div class="alloc-note">Adjust the extra savings slider to see how more cash shortens your timeline.</div>';
   } else if(!esfDone){
-    const tl = esfFunded&&wcFunded ? moLabel(esfFunded)+' for ESF · '+moLabel(wcFunded)+' for War Chest'
-              : esfFunded ? moLabel(esfFunded)+' for ESF, then all savings shift to War Chest' : 'Timeline updates with slider.';
+    const tl = efLabel&&wfLabel ? efLabel+' · '+wfLabel+'.'
+              : efLabel ? efLabel+', then all savings shift to War Chest.' : 'Timeline updates with slider.';
     html='<div class="alloc-card primary"><div class="alloc-tag">Priority Action</div>'+
       '<div class="alloc-headline">100% of savings to Emergency Savings Fund until fully funded — then shift every dollar to the War Chest.</div>'+
       '<div class="alloc-timeline">'+fmt(monthly)+'/mo · '+tl+'</div>'+
       '<div class="alloc-note">Drag the extra savings slider above to see how increasing your monthly savings rate accelerates each milestone.</div></div>';
   } else {
-    const tl = wcFunded ? moLabel(wcFunded)+' to reach your War Chest target.' : 'Timeline updates with slider.';
+    const tl = wfLabel ? wfLabel+'.' : 'Timeline updates with slider.';
     html='<div class="alloc-card primary"><div class="alloc-tag">Priority Action</div>'+
       '<div class="alloc-headline">ESF is funded. Redirect all available savings to the War Chest now.</div>'+
       '<div class="alloc-timeline">'+fmt(monthly)+'/mo · '+tl+'</div>'+
@@ -822,7 +827,7 @@ function renderMessages({isTrap,hysaInt,curESF,curWC,goals,esfPct,wcPct,esfFunde
     html+='<div class="insight debt-trap"><strong>The Debt Trap Warning:</strong> Without a funded ESF, every dollar you put toward debt is at risk. One unexpected expense forces you back into debt. Splitting 50/50 between ESF and debt paydown breaks the cycle.</div>';
   if(tspAmt===0)
     html+='<div class="insight tsp-note"><strong>Missing Your BRS Match:</strong> You entered $0 in TSP contributions. If you are on the Blended Retirement System, you are leaving free government matching money on the table every month. Set your contribution to at least 5% of base pay immediately.</div>';
-  else if(tspAmt>0&&(esfPct<1||wcPct<1))
+  else if(tspAmt>0&&(!(esfTgt<=0||curESF>=esfTgt-0.01)||!(wcTgt<=0||curWC>=wcTgt-0.01)))
     html+='<div class="insight tsp-note"><strong>Consider rebalancing toward cash:</strong> When your ESF and War Chest are underfunded, the cash you might need is locked in your retirement account until age 59&#189;. Consider temporarily reducing your TSP contribution — never below 5% to keep the full BRS match — until your cash reserves are fully funded.</div>';
   if(curESF+curWC>0)
     html+='<div class="insight hysa"><strong>Your HYSA works while you build.</strong> At 3.5% APY, your current savings of '+fmt(curESF+curWC)+' will earn approximately <strong>'+fmt(hysaInt)+'</strong> in interest over the next 12 months. Keep ESF and War Chest in separate HYSAs (Marcus, Ally, or SoFi) to maximize this return.</div>';
@@ -830,7 +835,7 @@ function renderMessages({isTrap,hysaInt,curESF,curWC,goals,esfPct,wcPct,esfFunde
     html+='<div class="insight hysa"><strong>Open your HYSA today.</strong> Even $100 in a 3.5% APY high-yield savings account starts compounding immediately. Keep ESF and War Chest in separate accounts so you never accidentally spend one on the other.</div>';
   if(goals.length>0&&goals.every(g=>g.amount<=1000))
     html+='<div class="insight"><strong>One thought:</strong> A '+fmtK(goals.reduce((s,g)=>s+g.amount,0))+' War Chest may not be enough. Starting the habit of saving toward a goal you don’t have yet will position you to act fast when the right opportunity appears. Consider adding a longer-term goal.</div>';
-  if(wcFunded&&goals.length>0){
+  if(wcFunded!==null&&goals.length>0){
     const late=goals.filter(g=>wcFunded>g.months);
     const ok  =goals.filter(g=>wcFunded<=g.months);
     if(ok.length>0)   html+='<div class="insight"><strong>On track:</strong> '+ok.map(g=>g.label).join(', ')+' — War Chest funded before your target date.</div>';
@@ -885,7 +890,7 @@ const annotPlugin = {
       ctx.fillStyle='#6C645B';ctx.font='500 9px Manrope,sans-serif';
       ctx.textAlign='right';ctx.fillText(t.lbl,ca.right-4,py-4);
     });
-    if(chart._esfFunded){
+    if(chart._esfFunded!==null&&chart._esfFunded!==undefined){
       const ex=sc.x.getPixelForValue(chart._esfFunded);
       if(ex>=ca.left&&ex<=ca.right){
         ctx.strokeStyle='#2F6B43';ctx.lineWidth=1.5;ctx.setLineDash([3,3]);
@@ -894,7 +899,7 @@ const annotPlugin = {
         ctx.textAlign='left';ctx.fillText('ESF ✓',ex+4,ca.top+13);
       }
     }
-    if(chart._wcFunded){
+    if(chart._wcFunded!==null&&chart._wcFunded!==undefined){
       const wx=sc.x.getPixelForValue(chart._wcFunded);
       if(wx>=ca.left&&wx<=ca.right){
         ctx.strokeStyle='#A6182C';ctx.lineWidth=1.5;ctx.setLineDash([3,3]);
@@ -950,15 +955,15 @@ function renderChart(esfData,wcData,esfTgt,wcTgt,horizon,esfFunded,wcFunded,goal
   document.getElementById('safe-zone-val').textContent=fmt(freeCash)+' / mo';
   document.getElementById('tsp-slider-warn').style.display='none';
 
-  // Hover cpanel
+  // Hover cpanel — addEventListener is more robust than onX properties with Chart.js
   canvas.style.cursor='crosshair';
-  canvas.onmousemove=e=>{const m=canvasToMonth(e);if(m!==null)updateCrosshair(m);};
-  canvas.onmouseleave=()=>{G.chart._chYr=undefined;G.chart.update('none');resetCpanel();};
-  canvas.ontouchmove=e=>{e.preventDefault();const m=canvasToMonth(e.touches[0]);if(m!==null)updateCrosshair(m);};
+  canvas.addEventListener('mousemove',e=>{const m=canvasToMonth(e);if(m!==null)updateCrosshair(m);});
+  canvas.addEventListener('mouseleave',()=>{if(G.chart){G.chart._chYr=undefined;G.chart.update('none');}resetCpanel();});
+  canvas.addEventListener('touchmove',e=>{e.preventDefault();const m=canvasToMonth(e.touches[0]);if(m!==null)updateCrosshair(m);},{passive:false});
 }
 
 function canvasToMonth(e){
-  if(!G.chart) return null;
+  if(!G.chart||!G.chart.chartArea) return null;
   const rect=e.target.getBoundingClientRect();
   const x=e.clientX-rect.left;
   const{left,right}=G.chart.chartArea;
@@ -970,8 +975,8 @@ function resetCpanel(){
   const ef=G.esfFunded, wf=G.wcFunded, extra=parseFloat(document.getElementById('extra-slider').value)||0;
   const monthly=G.freeCash+extra;
   let row1 = monthly>0 ? 'At '+fmt(monthly)+'/mo' : 'No savings allocated';
-  let row2 = ef ? 'ESF funded Month '+ef : 'ESF not yet funded';
-  let row3 = wf ? 'War Chest ready Month '+wf : 'War Chest not yet funded within timeline';
+  let row2 = ef!==null ? (ef===0?'ESF already funded':'ESF funded Month '+ef) : 'ESF not yet funded within timeline';
+  let row3 = wf!==null ? (wf===0?'War Chest already funded':'War Chest ready Month '+wf) : 'War Chest not yet funded within timeline';
   document.getElementById('cpanel').innerHTML=
     '<div class="cp-row1">'+row1+'</div>'+
     '<div style="display:flex;gap:24px;flex-wrap:wrap">'+
