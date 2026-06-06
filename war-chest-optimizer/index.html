@@ -50,6 +50,9 @@ header{background:var(--bg);padding:40px 20px 32px;border-bottom:1px solid var(-
 .prefix-wrap{position:relative}
 .prefix-wrap .prefix{position:absolute;left:11px;top:50%;transform:translateY(-50%);color:var(--muted);font-size:.95rem;pointer-events:none}
 .field .prefix-wrap input{padding-left:28px}
+.suffix-wrap{position:relative}
+.suffix-wrap input{padding-right:28px}
+.suffix-wrap .suffix{position:absolute;right:11px;top:50%;transform:translateY(-50%);color:var(--muted);font-size:.95rem;pointer-events:none}
 .hint{font-size:.75rem;color:var(--muted);line-height:1.4;margin-top:2px}
 
 /* radio groups */
@@ -66,18 +69,18 @@ header{background:var(--bg);padding:40px 20px 32px;border-bottom:1px solid var(-
 .btn-add-goal{background:none;border:1px dashed var(--border);border-radius:2px;padding:9px 16px;font-family:'JetBrains Mono',monospace;font-size:.65rem;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);cursor:pointer;width:100%;margin-top:8px;transition:all .15s}
 .btn-add-goal:hover{border-color:var(--mid);color:var(--mid)}
 
-/* war chest target display */
+/* war chest target */
 .wct-row{display:flex;justify-content:space-between;align-items:center;margin-top:16px;padding:14px 16px;background:var(--dark);border-radius:2px}
 .wct-label{font-family:'JetBrains Mono',monospace;font-size:.66rem;letter-spacing:.18em;text-transform:uppercase;color:var(--gold);font-weight:600}
 .wct-amount{font-family:'Newsreader',Georgia,serif;font-size:1.9rem;font-weight:600;color:var(--gold);letter-spacing:-0.01em;line-height:1}
 
-/* available display */
+/* available strip */
 .avail-strip{display:flex;justify-content:space-between;align-items:center;background:var(--bg-2);border:1px solid var(--border);border-radius:2px;padding:10px 14px;margin-top:12px}
 .avail-label{font-family:'JetBrains Mono',monospace;font-size:.64rem;letter-spacing:.12em;text-transform:uppercase;color:var(--muted)}
-.avail-val{font-family:'Newsreader',Georgia,serif;font-size:1.3rem;font-weight:600;color:var(--dark);letter-spacing:-0.01em}
+.avail-val{font-family:'Newsreader',Georgia,serif;font-size:1.2rem;font-weight:600;color:var(--dark);letter-spacing:-0.01em;line-height:1.1}
 .avail-val.warn{color:var(--red)}
 
-/* button */
+/* buttons */
 .btn-calc{width:100%;padding:1rem;background:var(--mid);color:#fff;font-family:'Manrope',sans-serif;font-size:.9rem;font-weight:700;letter-spacing:.02em;border:none;border-radius:2px;cursor:pointer;margin-top:14px;transition:background .15s}
 .btn-calc:hover{background:var(--red)}
 .btn-calc:active{transform:scale(.99)}
@@ -88,6 +91,13 @@ header{background:var(--bg);padding:40px 20px 32px;border-bottom:1px solid var(-
 .alert{padding:12px 16px;border-radius:2px;font-size:.85rem;font-weight:600;margin-bottom:14px;display:none}
 .alert.error{background:rgba(122,16,32,.10);color:var(--red);border:1px solid rgba(122,16,32,.25)}
 .alert.show{display:block}
+
+/* hero */
+.hero-card{background:var(--dark);border-radius:2px;padding:2rem 1.75rem;text-align:center;margin-bottom:20px}
+.hero-label{font-family:'JetBrains Mono',monospace;font-size:.66rem;letter-spacing:.22em;text-transform:uppercase;color:var(--gold);margin-bottom:10px}
+.hero-number{font-family:'Newsreader',Georgia,serif;font-size:clamp(2.4rem,7vw,3.8rem);font-weight:600;color:var(--gold);line-height:1;letter-spacing:-0.01em}
+.hero-pct{font-family:'JetBrains Mono',monospace;font-size:.7rem;letter-spacing:.15em;text-transform:uppercase;color:rgba(201,162,75,.78);margin:8px 0 14px}
+.hero-desc{font-size:.95rem;color:rgba(255,255,255,.72);max-width:520px;margin:0 auto;line-height:1.6}
 
 /* SOP tracker */
 .sop-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
@@ -109,35 +119,26 @@ header{background:var(--bg);padding:40px 20px 32px;border-bottom:1px solid var(-
 .sop-step.coaching .sop-status{color:rgba(255,255,255,.6);font-size:.72rem;letter-spacing:0;text-transform:none;font-family:'Manrope',sans-serif;margin-top:6px;line-height:1.45}
 .sop-step.coaching a{color:var(--gold);font-weight:700}
 
-/* metric cards */
-.mg{display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px;margin-bottom:18px}
-@media(max-width:580px){.mg{grid-template-columns:1fr 1fr}}
-.m{background:var(--bg);border-radius:2px;padding:14px;border:1px solid var(--border)}
-.m.acc{background:var(--dark);border-color:var(--dark)}
-.m.g{background:rgba(47,107,67,.08);border-color:rgba(47,107,67,.28)}
-.ml{font-family:'JetBrains Mono',monospace;font-size:.62rem;font-weight:500;text-transform:uppercase;letter-spacing:.1em;color:var(--muted);margin-bottom:4px}
-.m.acc .ml{color:rgba(255,255,255,.55)}
-.mv{font-family:'Newsreader',Georgia,serif;font-size:1.45rem;font-weight:600;color:var(--dark);letter-spacing:-0.01em;line-height:1.15}
-.m.acc .mv{color:var(--gold)}
-.m.g .mv{color:var(--green)}
-.ms{font-size:.73rem;color:var(--muted);margin-top:3px;line-height:1.4}
-.m.acc .ms{color:rgba(255,255,255,.5)}
-
-/* hero dark */
-.hero-card{background:var(--dark);border-radius:2px;padding:2rem 1.75rem;text-align:center;margin-bottom:20px}
-.hero-label{font-family:'JetBrains Mono',monospace;font-size:.66rem;letter-spacing:.22em;text-transform:uppercase;color:var(--gold);margin-bottom:12px}
-.hero-number{font-family:'Newsreader',Georgia,serif;font-size:clamp(2.4rem,7vw,3.8rem);font-weight:600;color:var(--gold);line-height:1;letter-spacing:-0.01em}
-.hero-desc{font-size:.95rem;color:rgba(255,255,255,.78);max-width:520px;margin:12px auto 0;line-height:1.6}
-
 /* chart */
 .chart-wrap{position:relative;height:280px;margin-bottom:1rem}
 @media(min-width:600px){.chart-wrap{height:340px}}
-.slider-row{display:flex;align-items:center;gap:.75rem;margin-bottom:.75rem}
-.slider-label{font-family:'JetBrains Mono',monospace;font-size:.64rem;font-weight:500;letter-spacing:.06em;color:var(--muted);white-space:nowrap;min-width:56px}
-.slider-label:last-child{text-align:right}
+
+/* extra savings slider */
+.slider-section{margin-top:4px}
+.slider-hd{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:8px}
+.slider-hd-label{font-family:'JetBrains Mono',monospace;font-size:.64rem;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:var(--muted)}
+.slider-hd-val{font-family:'Newsreader',Georgia,serif;font-size:1.4rem;font-weight:600;color:var(--mid);letter-spacing:-0.01em}
+.slider-hd-val.danger{color:var(--red)}
+.slider-row{display:flex;align-items:center;gap:.75rem;margin-bottom:6px}
+.slider-label{font-family:'JetBrains Mono',monospace;font-size:.62rem;font-weight:500;letter-spacing:.06em;color:var(--muted);white-space:nowrap;min-width:44px}
+.slider-label:last-child{text-align:right;min-width:56px}
 input[type=range]{flex:1;height:4px;padding:0;border:none;border-radius:2px;background:var(--border);appearance:none;-webkit-appearance:none;cursor:pointer;outline:none;box-shadow:none}
-input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:20px;height:20px;border-radius:50%;background:var(--mid);cursor:pointer;border:3px solid #fff;box-shadow:0 1px 4px rgba(26,26,26,.28)}
-input[type=range]::-moz-range-thumb{width:20px;height:20px;border-radius:50%;background:var(--mid);cursor:pointer;border:3px solid #fff}
+input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:20px;height:20px;border-radius:50%;background:var(--mid);cursor:pointer;border:3px solid #fff;box-shadow:0 1px 4px rgba(26,26,26,.28);transition:background .15s}
+input[type=range]::-moz-range-thumb{width:20px;height:20px;border-radius:50%;background:var(--mid);cursor:pointer;border:3px solid #fff;transition:background .15s}
+input[type=range].danger::-webkit-slider-thumb{background:var(--red)}
+input[type=range].danger::-moz-range-thumb{background:var(--red)}
+.safe-zone-note{font-size:.72rem;color:var(--muted);margin-bottom:8px}
+.safe-zone-note span{font-weight:700;color:var(--ink-2)}
 
 /* cpanel */
 .cpanel{background:var(--bg);border-radius:2px;border:1px solid var(--border);padding:.9rem 1rem;margin-top:.25rem}
@@ -151,18 +152,21 @@ input[type=range]::-moz-range-thumb{width:20px;height:20px;border-radius:50%;bac
 .cp-verdict.building{background:rgba(201,162,75,.15);color:#7A5C14}
 .cp-verdict.trapped{background:rgba(122,16,32,.10);color:var(--red)}
 
-/* allocation plan */
-.alloc-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:16px}
-@media(max-width:540px){.alloc-grid{grid-template-columns:1fr}}
-.alloc-card{border-radius:2px;padding:14px;border:1px solid var(--border)}
-.alloc-card.primary{background:rgba(47,107,67,.08);border-color:rgba(47,107,67,.28)}
-.alloc-card.secondary{background:var(--bg-2)}
-.alloc-card.debt{background:rgba(122,16,32,.07);border-color:rgba(122,16,32,.2)}
-.alloc-tag{font-family:'JetBrains Mono',monospace;font-size:.6rem;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:var(--muted);margin-bottom:6px}
+/* allocation card */
+.alloc-card{border-radius:2px;padding:18px;border:1px solid var(--border)}
+.alloc-card.primary{background:rgba(47,107,67,.06);border-color:rgba(47,107,67,.25)}
+.alloc-card.debt{background:rgba(122,16,32,.06);border-color:rgba(122,16,32,.2)}
+.alloc-card.neutral{background:var(--bg-2)}
+.alloc-tag{font-family:'JetBrains Mono',monospace;font-size:.6rem;font-weight:700;text-transform:uppercase;letter-spacing:.12em;color:var(--muted);margin-bottom:8px}
 .alloc-card.primary .alloc-tag{color:var(--green)}
 .alloc-card.debt .alloc-tag{color:var(--red)}
-.alloc-amt{font-family:'Newsreader',Georgia,serif;font-size:1.5rem;font-weight:600;color:var(--dark);letter-spacing:-0.01em}
-.alloc-desc{font-size:.78rem;color:var(--muted);margin-top:4px;line-height:1.4}
+.alloc-headline{font-family:'Newsreader',Georgia,serif;font-size:1.25rem;font-weight:600;color:var(--dark);letter-spacing:-0.01em;line-height:1.3;margin-bottom:10px}
+.alloc-timeline{font-size:.95rem;font-weight:700;color:var(--green);margin-bottom:6px}
+.alloc-note{font-size:.78rem;color:var(--muted);line-height:1.5}
+.alloc-split{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:14px}
+@media(max-width:500px){.alloc-split{grid-template-columns:1fr}}
+.alloc-split-item{background:var(--bg-2);border-radius:2px;padding:12px 14px;border:1px solid var(--border)}
+.alloc-split-amt{font-family:'Newsreader',Georgia,serif;font-size:1.35rem;font-weight:600;color:var(--dark);letter-spacing:-0.01em;margin:4px 0}
 
 /* insight box */
 .insight{background:var(--bg);border:1px solid var(--border);border-left:3px solid var(--gold);border-radius:2px;padding:1rem 1.15rem;margin-bottom:14px;font-size:.85rem;line-height:1.65;color:var(--ink-2)}
@@ -170,6 +174,25 @@ input[type=range]::-moz-range-thumb{width:20px;height:20px;border-radius:50%;bac
 .insight.debt-trap{border-left-color:var(--red)}
 .insight.tsp-note{border-left-color:var(--mid)}
 .insight.hysa{border-left-color:var(--green)}
+.insight.warn{border-left-color:var(--red)}
+
+/* metric cards (for advanced output) */
+.mg{display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px;margin-bottom:18px}
+@media(max-width:580px){.mg{grid-template-columns:1fr 1fr}}
+.m{background:var(--bg);border-radius:2px;padding:14px;border:1px solid var(--border)}
+.m.acc{background:var(--dark);border-color:var(--dark)}
+.m.g{background:rgba(47,107,67,.08);border-color:rgba(47,107,67,.28)}
+.ml{font-family:'JetBrains Mono',monospace;font-size:.62rem;font-weight:500;text-transform:uppercase;letter-spacing:.1em;color:var(--muted);margin-bottom:4px}
+.m.acc .ml{color:rgba(255,255,255,.55)}
+.mv{font-family:'Newsreader',Georgia,serif;font-size:1.45rem;font-weight:600;color:var(--dark);letter-spacing:-0.01em;line-height:1.15}
+.m.acc .mv{color:var(--gold)}
+.m.g .mv{color:var(--green)}
+.ms{font-size:.73rem;color:var(--muted);margin-top:3px;line-height:1.4}
+.m.acc .ms{color:rgba(255,255,255,.5)}
+
+/* deploy grid */
+.deploy-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:16px}
+@media(max-width:540px){.deploy-grid{grid-template-columns:1fr 1fr}}
 
 /* courses CTA */
 .courses-cta{background:var(--dark);border-radius:2px;padding:2rem 1.75rem;margin-top:20px;text-align:center}
@@ -180,13 +203,9 @@ input[type=range]::-moz-range-thumb{width:20px;height:20px;border-radius:50%;bac
 .btn-courses{display:inline-block;padding:.8rem 2rem;background:var(--gold);color:var(--dark);font-family:'Manrope',sans-serif;font-weight:800;font-size:.88rem;border-radius:2px;text-decoration:none;transition:opacity .15s}
 .btn-courses:hover{opacity:.88;color:var(--dark)}
 
-/* advanced unlock */
+/* unlock bar */
 .unlock-bar{text-align:center;padding:24px 20px;border-top:1px solid var(--border);margin-top:8px}
 .unlock-bar p{font-size:.88rem;color:var(--muted);margin-bottom:12px}
-
-/* deployment output */
-.deploy-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:16px}
-@media(max-width:540px){.deploy-grid{grid-template-columns:1fr 1fr}}
 
 footer{text-align:center;padding:2rem 1.25rem 2.5rem;font-size:.72rem;color:var(--muted);border-top:1px solid var(--border);line-height:1.8}
 footer a{color:var(--mid);font-weight:600}
@@ -218,18 +237,14 @@ footer a{color:var(--mid);font-weight:600}
   <!-- ── GOALS CARD ── -->
   <div class="card">
     <div class="sec">Your War Chest Goals</div>
-
     <div class="rg" style="margin-bottom:18px">
       <label><input type="radio" name="goal-mode" value="manual" id="mode-manual" checked onchange="goalModeChanged()"> I&#8217;ll set my own goals</label>
       <label><input type="radio" name="goal-mode" value="auto" id="mode-auto" onchange="goalModeChanged()"> Set it for me</label>
     </div>
-
     <div id="decide-msg" style="display:none" class="insight">
       <strong>War Chest target set to $30,000</strong> &mdash; a New Car fund ($10,000) and a VA loan down payment &amp; closing costs ($20,000). This covers the two most common first asset purchases for service members.
     </div>
-
     <div id="goals-section">
-
       <!-- Goal 1 -->
       <div class="goal-row" id="goal-row-1">
         <div class="field">
@@ -263,12 +278,10 @@ footer a{color:var(--mid);font-weight:600}
           </div>
         </div>
       </div>
-
       <!-- Goal 2 -->
       <button type="button" class="btn-add-goal" id="add-goal-2-btn" onclick="addGoal(2)">+ Add a second goal</button>
       <div class="goal-row" id="goal-row-2" style="display:none">
-        <div class="field">
-          <label>Goal 2</label>
+        <div class="field"><label>Goal 2</label>
           <select id="goal-sel-2" onchange="goalChanged(2)">
             <option value="">&#8212; Select a goal &#8212;</option>
             <option value="1000">New Phone &mdash; $1,000</option>
@@ -281,29 +294,20 @@ footer a{color:var(--mid);font-weight:600}
             <option value="other">Other (enter amount)</option>
           </select>
         </div>
-        <div class="field" id="goal-tl-2" style="display:none">
-          <label>When do you want it?</label>
+        <div class="field" id="goal-tl-2" style="display:none"><label>When?</label>
           <select id="goal-when-2" onchange="updateWarChestTarget()">
-            <option value="12">Within 1 year</option>
-            <option value="24">2 years</option>
-            <option value="36" selected>3 years</option>
-            <option value="60">5 years</option>
-            <option value="120">10 years</option>
+            <option value="12">Within 1 year</option><option value="24">2 years</option>
+            <option value="36" selected>3 years</option><option value="60">5 years</option><option value="120">10 years</option>
           </select>
         </div>
-        <div class="field goal-other" id="goal-other-2" style="display:none">
-          <label>Custom amount</label>
-          <div class="prefix-wrap"><span class="prefix">$</span>
-            <input type="number" id="goal-amt-2" min="0" placeholder="0" oninput="updateWarChestTarget()">
-          </div>
+        <div class="field goal-other" id="goal-other-2" style="display:none"><label>Custom amount</label>
+          <div class="prefix-wrap"><span class="prefix">$</span><input type="number" id="goal-amt-2" min="0" placeholder="0" oninput="updateWarChestTarget()"></div>
         </div>
       </div>
-
       <!-- Goal 3 -->
       <button type="button" class="btn-add-goal" id="add-goal-3-btn" onclick="addGoal(3)" style="display:none">+ Add a third goal</button>
       <div class="goal-row" id="goal-row-3" style="display:none">
-        <div class="field">
-          <label>Goal 3</label>
+        <div class="field"><label>Goal 3</label>
           <select id="goal-sel-3" onchange="goalChanged(3)">
             <option value="">&#8212; Select a goal &#8212;</option>
             <option value="1000">New Phone &mdash; $1,000</option>
@@ -316,60 +320,57 @@ footer a{color:var(--mid);font-weight:600}
             <option value="other">Other (enter amount)</option>
           </select>
         </div>
-        <div class="field" id="goal-tl-3" style="display:none">
-          <label>When do you want it?</label>
+        <div class="field" id="goal-tl-3" style="display:none"><label>When?</label>
           <select id="goal-when-3" onchange="updateWarChestTarget()">
-            <option value="12">Within 1 year</option>
-            <option value="24">2 years</option>
-            <option value="36" selected>3 years</option>
-            <option value="60">5 years</option>
-            <option value="120">10 years</option>
+            <option value="12">Within 1 year</option><option value="24">2 years</option>
+            <option value="36" selected>3 years</option><option value="60">5 years</option><option value="120">10 years</option>
           </select>
         </div>
-        <div class="field goal-other" id="goal-other-3" style="display:none">
-          <label>Custom amount</label>
-          <div class="prefix-wrap"><span class="prefix">$</span>
-            <input type="number" id="goal-amt-3" min="0" placeholder="0" oninput="updateWarChestTarget()">
-          </div>
+        <div class="field goal-other" id="goal-other-3" style="display:none"><label>Custom amount</label>
+          <div class="prefix-wrap"><span class="prefix">$</span><input type="number" id="goal-amt-3" min="0" placeholder="0" oninput="updateWarChestTarget()"></div>
         </div>
       </div>
-
-    </div><!-- /goals-section -->
-
+    </div>
     <div class="wct-row">
       <div class="wct-label">War Chest Target</div>
       <div class="wct-amount" id="wct-display">&mdash;</div>
     </div>
-    <div class="hint" style="margin-top:8px">Select at least one goal above. Your War Chest Target is the combined total of everything you want to save.</div>
+    <div class="hint" style="margin-top:8px">Select at least one goal. Your War Chest Target is the combined total of all selected goals.</div>
   </div>
 
   <!-- ── SITUATION CARD ── -->
   <div class="card">
     <div class="sec">Your Financial Situation</div>
-    <div class="fg" style="margin-bottom:14px">
+    <div class="fg fg3" style="margin-bottom:14px">
       <div class="field">
-        <label>Monthly Take-Home Pay</label>
+        <label>Monthly Net Pay (pre-TSP)</label>
         <div class="prefix-wrap"><span class="prefix">$</span>
           <input type="number" id="inp-take-home" min="0" placeholder="3,500" oninput="updateAvail()">
         </div>
-        <div class="hint">After taxes and all deductions &mdash; what hits your bank account.</div>
+        <div class="hint">Base pay + BAH + BAS, after taxes. Include your TSP contribution here &mdash; enter it separately below.</div>
       </div>
       <div class="field">
         <label>Monthly Debt Payments</label>
         <div class="prefix-wrap"><span class="prefix">$</span>
           <input type="number" id="inp-debt" min="0" value="0" placeholder="0" oninput="updateAvail()">
         </div>
-        <div class="hint">Credit cards, auto loans, student loans, personal loans &mdash; minimum required payments.</div>
+        <div class="hint">Minimum required payments: credit cards, auto, student, personal loans.</div>
       </div>
       <div class="field">
         <label>All Other Monthly Expenses</label>
         <div class="prefix-wrap"><span class="prefix">$</span>
           <input type="number" id="inp-exp" min="0" placeholder="2,000" oninput="updateAvail()">
         </div>
-        <div class="hint">Rent, food, utilities, subscriptions, everything else. Not debt payments.</div>
+        <div class="hint">Rent, food, utilities, subscriptions &mdash; everything except debt payments.</div>
+      </div>
+      <div class="field">
+        <label>Monthly TSP / IRA Contribution</label>
+        <div class="prefix-wrap"><span class="prefix">$</span>
+          <input type="number" id="inp-tsp-contrib" min="0" value="0" placeholder="0" oninput="updateAvail()">
+        </div>
+        <div class="hint">Dollar amount going to TSP or IRA each month. Minimum $0 &mdash; but 5% of base pay captures the full BRS match.</div>
       </div>
     </div>
-
     <div class="field" style="margin-bottom:14px">
       <label>Type of Debt (choose the highest-risk category you carry)</label>
       <div class="rg">
@@ -379,29 +380,26 @@ footer a{color:var(--mid);font-weight:600}
         <label><input type="radio" name="debt-type" value="revolving" onchange="updateAvail()"> Credit card / revolving</label>
       </div>
     </div>
-
     <div class="fg" style="margin-bottom:6px">
       <div class="field">
         <label>Current ESF Balance</label>
         <div class="prefix-wrap"><span class="prefix">$</span>
           <input type="number" id="inp-esf" min="0" value="0" placeholder="0" oninput="updateAvail()">
         </div>
-        <div class="hint">Your Emergency Savings Fund &mdash; separate HYSA for emergencies only.</div>
+        <div class="hint">Emergency Savings Fund &mdash; separate HYSA for emergencies only.</div>
       </div>
       <div class="field">
         <label>Current War Chest Balance</label>
         <div class="prefix-wrap"><span class="prefix">$</span>
           <input type="number" id="inp-wc" min="0" value="0" placeholder="0" oninput="updateAvail()">
         </div>
-        <div class="hint">Liquid savings earmarked for asset acquisition &mdash; separate from ESF.</div>
+        <div class="hint">Liquid savings earmarked for asset acquisition &mdash; separate account from ESF.</div>
       </div>
     </div>
-
     <div class="avail-strip" id="avail-strip">
-      <span class="avail-label">Monthly savings available</span>
+      <span class="avail-label">Free cash after TSP</span>
       <span class="avail-val" id="avail-display">&mdash;</span>
     </div>
-
     <div class="alert error" id="alert-box"></div>
     <button class="btn-calc" onclick="calculate()">Calculate My War Chest Plan</button>
   </div>
@@ -409,43 +407,53 @@ footer a{color:var(--mid);font-weight:600}
   <!-- ── RESULTS ── -->
   <div id="results">
 
-    <!-- Mission Readiness -->
+    <!-- 1. Hero: Combined Cash Reserves -->
+    <div class="hero-card">
+      <div class="hero-label">Combined Cash Reserves</div>
+      <div class="hero-number" id="hero-number">$0</div>
+      <div class="hero-pct" id="hero-pct">&mdash;</div>
+      <div class="hero-desc" id="hero-desc"></div>
+    </div>
+
+    <!-- 2. Mission Readiness -->
     <div class="card">
       <div class="sec">Mission Readiness</div>
       <div class="sop-grid" id="sop-grid"></div>
     </div>
 
-    <!-- Bucket Status Hero -->
-    <div class="hero-card">
-      <div class="hero-label" id="hero-label">War Chest Status</div>
-      <div class="hero-number" id="hero-number">$0</div>
-      <div class="hero-desc" id="hero-desc"></div>
-    </div>
-
-    <!-- Bucket Metrics -->
-    <div class="mg" id="bucket-metrics"></div>
-
-    <!-- Savings Plan Chart -->
+    <!-- 3. Savings Timeline Chart -->
     <div class="card">
-      <div class="sec">Your Savings Timeline</div>
+      <div class="sec">Savings Timeline</div>
       <div class="chart-wrap">
         <canvas id="wcChart"></canvas>
       </div>
-      <div class="slider-row">
-        <span class="slider-label" id="sl-min">Month 0</span>
-        <input type="range" id="chart-slider" min="0" max="120" step="0.5" value="12" oninput="sliderMoved(this.value)">
-        <span class="slider-label" id="sl-max">Month 120</span>
+      <!-- Extra savings slider -->
+      <div class="slider-section" style="margin-top:16px">
+        <div class="slider-hd">
+          <span class="slider-hd-label">Extra monthly savings</span>
+          <span class="slider-hd-val" id="extra-val-display">$0 / mo</span>
+        </div>
+        <div class="slider-row">
+          <span class="slider-label">$0</span>
+          <input type="range" id="extra-slider" min="0" max="2000" step="25" value="0" oninput="extraSliderMoved(this.value)">
+          <span class="slider-label" id="sl-max">$2,000</span>
+        </div>
+        <div class="safe-zone-note">TSP-safe limit: <span id="safe-zone-val">$0 / mo</span> &mdash; drag past this to model reducing your TSP contribution.</div>
+        <div class="insight warn" id="tsp-slider-warn" style="display:none">
+          <strong>TSP territory:</strong> At this savings rate you would need to reduce your monthly TSP contribution below its current level. Never go below 5% of base pay &mdash; that's the floor to secure the full BRS government match.
+        </div>
       </div>
-      <div class="cpanel" id="cpanel">
-        <div class="cp-row1">Drag the slider or hover the chart to explore your timeline</div>
+      <!-- Hover cpanel -->
+      <div class="cpanel" id="cpanel" style="margin-top:12px">
+        <div class="cp-row1">Hover the chart to read balances at any month</div>
       </div>
     </div>
 
-    <!-- Allocation Plan -->
+    <!-- 4. Recommended Monthly Plan -->
     <div class="card">
       <div class="sec">Recommended Monthly Plan</div>
-      <div class="alloc-grid" id="alloc-grid"></div>
-      <div id="messages"></div>
+      <div id="alloc-content"></div>
+      <div id="messages" style="margin-top:4px"></div>
     </div>
 
     <!-- Courses CTA -->
@@ -458,7 +466,7 @@ footer a{color:var(--mid);font-weight:600}
 
     <!-- Unlock Advanced -->
     <div class="unlock-bar">
-      <p>Want to factor in a deployment, TSP contribution rate, or income-generating assets?</p>
+      <p>Want a deeper look at your TSP trajectory and retirement projection &mdash; or modeling an upcoming deployment?</p>
       <button class="btn-secondary" onclick="unlockAdvanced()">Unlock Advanced Analysis</button>
     </div>
 
@@ -471,34 +479,28 @@ footer a{color:var(--mid);font-weight:600}
 
       <div class="fg" style="margin-bottom:16px">
         <div class="field">
-          <label>TSP Contribution Rate</label>
-          <div class="prefix-wrap" style="position:relative">
-            <input type="number" id="inp-tsp" min="0" max="100" step="1" value="5" placeholder="5" style="padding-right:28px">
-            <span style="position:absolute;right:11px;top:50%;transform:translateY(-50%);color:var(--muted);font-size:.95rem;pointer-events:none">%</span>
-          </div>
-          <div class="hint">As a % of base pay. Minimum 5% to capture the full BRS match.</div>
-        </div>
-      </div>
-
-      <div class="field" style="margin-bottom:16px">
-        <label>Do you own income-generating real estate?</label>
-        <div class="rg">
-          <label><input type="radio" name="has-re" value="no" id="re-no" checked onchange="toggleRE()"> No</label>
-          <label><input type="radio" name="has-re" value="yes" id="re-yes" onchange="toggleRE()"> Yes</label>
-        </div>
-      </div>
-      <div id="re-inputs" style="display:none" class="fg" style="margin-bottom:16px">
-        <div class="field">
-          <label>Total Property Value</label>
+          <label>Current TSP / IRA Balance</label>
           <div class="prefix-wrap"><span class="prefix">$</span>
-            <input type="number" id="inp-re-val" min="0" placeholder="200,000">
+            <input type="number" id="inp-tsp-bal" min="0" placeholder="0">
           </div>
+          <div class="hint">Your current total balance across all TSP accounts and IRAs.</div>
         </div>
         <div class="field">
-          <label>Monthly Gross Rental Income</label>
-          <div class="prefix-wrap"><span class="prefix">$</span>
-            <input type="number" id="inp-re-rent" min="0" placeholder="1,500">
+          <label>Estimated Annual Return</label>
+          <div class="suffix-wrap">
+            <input type="number" id="inp-tsp-ret" min="0" max="20" step="0.5" value="7">
+            <span class="suffix">%</span>
           </div>
+          <div class="hint">TSP C-Fund historical avg is ~10%. Use 7% for a conservative estimate.</div>
+        </div>
+        <div class="field">
+          <label>Your Current Age</label>
+          <input type="number" id="inp-age" min="18" max="65" placeholder="28">
+        </div>
+        <div class="field">
+          <label>Years Until Planned Separation</label>
+          <input type="number" id="inp-sep-yrs" min="0" max="40" step="0.5" placeholder="4">
+          <div class="hint">After separation, TSP contributions stop but balance keeps growing until 59&#189;.</div>
         </div>
       </div>
 
@@ -515,19 +517,16 @@ footer a{color:var(--mid);font-weight:600}
           <div class="field">
             <label>Deployment Duration</label>
             <select id="inp-dep-months">
-              <option value="3">3 months</option>
-              <option value="4">4 months</option>
-              <option value="6" selected>6 months</option>
-              <option value="7">7 months</option>
-              <option value="9">9 months</option>
-              <option value="12">12 months</option>
+              <option value="3">3 months</option><option value="4">4 months</option>
+              <option value="6" selected>6 months</option><option value="7">7 months</option>
+              <option value="9">9 months</option><option value="12">12 months</option>
             </select>
           </div>
         </div>
         <div class="field" style="margin-bottom:12px">
           <label>Will you continue paying for housing while deployed?</label>
           <div class="rg">
-            <label><input type="radio" name="dep-housing" value="yes" checked> Yes (family stays home / keeping lease)</label>
+            <label><input type="radio" name="dep-housing" value="yes" checked> Yes (family stays / keeping lease)</label>
             <label><input type="radio" name="dep-housing" value="no"> No (no housing costs while deployed)</label>
           </div>
         </div>
@@ -559,344 +558,312 @@ footer a{color:var(--mid);font-weight:600}
   <strong>Disclaimer:</strong> Educational estimates only &mdash; not financial or legal advice.
   HYSA rates, TSP returns, and SDP eligibility vary. Consult a certified financial planner or
   <a href="https://www.militaryonesource.mil/financial-legal/personal-finance/">Military OneSource</a>
-  for personalized guidance.
+  for personalized guidance before making major financial decisions.
 </footer>
 
 <script>
 // ── Constants ─────────────────────────────────────────────────────────────
-const HYSA_APY   = 0.035;
-const HYSA_MO    = HYSA_APY / 12;
+const HYSA_APY = 0.035;
+const HYSA_MO  = HYSA_APY / 12;
 
 // ── Helpers ───────────────────────────────────────────────────────────────
 function fmt(n){ return '$' + Math.round(Math.abs(n)).toLocaleString('en-US'); }
 function fmtK(n){
   const a = Math.abs(n);
-  if(a >= 1e6) return '$' + (a/1e6).toFixed(2) + 'M';
-  if(a >= 10000) return '$' + Math.round(a/1000) + 'K';
+  if(a>=1e6) return '$'+(a/1e6).toFixed(2)+'M';
+  if(a>=10000) return '$'+Math.round(a/1000)+'K';
   return fmt(n);
 }
-function fmtPct(r){ return Math.round(r * 100) + '%'; }
-function mo(m){ return m === 1 ? '1 month' : m + ' months'; }
-function clamp(v,lo,hi){ return Math.max(lo, Math.min(hi, v)); }
+function fmtPct(r){ return Math.round(r*100)+'%'; }
+function moLabel(m){ return m===1?'1 month':m+' months'; }
+function clamp(v,lo,hi){ return Math.max(lo,Math.min(hi,v)); }
 
 // ── Goal UI ───────────────────────────────────────────────────────────────
 function goalModeChanged(){
   const auto = document.getElementById('mode-auto').checked;
-  document.getElementById('goals-section').style.display  = auto ? 'none' : 'block';
-  document.getElementById('decide-msg').style.display     = auto ? 'block' : 'none';
+  document.getElementById('goals-section').style.display = auto?'none':'block';
+  document.getElementById('decide-msg').style.display    = auto?'block':'none';
   updateWarChestTarget();
 }
-
 function addGoal(n){
-  document.getElementById('add-goal-' + n + '-btn').style.display = 'none';
-  document.getElementById('goal-row-' + n).style.display = 'grid';
-  if(n === 2) document.getElementById('add-goal-3-btn').style.display = 'block';
+  document.getElementById('add-goal-'+n+'-btn').style.display = 'none';
+  document.getElementById('goal-row-'+n).style.display = 'grid';
+  if(n===2) document.getElementById('add-goal-3-btn').style.display = 'block';
 }
-
 function goalChanged(n){
-  const val = document.getElementById('goal-sel-' + n).value;
-  document.getElementById('goal-tl-' + n).style.display    = val ? 'flex' : 'none';
-  document.getElementById('goal-other-' + n).style.display = val === 'other' ? 'flex' : 'none';
+  const val = document.getElementById('goal-sel-'+n).value;
+  document.getElementById('goal-tl-'+n).style.display    = val?'flex':'none';
+  document.getElementById('goal-other-'+n).style.display = val==='other'?'flex':'none';
   updateWarChestTarget();
 }
-
 function getGoals(){
   if(document.getElementById('mode-auto').checked)
-    return [{ label:'New Car', amount:10000, months:60 },
-            { label:'VA Loan Home Purchase', amount:20000, months:60 }];
-  const goals = [];
-  for(let n = 1; n <= 3; n++){
-    const row = document.getElementById('goal-row-' + n);
-    if(!row || row.style.display === 'none') continue;
-    const sel = document.getElementById('goal-sel-' + n);
-    if(!sel || !sel.value) continue;
-    const months = parseInt(document.getElementById('goal-when-' + n)?.value) || 36;
-    if(sel.value === 'other'){
-      const amt = parseFloat(document.getElementById('goal-amt-' + n).value) || 0;
-      if(amt > 0) goals.push({ label:'Custom goal', amount:amt, months });
+    return [{label:'New Car',amount:10000,months:60},{label:'VA Loan Home Purchase',amount:20000,months:60}];
+  const goals=[];
+  for(let n=1;n<=3;n++){
+    const row=document.getElementById('goal-row-'+n);
+    if(!row||row.style.display==='none') continue;
+    const sel=document.getElementById('goal-sel-'+n);
+    if(!sel||!sel.value) continue;
+    const months=parseInt(document.getElementById('goal-when-'+n)?.value)||36;
+    if(sel.value==='other'){
+      const amt=parseFloat(document.getElementById('goal-amt-'+n).value)||0;
+      if(amt>0) goals.push({label:'Custom goal',amount:amt,months});
     } else {
-      const label = sel.options[sel.selectedIndex].text.split('—')[0].trim();
-      goals.push({ label, amount:parseInt(sel.value), months });
+      const label=sel.options[sel.selectedIndex].text.split('—')[0].trim().replace(/\s*&mdash;\s*/,'');
+      goals.push({label,amount:parseInt(sel.value),months});
     }
   }
   return goals;
 }
-
 function updateWarChestTarget(){
-  const goals = getGoals();
-  const total = goals.reduce((s,g) => s + g.amount, 0);
-  document.getElementById('wct-display').textContent = total > 0 ? fmtK(total) : '—';
+  const goals=getGoals();
+  const total=goals.reduce((s,g)=>s+g.amount,0);
+  document.getElementById('wct-display').textContent = total>0?fmtK(total):'—';
 }
 
-// ── Situation live update ─────────────────────────────────────────────────
+// ── Situation live ────────────────────────────────────────────────────────
 function updateAvail(){
-  const th  = parseFloat(document.getElementById('inp-take-home').value) || 0;
-  const dbt = parseFloat(document.getElementById('inp-debt').value) || 0;
-  const exp = parseFloat(document.getElementById('inp-exp').value) || 0;
-  const avail = th - dbt - exp;
-  const el  = document.getElementById('avail-display');
-  if(!th){ el.textContent = '—'; el.className='avail-val'; return; }
-  el.textContent = avail >= 0 ? fmt(avail) + '/mo' : '−' + fmt(Math.abs(avail)) + '/mo';
-  el.className = 'avail-val' + (avail < 0 ? ' warn' : '');
+  const th  = parseFloat(document.getElementById('inp-take-home').value)||0;
+  const dbt = parseFloat(document.getElementById('inp-debt').value)||0;
+  const exp = parseFloat(document.getElementById('inp-exp').value)||0;
+  const tsp = parseFloat(document.getElementById('inp-tsp-contrib').value)||0;
+  const avail = th-dbt-exp;
+  const free  = Math.max(0,avail-tsp);
+  const el = document.getElementById('avail-display');
+  if(!th){ el.textContent='—'; el.className='avail-val'; return; }
+  if(avail<0){ el.textContent=fmt(Math.abs(avail))+'/mo over budget'; el.className='avail-val warn'; return; }
+  const tspNote = tsp>0 ? ' (after '+fmt(tsp)+'/mo TSP)' : '';
+  el.textContent = fmt(free)+'/mo'+tspNote;
+  el.className = 'avail-val';
 }
 
 // ── Projection ────────────────────────────────────────────────────────────
-function projectBalances(curESF, esfTgt, curWC, wcTgt, avail, isDebtTrap, horizon){
-  let esf = curESF, wc = curWC;
-  const esfData = [Math.min(esf, esfTgt)];
-  const wcData  = [Math.min(wc,  wcTgt)];
-  let esfFunded = null, wcFunded = null;
+function projectBalances(curESF,esfTgt,curWC,wcTgt,monthly,isDebtTrap,horizon){
+  let esf=curESF, wc=curWC;
+  const esfData=[Math.min(esf,esfTgt)];
+  const wcData=[Math.min(wc,wcTgt)];
+  let esfFunded=null, wcFunded=null;
+  if(curESF>=esfTgt) esfFunded=0;
+  if(curWC>=wcTgt)   wcFunded=0;
 
-  for(let m = 1; m <= horizon; m++){
-    esf *= (1 + HYSA_MO);
-    wc  *= (1 + HYSA_MO);
-
-    if(esf < esfTgt){
-      const contrib = isDebtTrap ? avail * 0.5 : Math.min(avail, esfTgt - esf);
-      esf += Math.max(0, contrib);
+  for(let m=1;m<=horizon;m++){
+    esf *= (1+HYSA_MO);
+    wc  *= (1+HYSA_MO);
+    if(esf<esfTgt){
+      const contrib = isDebtTrap ? monthly*0.5 : Math.min(monthly,esfTgt-esf);
+      esf += Math.max(0,contrib);
     } else {
-      if(esfFunded === null) esfFunded = m;
-      if(wc < wcTgt) wc += Math.min(avail, wcTgt - wc);
+      if(esfFunded===null) esfFunded=m;
+      if(wc<wcTgt) wc += Math.min(monthly,wcTgt-wc);
     }
-
-    if(esf >= esfTgt && esfFunded === null) esfFunded = m;
-    if(wc  >= wcTgt  && wcFunded  === null) wcFunded  = m;
-
-    esfData.push(Math.min(esf, esfTgt));
-    wcData.push(Math.min(wc,  wcTgt));
+    if(esf>=esfTgt&&esfFunded===null) esfFunded=m;
+    if(wc>=wcTgt &&wcFunded===null)   wcFunded=m;
+    esfData.push(Math.min(esf,esfTgt));
+    wcData.push(Math.min(wc,wcTgt));
   }
-  return { esfData, wcData, esfFunded, wcFunded };
+  return {esfData,wcData,esfFunded,wcFunded};
 }
 
-function computeHorizon(curESF, esfTgt, curWC, wcTgt, avail, isDebtTrap){
-  if(avail <= 0) return 120;
-  const esfRate = isDebtTrap ? avail * 0.5 : avail;
-  const esfMo   = esfRate > 0 ? Math.ceil(Math.max(0, esfTgt - curESF) / esfRate) : 120;
-  const wcMo    = avail   > 0 ? Math.ceil(Math.max(0, wcTgt  - curWC)  / avail)   : 120;
-  const total   = esfMo + wcMo;
-  return clamp(total + Math.max(6, Math.ceil(total * 0.15)), 18, 180);
+function computeHorizon(curESF,esfTgt,curWC,wcTgt,avail,isDebtTrap){
+  if(avail<=0) return 120;
+  const esfRate = isDebtTrap?avail*0.5:avail;
+  const esfMo   = esfRate>0?Math.ceil(Math.max(0,esfTgt-curESF)/esfRate):120;
+  const wcMo    = avail>0  ?Math.ceil(Math.max(0,wcTgt-curWC)/avail)    :120;
+  const total   = esfMo+wcMo;
+  return clamp(total+Math.max(6,Math.ceil(total*0.15)),18,180);
 }
+
+// ── Global state ──────────────────────────────────────────────────────────
+let G = {
+  chart:null, esfTgt:0, wcTgt:0, horizon:0,
+  available:0, freeCash:0, tspAmt:0,
+  isDebtTrap:false, curESF:0, curWC:0,
+  esfFunded:null, wcFunded:null, goals:[]
+};
 
 // ── Main calculate ────────────────────────────────────────────────────────
-let G = { chart:null, esfTgt:0, wcTgt:0, horizon:0, available:0, esfFunded:null, wcFunded:null };
-
 function calculate(){
-  const el = document.getElementById('alert-box');
-  el.className = 'alert error'; el.textContent = '';
+  const alertEl = document.getElementById('alert-box');
+  alertEl.className='alert error'; alertEl.textContent='';
 
   const goals   = getGoals();
-  const wcTgt   = goals.reduce((s,g) => s + g.amount, 0);
-  const th      = parseFloat(document.getElementById('inp-take-home').value) || 0;
-  const dbt     = parseFloat(document.getElementById('inp-debt').value) || 0;
-  const exp     = parseFloat(document.getElementById('inp-exp').value) || 0;
+  const wcTgt   = goals.reduce((s,g)=>s+g.amount,0);
+  const th      = parseFloat(document.getElementById('inp-take-home').value)||0;
+  const dbt     = parseFloat(document.getElementById('inp-debt').value)||0;
+  const exp     = parseFloat(document.getElementById('inp-exp').value)||0;
+  const tspAmt  = parseFloat(document.getElementById('inp-tsp-contrib').value)||0;
   const debtTyp = document.querySelector('input[name="debt-type"]:checked').value;
-  const curESF  = parseFloat(document.getElementById('inp-esf').value) || 0;
-  const curWC   = parseFloat(document.getElementById('inp-wc').value) || 0;
+  const curESF  = parseFloat(document.getElementById('inp-esf').value)||0;
+  const curWC   = parseFloat(document.getElementById('inp-wc').value)||0;
 
-  if(!th){ el.textContent='Enter your monthly take-home pay.'; el.className='alert error show'; return; }
-  if(wcTgt === 0){ el.textContent='Select at least one goal above.'; el.className='alert error show'; return; }
+  if(!th){ alertEl.textContent='Enter your monthly net pay.'; alertEl.className='alert error show'; return; }
+  if(wcTgt===0){ alertEl.textContent='Select at least one goal above.'; alertEl.className='alert error show'; return; }
 
-  const totalExp = dbt + exp;
-  const avail    = th - totalExp;
-  const esfTgt   = totalExp * 3;
-  const isTrap   = debtTyp === 'revolving';
+  const totalExp  = dbt+exp;
+  const available = th-totalExp;
+  const freeCash  = Math.max(0,available-tspAmt);
+  const esfTgt    = totalExp*3;
+  const isTrap    = debtTyp==='revolving';
 
-  if(avail < 0){
-    el.textContent='Your expenses exceed your take-home pay by ' + fmt(Math.abs(avail)) + '/mo. Review your inputs.';
-    el.className='alert error show'; return;
+  if(available<0){
+    alertEl.textContent='Your expenses exceed your take-home pay by '+fmt(Math.abs(available))+'/mo. Review your inputs.';
+    alertEl.className='alert error show'; return;
   }
 
-  const horizon = computeHorizon(curESF, esfTgt, curWC, wcTgt, avail, isTrap);
-  const { esfData, wcData, esfFunded, wcFunded } =
-    projectBalances(curESF, esfTgt, curWC, wcTgt, avail, isTrap, horizon);
+  const horizon = computeHorizon(curESF,esfTgt,curWC,wcTgt,freeCash,isTrap);
+  const {esfData,wcData,esfFunded,wcFunded} =
+    projectBalances(curESF,esfTgt,curWC,wcTgt,freeCash,isTrap,horizon);
 
-  G = { chart:null, esfTgt, wcTgt, horizon, available:avail, esfFunded, wcFunded };
+  G = {chart:null,esfTgt,wcTgt,horizon,available,freeCash,tspAmt,
+       isDebtTrap:isTrap,curESF,curWC,esfFunded,wcFunded,goals};
 
-  const savingsRate  = th > 0 ? avail / th : 0;
-  const esfPct       = esfTgt > 0 ? clamp(curESF / esfTgt, 0, 1) : 1;
-  const wcPct        = wcTgt  > 0 ? clamp(curWC  / wcTgt,  0, 1) : 1;
-  const hysaInterest = (curESF + curWC) * (Math.pow(1 + HYSA_MO, 12) - 1);
+  const savingsRate = th>0?freeCash/th:0;
+  const esfPct      = esfTgt>0?clamp(curESF/esfTgt,0,1):1;
+  const wcPct       = wcTgt >0?clamp(curWC /wcTgt, 0,1):1;
+  const hysaInt     = (curESF+curWC)*(Math.pow(1+HYSA_MO,12)-1);
 
-  renderSOP({ savingsRate, debtTyp, esfPct, wcPct });
-  renderHero({ curESF, curWC, esfTgt, wcTgt, esfPct, wcPct, esfFunded, wcFunded });
-  renderBuckets({ curESF, curWC, esfTgt, wcTgt, esfPct, wcPct });
-  renderChart(esfData, wcData, esfTgt, wcTgt, horizon, esfFunded, wcFunded, goals);
-  renderAllocation({ avail, isTrap, esfPct, wcPct, esfFunded, wcFunded, hysaInterest, curESF, curWC, esfTgt, wcTgt, goals, th, savingsRate, debtTyp });
+  renderHero({curESF,curWC,esfTgt,wcTgt,esfPct,wcPct});
+  renderSOP({savingsRate,debtTyp,esfPct,wcPct,tspAmt,available});
+  renderChart(esfData,wcData,esfTgt,wcTgt,horizon,esfFunded,wcFunded,goals,freeCash,available);
+  renderAllocation(freeCash,esfFunded,wcFunded,isTrap,esfPct,wcPct,curESF,curWC,esfTgt,wcTgt);
+  renderMessages({isTrap,hysaInt,curESF,curWC,goals,esfPct,wcPct,esfFunded,wcFunded,tspAmt,freeCash,available,debtTyp});
 
-  document.getElementById('results').style.display = 'block';
-  setTimeout(() => document.getElementById('results').scrollIntoView({behavior:'smooth',block:'start'}), 50);
+  document.getElementById('results').style.display='block';
+  setTimeout(()=>document.getElementById('results').scrollIntoView({behavior:'smooth',block:'start'}),50);
 }
 
-// ── Render: SOP Tracker ───────────────────────────────────────────────────
-function renderSOP({ savingsRate, debtTyp, esfPct, wcPct }){
-  const steps = [
-    {
-      n:1, name:'Savings Rate',
-      cls: savingsRate <= 0 ? 'red' : savingsRate < 0.15 ? 'amber' : 'green',
-      status: savingsRate <= 0 ? 'No savings rate' :
-              savingsRate < 0.15 ? fmtPct(savingsRate) + ' — build toward 15%' :
-              fmtPct(savingsRate) + ' — on track'
-    },
-    {
-      n:2, name:'Debt Status',
-      cls: debtTyp === 'revolving' ? 'red' : debtTyp === 'auto' ? 'amber' : 'green',
-      status: debtTyp === 'revolving' ? 'High-interest debt — priority target' :
-              debtTyp === 'auto'      ? 'Auto/student loan — manageable' :
-              debtTyp === 'mortgage'  ? 'Mortgage only — clear' : 'No consumer debt — clear'
-    },
-    {
-      n:3, name:'Cash Reserve',
-      cls: esfPct < 1 ? 'red' : wcPct < 1 ? 'amber' : 'green',
-      status: esfPct < 1 ? 'ESF ' + fmtPct(esfPct) + ' funded' :
-              wcPct  < 1 ? 'ESF funded · War Chest ' + fmtPct(wcPct) + ' funded' :
-              'ESF + War Chest funded'
-    },
-    { n:4, name:'TSP / IRA',  cls:'locked', status:'Unlock advanced analysis' },
-    { n:5, name:'Income Assets', cls:'locked', status:'Unlock advanced analysis' }
-  ];
-
-  const coaching = '<div class="sop-step coaching"><div class="sop-num">Steps 5 – 6</div><div class="sop-name">Advanced Strategies</div><div class="sop-status">Recycling investment income and asset protection are advanced SOP steps. <a href="https://militarywealthcoach.com/courses">Explore coaching →</a></div></div>';
-
-  document.getElementById('sop-grid').innerHTML =
-    steps.map(s =>
-      '<div class="sop-step ' + s.cls + '">' +
-      '<div class="sop-num">Step ' + s.n + '</div>' +
-      '<div class="sop-name">' + s.name + '</div>' +
-      '<div class="sop-status">' + s.status + '</div>' +
-      '</div>'
-    ).join('') + coaching;
-}
-
-// ── Render: Hero + Buckets ────────────────────────────────────────────────
-function renderHero({ curESF, curWC, esfTgt, wcTgt, esfPct, wcPct, esfFunded, wcFunded }){
-  const bothFunded = esfPct >= 1 && wcPct >= 1;
-  const total = curESF + curWC;
-  document.getElementById('hero-label').textContent = bothFunded ? 'War Chest Status' : 'Combined Cash Reserves';
+// ── Render: Hero ──────────────────────────────────────────────────────────
+function renderHero({curESF,curWC,esfTgt,wcTgt,esfPct,wcPct}){
+  const total    = curESF+curWC;
+  const totalTgt = esfTgt+wcTgt;
+  const pct      = totalTgt>0?clamp(total/totalTgt,0,1):0;
   document.getElementById('hero-number').textContent = fmtK(total);
-  if(bothFunded){
-    document.getElementById('hero-desc').textContent = 'Your ESF and War Chest are fully funded. You are cleared to deploy capital toward income-generating assets.';
-  } else {
-    const parts = [];
-    if(esfPct < 1) parts.push('ESF ' + fmtPct(esfPct) + ' funded (' + fmt(curESF) + ' of ' + fmt(esfTgt) + ')');
-    else parts.push('ESF ✓ funded');
-    if(wcPct < 1)  parts.push('War Chest ' + fmtPct(wcPct) + ' funded (' + fmt(curWC) + ' of ' + fmt(wcTgt) + ')');
-    else parts.push('War Chest ✓ funded');
-    document.getElementById('hero-desc').textContent = parts.join(' · ');
-  }
+  document.getElementById('hero-pct').textContent    = fmtPct(pct)+' of target needs funded';
+  const parts = [];
+  parts.push(esfPct>=1?'ESF ✓ funded':'ESF '+fmtPct(esfPct)+' funded ('+fmt(curESF)+' of '+fmt(esfTgt)+')');
+  parts.push(wcPct >=1?'War Chest ✓ funded':'War Chest '+fmtPct(wcPct)+' funded ('+fmt(curWC)+' of '+fmtK(wcTgt)+')');
+  document.getElementById('hero-desc').textContent = parts.join(' · ');
 }
 
-function renderBuckets({ curESF, curWC, esfTgt, wcTgt, esfPct, wcPct }){
-  document.getElementById('bucket-metrics').innerHTML =
-    '<div class="m' + (esfPct >= 1 ? ' g' : '') + '">' +
-      '<div class="ml">Emergency Savings Fund</div>' +
-      '<div class="mv">' + fmtK(curESF) + '</div>' +
-      '<div class="ms">Target: ' + fmt(esfTgt) + ' · ' + fmtPct(esfPct) + ' funded</div>' +
-    '</div>' +
-    '<div class="m' + (wcPct >= 1 ? ' g' : '') + '">' +
-      '<div class="ml">War Chest</div>' +
-      '<div class="mv">' + fmtK(curWC) + '</div>' +
-      '<div class="ms">Target: ' + fmtK(wcTgt) + ' · ' + fmtPct(wcPct) + ' funded</div>' +
-    '</div>' +
-    '<div class="m acc">' +
-      '<div class="ml">HYSA Interest (12 mo.)</div>' +
-      '<div class="mv">+' + fmtK((curESF + curWC) * (Math.pow(1+HYSA_MO,12)-1)) + '</div>' +
-      '<div class="ms">3.5% APY on current balance</div>' +
-    '</div>';
+// ── Render: SOP ───────────────────────────────────────────────────────────
+function renderSOP({savingsRate,debtTyp,esfPct,wcPct,tspAmt,available}){
+  const step1cls = savingsRate<=0?'red':savingsRate<0.15?'amber':'green';
+  const step1txt = savingsRate<=0?'No savings rate':
+                   savingsRate<0.15?fmtPct(savingsRate)+' — build toward 15%':
+                   fmtPct(savingsRate)+' — on track';
+  const step2cls = debtTyp==='revolving'?'red':debtTyp==='auto'?'amber':'green';
+  const step2txt = debtTyp==='revolving'?'High-interest debt — priority target':
+                   debtTyp==='auto'?'Auto/student loan — manageable':
+                   debtTyp==='mortgage'?'Mortgage only — clear':'No consumer debt — clear';
+  const step3cls = esfPct<1?'red':wcPct<1?'amber':'green';
+  const step3txt = esfPct<1?'ESF '+fmtPct(esfPct)+' funded':
+                   wcPct <1?'ESF funded · War Chest '+fmtPct(wcPct)+' funded':
+                   'ESF + War Chest funded';
+  const step4cls = tspAmt===0?'red':(esfPct<1||wcPct<1)?'amber':'green';
+  const step4txt = tspAmt===0?'No contribution — missing BRS match':
+                   (esfPct<1||wcPct<1)?fmt(tspAmt)+'/mo — balance with cash reserves':
+                   fmt(tspAmt)+'/mo — match secured';
+
+  const steps = [
+    {n:1,name:'Savings Rate',cls:step1cls,status:step1txt},
+    {n:2,name:'Debt Status',cls:step2cls,status:step2txt},
+    {n:3,name:'Cash Reserve',cls:step3cls,status:step3txt},
+    {n:4,name:'TSP / IRA',cls:step4cls,status:step4txt}
+  ];
+  const coaching = '<div class="sop-step coaching"><div class="sop-num">Steps 5–6</div><div class="sop-name">Advanced Strategies</div><div class="sop-status">Recycling investment income and asset protection are advanced SOP steps. <a href="https://militarywealthcoach.com/courses">Explore coaching →</a></div></div>';
+  document.getElementById('sop-grid').innerHTML =
+    steps.map(s=>'<div class="sop-step '+s.cls+'"><div class="sop-num">Step '+s.n+'</div><div class="sop-name">'+s.name+'</div><div class="sop-status">'+s.status+'</div></div>').join('')+coaching;
 }
 
-// ── Render: Allocation + Messages ─────────────────────────────────────────
-function renderAllocation({ avail, isTrap, esfPct, wcPct, esfFunded, wcFunded, hysaInterest, curESF, curWC, esfTgt, wcTgt, goals, th, savingsRate, debtTyp }){
-  const esfDone = esfPct >= 1;
-  const wcDone  = wcPct  >= 1;
+// ── Render: Allocation ────────────────────────────────────────────────────
+function renderAllocation(monthly,esfFunded,wcFunded,isTrap,esfPct,wcPct,curESF,curWC,esfTgt,wcTgt){
+  const esfDone=esfPct>=1, wcDone=wcPct>=1;
+  let html='';
 
-  let allocHtml = '';
-  if(avail <= 0){
-    allocHtml = '<div class="insight debt-trap"><strong>No savings available.</strong> Your monthly expenses currently consume all of your take-home pay. Focus first on reducing expenses or increasing income before funding any savings bucket.</div>';
-  } else if(esfDone && wcDone){
-    allocHtml = '<div class="alloc-card primary" style="grid-column:1/-1"><div class="alloc-tag">Status</div><div class="alloc-amt">' + fmt(avail) + '<span style="font-family:Manrope;font-size:.9rem;font-weight:500">/mo available</span></div><div class="alloc-desc">Both buckets are funded. Direct all available savings toward income-generating assets. Visit the BAH House-Hack Wealth Builder to see what you can afford.</div></div>';
-  } else if(isTrap && !esfDone){
-    allocHtml =
-      '<div class="alloc-card primary"><div class="alloc-tag">Emergency Savings Fund</div>' +
-      '<div class="alloc-amt">' + fmt(avail * 0.5) + '<span style="font-family:Manrope;font-size:.9rem;font-weight:500">/mo</span></div>' +
-      '<div class="alloc-desc">50% of available savings — funded' + (esfFunded ? ' in ' + mo(esfFunded) : ' over time') + '.</div></div>' +
-      '<div class="alloc-card debt"><div class="alloc-tag">Accelerated Debt Paydown</div>' +
-      '<div class="alloc-amt">' + fmt(avail * 0.5) + '<span style="font-family:Manrope;font-size:.9rem;font-weight:500">/mo</span></div>' +
-      '<div class="alloc-desc">50% toward highest-interest debt. Attack the highest rate first (avalanche method).</div></div>';
+  if(monthly<=0){
+    html='<div class="alloc-card neutral"><div class="alloc-tag">Status</div>'+
+      '<div class="alloc-headline">No free cash available at current savings rate.</div>'+
+      '<div class="alloc-note">Adjust the extra savings slider above or reduce expenses to begin building your War Chest.</div></div>';
+  } else if(esfDone&&wcDone){
+    html='<div class="alloc-card primary"><div class="alloc-tag">Status</div>'+
+      '<div class="alloc-headline">Both buckets fully funded. You are cleared to deploy capital.</div>'+
+      '<div class="alloc-note">Direct all available savings toward income-generating assets. Visit the BAH House-Hack Wealth Builder to see what you can afford.</div></div>';
+  } else if(isTrap&&!esfDone){
+    const half=fmt(monthly*0.5);
+    const tl = esfFunded&&wcFunded ? 'ESF funded '+moLabel(esfFunded)+' · War Chest ready '+moLabel(wcFunded)+'.' : esfFunded ? 'ESF funded '+moLabel(esfFunded)+'.' : 'Timeline depends on savings rate.';
+    html='<div class="alloc-split">'+
+      '<div class="alloc-split-item"><div class="alloc-tag">Emergency Savings Fund</div><div class="alloc-amt">'+half+'/mo</div><div class="alloc-note">50% until fully funded</div></div>'+
+      '<div class="alloc-split-item"><div class="alloc-tag debt-tag">Accelerated Debt Paydown</div><div class="alloc-amt">'+half+'/mo</div><div class="alloc-note">50% toward highest-rate balance first</div></div>'+
+    '</div>'+
+    '<div class="alloc-timeline">'+tl+'</div>'+
+    '<div class="alloc-note">Adjust the extra savings slider to see how more cash shortens your timeline.</div>';
   } else if(!esfDone){
-    allocHtml =
-      '<div class="alloc-card primary" style="grid-column:1/-1"><div class="alloc-tag">Emergency Savings Fund — Priority</div>' +
-      '<div class="alloc-amt">' + fmt(avail) + '<span style="font-family:Manrope;font-size:.9rem;font-weight:500">/mo</span></div>' +
-      '<div class="alloc-desc">100% of savings to ESF until funded' + (esfFunded ? ' — estimated ' + mo(esfFunded) + '.' : '.') + ' Then shift to War Chest.</div></div>';
+    const tl = esfFunded&&wcFunded ? moLabel(esfFunded)+' for ESF · '+moLabel(wcFunded)+' for War Chest'
+              : esfFunded ? moLabel(esfFunded)+' for ESF, then all savings shift to War Chest' : 'Timeline updates with slider.';
+    html='<div class="alloc-card primary"><div class="alloc-tag">Priority Action</div>'+
+      '<div class="alloc-headline">100% of savings to Emergency Savings Fund until fully funded — then shift every dollar to the War Chest.</div>'+
+      '<div class="alloc-timeline">'+fmt(monthly)+'/mo · '+tl+'</div>'+
+      '<div class="alloc-note">Drag the extra savings slider above to see how increasing your monthly savings rate accelerates each milestone.</div></div>';
   } else {
-    allocHtml =
-      '<div class="alloc-card primary" style="grid-column:1/-1"><div class="alloc-tag">War Chest — Now Building</div>' +
-      '<div class="alloc-amt">' + fmt(avail) + '<span style="font-family:Manrope;font-size:.9rem;font-weight:500">/mo</span></div>' +
-      '<div class="alloc-desc">ESF is funded. All savings now go to the War Chest' + (wcFunded ? ' — estimated ' + mo(wcFunded) + '.' : '.') + '</div></div>';
+    const tl = wcFunded ? moLabel(wcFunded)+' to reach your War Chest target.' : 'Timeline updates with slider.';
+    html='<div class="alloc-card primary"><div class="alloc-tag">Priority Action</div>'+
+      '<div class="alloc-headline">ESF is funded. Redirect all available savings to the War Chest now.</div>'+
+      '<div class="alloc-timeline">'+fmt(monthly)+'/mo · '+tl+'</div>'+
+      '<div class="alloc-note">Drag the extra savings slider to see how increasing your monthly savings rate changes your timeline.</div></div>';
   }
+  document.getElementById('alloc-content').innerHTML=html;
+}
 
-  let msgHtml = '';
-
-  // Debt trap insight
-  if(isTrap){
-    msgHtml += '<div class="insight debt-trap"><strong>The Debt Trap Warning:</strong> Without a funded ESF, every dollar you put toward debt is at risk. One unexpected expense forces you back into debt — and you’re right back where you started. Splitting your savings 50/50 between ESF and debt paydown breaks the cycle.</div>';
+// ── Render: Messages ──────────────────────────────────────────────────────
+function renderMessages({isTrap,hysaInt,curESF,curWC,goals,esfPct,wcPct,esfFunded,wcFunded,tspAmt,freeCash,available,debtTyp}){
+  let html='';
+  if(isTrap)
+    html+='<div class="insight debt-trap"><strong>The Debt Trap Warning:</strong> Without a funded ESF, every dollar you put toward debt is at risk. One unexpected expense forces you back into debt. Splitting 50/50 between ESF and debt paydown breaks the cycle.</div>';
+  if(tspAmt===0)
+    html+='<div class="insight tsp-note"><strong>Missing Your BRS Match:</strong> You entered $0 in TSP contributions. If you are on the Blended Retirement System, you are leaving free government matching money on the table every month. Set your contribution to at least 5% of base pay immediately.</div>';
+  else if(tspAmt>0&&(esfPct<1||wcPct<1))
+    html+='<div class="insight tsp-note"><strong>Consider rebalancing toward cash:</strong> When your ESF and War Chest are underfunded, the cash you might need is locked in your retirement account until age 59&#189;. Consider temporarily reducing your TSP contribution — never below 5% to keep the full BRS match — until your cash reserves are fully funded.</div>';
+  if(curESF+curWC>0)
+    html+='<div class="insight hysa"><strong>Your HYSA works while you build.</strong> At 3.5% APY, your current savings of '+fmt(curESF+curWC)+' will earn approximately <strong>'+fmt(hysaInt)+'</strong> in interest over the next 12 months. Keep ESF and War Chest in separate HYSAs (Marcus, Ally, or SoFi) to maximize this return.</div>';
+  else
+    html+='<div class="insight hysa"><strong>Open your HYSA today.</strong> Even $100 in a 3.5% APY high-yield savings account starts compounding immediately. Keep ESF and War Chest in separate accounts so you never accidentally spend one on the other.</div>';
+  if(goals.length>0&&goals.every(g=>g.amount<=1000))
+    html+='<div class="insight"><strong>One thought:</strong> A '+fmtK(goals.reduce((s,g)=>s+g.amount,0))+' War Chest may not be enough. Starting the habit of saving toward a goal you don’t have yet will position you to act fast when the right opportunity appears. Consider adding a longer-term goal.</div>';
+  if(wcFunded&&goals.length>0){
+    const late=goals.filter(g=>wcFunded>g.months);
+    const ok  =goals.filter(g=>wcFunded<=g.months);
+    if(ok.length>0)   html+='<div class="insight"><strong>On track:</strong> '+ok.map(g=>g.label).join(', ')+' — War Chest funded before your target date.</div>';
+    if(late.length>0) html+='<div class="insight warn"><strong>Behind schedule:</strong> '+late.map(g=>g.label+' (goal: '+moLabel(g.months)+', funded: '+moLabel(wcFunded)+')').join('; ')+'. Increase monthly savings rate or reduce expenses to close the gap.</div>';
   }
-
-  // TSP insight (always show in Phase 1 as a prompt)
-  msgHtml += '<div class="insight tsp-note"><strong>TSP Check:</strong> When your ESF and War Chest are underfunded, you are at risk of financial hardship because the cash you might need immediately is locked in your retirement accounts until age 59½. Consider reducing your TSP contribution temporarily — never below 5% to keep the full BRS match — until your ESF and War Chest are fully funded. Enter your TSP rate in Advanced Analysis for a personalized assessment.</div>';
-
-  // HYSA interest note
-  if(curESF + curWC > 0){
-    msgHtml += '<div class="insight hysa"><strong>Your HYSA earns while you build.</strong> At 3.5% APY, your current savings of ' + fmt(curESF + curWC) + ' will earn approximately <strong>' + fmt(hysaInterest) + '</strong> in interest over the next 12 months — without lifting a finger. Keep ESF and War Chest in separate high-yield savings accounts (Marcus, Ally, or SoFi) to maximize this return.</div>';
-  } else {
-    msgHtml += '<div class="insight hysa"><strong>Open your HYSA today.</strong> Even $100 in a 3.5% APY high-yield savings account starts compounding. ESF and War Chest should each live in a separate HYSA so you never accidentally spend your emergency fund on a vacation, or vice versa.</div>';
-  }
-
-  // Small goal message
-  if(goals.length > 0 && goals.every(g => g.amount <= 1000)){
-    msgHtml += '<div class="insight"><strong>One thought:</strong> A $' + goals.reduce((s,g)=>s+g.amount,0).toLocaleString() + ' War Chest may not be enough. The habit of saving toward a goal you don’t have yet will position you to act fast when the right opportunity appears. Consider adding a longer-term goal to your War Chest target.</div>';
-  }
-
-  // Goal timeline status
-  if(wcFunded && goals.length > 0){
-    const lateGoals = goals.filter(g => wcFunded > g.months);
-    const onTrack   = goals.filter(g => wcFunded <= g.months);
-    if(onTrack.length > 0){
-      msgHtml += '<div class="insight"><strong>On track:</strong> ' + onTrack.map(g=>g.label).join(', ') + ' — your War Chest will be funded before your target date.</div>';
-    }
-    if(lateGoals.length > 0){
-      msgHtml += '<div class="insight debt-trap"><strong>Behind schedule:</strong> ' + lateGoals.map(g=>g.label+' (want by '+mo(g.months)+', funded by '+mo(wcFunded)+')').join('; ') + '. Increasing your monthly savings rate or reducing expenses will close this gap.</div>';
-    }
-  }
-
-  document.getElementById('alloc-grid').innerHTML = allocHtml;
-  document.getElementById('messages').innerHTML   = msgHtml;
+  document.getElementById('messages').innerHTML=html;
 }
 
 // ── Chart ─────────────────────────────────────────────────────────────────
 const crosshairPlugin = {
   id:'wcCross',
   afterDatasetsDraw(chart){
-    if(chart._chYr === undefined) return;
-    const {ctx,chartArea:ca,scales:sc} = chart;
-    const x = sc.x.getPixelForValue(chart._chYr);
-    if(x < ca.left || x > ca.right) return;
+    if(chart._chYr===undefined) return;
+    const{ctx,chartArea:ca,scales:sc}=chart;
+    const x=sc.x.getPixelForValue(chart._chYr);
+    if(x<ca.left||x>ca.right) return;
     ctx.save();
-    ctx.strokeStyle = 'rgba(201,162,75,0.65)'; ctx.lineWidth=1.5; ctx.setLineDash([4,3]);
-    ctx.beginPath(); ctx.moveTo(x,ca.top); ctx.lineTo(x,ca.bottom); ctx.stroke();
-    chart.data.datasets.forEach(ds => {
-      const lbl = chart.data.labels;
-      let yVal = null;
+    ctx.strokeStyle='rgba(201,162,75,0.65)';ctx.lineWidth=1.5;ctx.setLineDash([4,3]);
+    ctx.beginPath();ctx.moveTo(x,ca.top);ctx.lineTo(x,ca.bottom);ctx.stroke();
+    chart.data.datasets.forEach(ds=>{
+      const lbl=chart.data.labels;
+      let yVal=null;
       for(let j=0;j<lbl.length-1;j++){
         if(chart._chYr>=lbl[j]&&chart._chYr<=lbl[j+1]){
           const t=(chart._chYr-lbl[j])/(lbl[j+1]-lbl[j]);
-          yVal=ds.data[j]+t*(ds.data[j+1]-ds.data[j]); break;
+          yVal=ds.data[j]+t*(ds.data[j+1]-ds.data[j]);break;
         }
       }
       if(yVal===null) return;
-      const y = sc.y.getPixelForValue(yVal);
-      ctx.beginPath(); ctx.arc(x,y,5,0,Math.PI*2);
-      ctx.fillStyle=ds.borderColor; ctx.fill();
-      ctx.strokeStyle='#fff'; ctx.lineWidth=2; ctx.setLineDash([]); ctx.stroke();
+      const y=sc.y.getPixelForValue(yVal);
+      ctx.beginPath();ctx.arc(x,y,5,0,Math.PI*2);
+      ctx.fillStyle=ds.borderColor;ctx.fill();
+      ctx.strokeStyle='#fff';ctx.lineWidth=2;ctx.setLineDash([]);ctx.stroke();
     });
     ctx.restore();
   }
@@ -905,143 +872,120 @@ const crosshairPlugin = {
 const annotPlugin = {
   id:'wcAnnot',
   afterDatasetsDraw(chart){
-    const {ctx,chartArea:ca,scales:sc} = chart;
+    const{ctx,chartArea:ca,scales:sc}=chart;
     if(!sc.x||!ca) return;
     ctx.save();
-
-    // Horizontal target lines
-    [{ val:chart._esfTgt, lbl:'ESF Target' }, { val:chart._wcTgt, lbl:'War Chest Target' }].forEach(t => {
-      const py = sc.y.getPixelForValue(t.val);
+    [{val:chart._esfTgt,lbl:'ESF Target'},{val:chart._wcTgt,lbl:'War Chest Target'}].forEach(t=>{
+      if(!t.val) return;
+      const py=sc.y.getPixelForValue(t.val);
       if(py<ca.top||py>ca.bottom) return;
-      ctx.strokeStyle='#C9A24B'; ctx.lineWidth=1; ctx.setLineDash([5,4]);
-      ctx.beginPath(); ctx.moveTo(ca.left,py); ctx.lineTo(ca.right,py); ctx.stroke();
+      ctx.strokeStyle='#C9A24B';ctx.lineWidth=1;ctx.setLineDash([5,4]);
+      ctx.beginPath();ctx.moveTo(ca.left,py);ctx.lineTo(ca.right,py);ctx.stroke();
       ctx.setLineDash([]);
-      ctx.fillStyle='#6C645B'; ctx.font='500 9px Manrope,sans-serif';
-      ctx.textAlign='right'; ctx.fillText(t.lbl, ca.right-4, py-4);
+      ctx.fillStyle='#6C645B';ctx.font='500 9px Manrope,sans-serif';
+      ctx.textAlign='right';ctx.fillText(t.lbl,ca.right-4,py-4);
     });
-
-    // ESF funded month marker
     if(chart._esfFunded){
-      const ex = sc.x.getPixelForValue(chart._esfFunded);
+      const ex=sc.x.getPixelForValue(chart._esfFunded);
       if(ex>=ca.left&&ex<=ca.right){
-        ctx.strokeStyle='#2F6B43'; ctx.lineWidth=1.5; ctx.setLineDash([3,3]);
-        ctx.beginPath(); ctx.moveTo(ex,ca.top); ctx.lineTo(ex,ca.bottom); ctx.stroke();
-        ctx.setLineDash([]);
-        ctx.fillStyle='#2F6B43'; ctx.font='600 9px Manrope,sans-serif';
-        ctx.textAlign='left'; ctx.fillText('ESF ✓', ex+4, ca.top+13);
+        ctx.strokeStyle='#2F6B43';ctx.lineWidth=1.5;ctx.setLineDash([3,3]);
+        ctx.beginPath();ctx.moveTo(ex,ca.top);ctx.lineTo(ex,ca.bottom);ctx.stroke();
+        ctx.setLineDash([]);ctx.fillStyle='#2F6B43';ctx.font='600 9px Manrope,sans-serif';
+        ctx.textAlign='left';ctx.fillText('ESF ✓',ex+4,ca.top+13);
       }
     }
-
-    // WC funded month marker
     if(chart._wcFunded){
-      const wx = sc.x.getPixelForValue(chart._wcFunded);
+      const wx=sc.x.getPixelForValue(chart._wcFunded);
       if(wx>=ca.left&&wx<=ca.right){
-        ctx.strokeStyle='#A6182C'; ctx.lineWidth=1.5; ctx.setLineDash([3,3]);
-        ctx.beginPath(); ctx.moveTo(wx,ca.top); ctx.lineTo(wx,ca.bottom); ctx.stroke();
-        ctx.setLineDash([]);
-        ctx.fillStyle='#A6182C'; ctx.font='600 9px Manrope,sans-serif';
-        ctx.textAlign='left'; ctx.fillText('War Chest ✓', wx+4, ca.top+26);
+        ctx.strokeStyle='#A6182C';ctx.lineWidth=1.5;ctx.setLineDash([3,3]);
+        ctx.beginPath();ctx.moveTo(wx,ca.top);ctx.lineTo(wx,ca.bottom);ctx.stroke();
+        ctx.setLineDash([]);ctx.fillStyle='#A6182C';ctx.font='600 9px Manrope,sans-serif';
+        ctx.textAlign='left';ctx.fillText('War Chest ✓',wx+4,ca.top+26);
       }
     }
-
-    // Goal deadline markers
-    (chart._goalMilestones||[]).forEach(g => {
-      const gx = sc.x.getPixelForValue(g.months);
-      if(gx<ca.left||gx>ca.right) return;
-      ctx.strokeStyle='rgba(201,162,75,0.4)'; ctx.lineWidth=1; ctx.setLineDash([2,4]);
-      ctx.beginPath(); ctx.moveTo(gx,ca.top); ctx.lineTo(gx,ca.bottom); ctx.stroke();
-      ctx.setLineDash([]);
-    });
-
     ctx.restore();
   }
 };
 
-function renderChart(esfData, wcData, esfTgt, wcTgt, horizon, esfFunded, wcFunded, goals){
-  const labels = Array.from({length: horizon+1}, (_,i) => i);
-  const canvas = document.getElementById('wcChart');
-  if(G.chart){ G.chart.destroy(); G.chart=null; }
+function renderChart(esfData,wcData,esfTgt,wcTgt,horizon,esfFunded,wcFunded,goals,freeCash,available){
+  const labels=Array.from({length:horizon+1},(_,i)=>i);
+  const canvas=document.getElementById('wcChart');
+  if(G.chart){G.chart.destroy();G.chart=null;}
 
-  G.chart = new Chart(canvas, {
+  G.chart=new Chart(canvas,{
     type:'line',
-    plugins:[crosshairPlugin, annotPlugin],
-    data:{
-      labels,
-      datasets:[
-        { label:'Emergency Savings Fund', data:esfData, borderColor:'#2F6B43', borderWidth:2.5,
-          pointRadius:0, tension:.3, fill:false },
-        { label:'War Chest', data:wcData, borderColor:'#A6182C', borderWidth:2.5,
-          pointRadius:0, tension:.3, fill:false }
-      ]
-    },
+    plugins:[crosshairPlugin,annotPlugin],
+    data:{labels,datasets:[
+      {label:'Emergency Savings Fund',data:esfData,borderColor:'#2F6B43',borderWidth:2.5,pointRadius:0,tension:.3,fill:false},
+      {label:'War Chest',data:wcData,borderColor:'#A6182C',borderWidth:2.5,pointRadius:0,tension:.3,fill:false}
+    ]},
     options:{
-      responsive:true, maintainAspectRatio:false,
-      animation:{ duration:400 },
-      interaction:{ mode:'index', intersect:false },
+      responsive:true,maintainAspectRatio:false,animation:{duration:300},
+      interaction:{mode:'index',intersect:false},
       plugins:{
-        legend:{ display:true, position:'top',
-          labels:{ font:{family:'Manrope, sans-serif',size:12}, color:'#1A1A1A', usePointStyle:true, pointStyleWidth:20 }},
-        tooltip:{ enabled:false }
+        legend:{display:true,position:'top',labels:{font:{family:'Manrope, sans-serif',size:12},color:'#1A1A1A',usePointStyle:true,pointStyleWidth:20}},
+        tooltip:{enabled:false}
       },
       scales:{
-        x:{ type:'linear', min:0, max:horizon,
-          ticks:{ stepSize: horizon <= 36 ? 3 : horizon <= 72 ? 6 : 12,
-            color:'#6C645B', font:{family:'Manrope, sans-serif'},
-            callback:v => 'Mo ' + v },
-          grid:{ color:'rgba(26,26,26,0.06)' }
-        },
-        y:{ grid:{ color:'rgba(26,26,26,0.06)' },
-          ticks:{ color:'#6C645B', font:{family:'Manrope, sans-serif'},
-            callback:v => fmtK(v) }
-        }
+        x:{type:'linear',min:0,max:horizon,
+          ticks:{stepSize:horizon<=36?3:horizon<=72?6:12,color:'#6C645B',font:{family:'Manrope, sans-serif'},callback:v=>'Mo '+v},
+          grid:{color:'rgba(26,26,26,0.06)'}},
+        y:{grid:{color:'rgba(26,26,26,0.06)'},
+          ticks:{color:'#6C645B',font:{family:'Manrope, sans-serif'},callback:v=>fmtK(v)}}
       }
     }
   });
 
-  G.chart._esfTgt  = esfTgt;
-  G.chart._wcTgt   = wcTgt;
-  G.chart._esfFunded = esfFunded;
-  G.chart._wcFunded  = wcFunded;
-  G.chart._goalMilestones = goals;
+  G.chart._esfTgt=esfTgt; G.chart._wcTgt=wcTgt;
+  G.chart._esfFunded=esfFunded; G.chart._wcFunded=wcFunded;
 
-  document.getElementById('sl-min').textContent = 'Month 0';
-  document.getElementById('sl-max').textContent = 'Month ' + horizon;
-  const slider = document.getElementById('chart-slider');
-  slider.max   = horizon;
-  slider.step  = 0.5;
+  // Extra savings slider config
+  const slider=document.getElementById('extra-slider');
+  slider.max=available; slider.step=Math.max(25,Math.round(available/80)*25);
+  slider.value=0;
+  slider.classList.remove('danger');
+  document.getElementById('extra-val-display').textContent='$0 / mo';
+  document.getElementById('extra-val-display').className='slider-hd-val';
+  document.getElementById('sl-max').textContent=fmt(available);
+  document.getElementById('safe-zone-val').textContent=fmt(freeCash)+' / mo';
+  document.getElementById('tsp-slider-warn').style.display='none';
 
-  const initMo = esfFunded ? Math.min(esfFunded, horizon) : Math.min(12, horizon);
-  slider.value = initMo;
-
-  canvas.style.cursor = 'crosshair';
-  canvas.onmousemove  = e => { const m = canvasToMonth(e); if(m!==null) updateCrosshair(m,false); };
-  canvas.onmouseleave = () => { G.chart._chYr=undefined; G.chart.update('none'); };
-  canvas.ontouchmove  = e => { e.preventDefault(); const m=canvasToMonth(e.touches[0]); if(m!==null) updateCrosshair(m,true); };
-
-  updateCrosshair(initMo, true);
+  // Hover cpanel
+  canvas.style.cursor='crosshair';
+  canvas.onmousemove=e=>{const m=canvasToMonth(e);if(m!==null)updateCrosshair(m);};
+  canvas.onmouseleave=()=>{G.chart._chYr=undefined;G.chart.update('none');resetCpanel();};
+  canvas.ontouchmove=e=>{e.preventDefault();const m=canvasToMonth(e.touches[0]);if(m!==null)updateCrosshair(m);};
 }
 
 function canvasToMonth(e){
   if(!G.chart) return null;
-  const rect = e.target.getBoundingClientRect();
-  const x    = e.clientX - rect.left;
-  const {left,right} = G.chart.chartArea;
+  const rect=e.target.getBoundingClientRect();
+  const x=e.clientX-rect.left;
+  const{left,right}=G.chart.chartArea;
   if(x<left||x>right) return null;
-  return clamp(G.chart.scales.x.getValueForPixel(x), 0, G.horizon);
+  return clamp(G.chart.scales.x.getValueForPixel(x),0,G.horizon);
 }
 
-function sliderMoved(val){ updateCrosshair(parseFloat(val), true); }
+function resetCpanel(){
+  const ef=G.esfFunded, wf=G.wcFunded, extra=parseFloat(document.getElementById('extra-slider').value)||0;
+  const monthly=G.freeCash+extra;
+  let row1 = monthly>0 ? 'At '+fmt(monthly)+'/mo' : 'No savings allocated';
+  let row2 = ef ? 'ESF funded Month '+ef : 'ESF not yet funded';
+  let row3 = wf ? 'War Chest ready Month '+wf : 'War Chest not yet funded within timeline';
+  document.getElementById('cpanel').innerHTML=
+    '<div class="cp-row1">'+row1+'</div>'+
+    '<div style="display:flex;gap:24px;flex-wrap:wrap">'+
+    '<div><div class="cp-val-label">ESF Milestone</div><div style="font-weight:700;font-size:.92rem;color:#2F6B43">'+row2+'</div></div>'+
+    '<div><div class="cp-val-label">War Chest Milestone</div><div style="font-weight:700;font-size:.92rem;color:#A6182C">'+row3+'</div></div>'+
+    '</div>';
+}
 
-function updateCrosshair(mo, syncSlider){
+function updateCrosshair(mo){
   if(!G.chart) return;
-  G.chart._chYr = mo;
-  G.chart.update('none');
-  if(syncSlider) document.getElementById('chart-slider').value = mo.toFixed(1);
-
-  const lbl  = G.chart.data.labels;
-  const esfD = G.chart.data.datasets[0].data;
-  const wcD  = G.chart.data.datasets[1].data;
-
+  G.chart._chYr=mo; G.chart.update('none');
+  const lbl=G.chart.data.labels;
+  const esfD=G.chart.data.datasets[0].data;
+  const wcD =G.chart.data.datasets[1].data;
   function interp(data){
     for(let j=0;j<lbl.length-1;j++){
       if(mo>=lbl[j]&&mo<=lbl[j+1]){
@@ -1051,139 +995,159 @@ function updateCrosshair(mo, syncSlider){
     }
     return data[data.length-1];
   }
-
-  const esfVal = interp(esfD);
-  const wcVal  = interp(wcD);
-  const esfPct = G.esfTgt > 0 ? clamp(esfVal/G.esfTgt,0,1) : 1;
-  const wcPct  = G.wcTgt  > 0 ? clamp(wcVal /G.wcTgt, 0,1) : 1;
-
-  let verdictCls, verdictTxt;
-  if(esfPct >= 1 && wcPct >= 1){ verdictCls='funded';   verdictTxt='Both Funded'; }
-  else if(esfPct >= 1){           verdictCls='building'; verdictTxt='War Chest Building'; }
-  else{                           verdictCls='building'; verdictTxt='ESF Building'; }
-
-  const moLabel = Math.round(mo);
-  const phase = esfPct < 1 ? 'Phase 1 — Building ESF' : wcPct < 1 ? 'Phase 2 — Building War Chest' : 'Mission Complete';
-
-  document.getElementById('cpanel').innerHTML =
-    '<div class="cp-row1">Month ' + moLabel + ' &nbsp;·&nbsp; ' + phase + '</div>' +
-    '<div class="cp-row2">' +
-      '<div><div class="cp-val-label">ESF Balance</div>' +
-      '<div class="cp-val-num" style="color:#2F6B43">' + fmt(esfVal) + '</div>' +
-      '<div class="cp-sub">' + fmtPct(esfPct) + ' of ' + fmt(G.esfTgt) + ' target</div></div>' +
-      '<div class="cp-verdict ' + verdictCls + '">' + verdictTxt + '</div>' +
-      '<div style="text-align:right"><div class="cp-val-label">War Chest Balance</div>' +
-      '<div class="cp-val-num" style="color:#A6182C">' + fmt(wcVal) + '</div>' +
-      '<div class="cp-sub">' + fmtPct(wcPct) + ' of ' + fmtK(G.wcTgt) + ' target</div></div>' +
+  const esfVal=interp(esfD), wcVal=interp(wcD);
+  const esfPct=G.esfTgt>0?clamp(esfVal/G.esfTgt,0,1):1;
+  const wcPct =G.wcTgt >0?clamp(wcVal /G.wcTgt, 0,1):1;
+  let vCls,vTxt;
+  if(esfPct>=1&&wcPct>=1){vCls='funded';vTxt='Both Funded';}
+  else if(esfPct>=1){vCls='building';vTxt='War Chest Building';}
+  else{vCls='building';vTxt='ESF Building';}
+  const phase=esfPct<1?'Phase 1 — Building ESF':wcPct<1?'Phase 2 — Building War Chest':'Mission Complete';
+  document.getElementById('cpanel').innerHTML=
+    '<div class="cp-row1">Month '+Math.round(mo)+' &nbsp;·&nbsp; '+phase+'</div>'+
+    '<div class="cp-row2">'+
+    '<div><div class="cp-val-label">ESF Balance</div><div class="cp-val-num" style="color:#2F6B43">'+fmt(esfVal)+'</div><div class="cp-sub">'+fmtPct(esfPct)+' of '+fmt(G.esfTgt)+'</div></div>'+
+    '<div class="cp-verdict '+vCls+'">'+vTxt+'</div>'+
+    '<div style="text-align:right"><div class="cp-val-label">War Chest</div><div class="cp-val-num" style="color:#A6182C">'+fmt(wcVal)+'</div><div class="cp-sub">'+fmtPct(wcPct)+' of '+fmtK(G.wcTgt)+'</div></div>'+
     '</div>';
+}
+
+// ── Extra savings slider ───────────────────────────────────────────────────
+function extraSliderMoved(val){
+  const extra=parseFloat(val)||0;
+  const monthly=G.freeCash+extra;
+  const isTSP=extra>G.freeCash;
+
+  const dispEl=document.getElementById('extra-val-display');
+  dispEl.textContent=(extra>0?'+':'')+fmt(extra)+' / mo';
+  dispEl.className='slider-hd-val'+(isTSP?' danger':'');
+  document.getElementById('extra-slider').classList.toggle('danger',isTSP);
+  document.getElementById('tsp-slider-warn').style.display=isTSP?'block':'none';
+
+  const{esfData,wcData,esfFunded,wcFunded}=
+    projectBalances(G.curESF,G.esfTgt,G.curWC,G.wcTgt,monthly,G.isDebtTrap,G.horizon);
+
+  G.esfFunded=esfFunded; G.wcFunded=wcFunded;
+  G.chart._chYr=undefined;
+  G.chart.data.datasets[0].data=esfData;
+  G.chart.data.datasets[1].data=wcData;
+  G.chart._esfFunded=esfFunded;
+  G.chart._wcFunded=wcFunded;
+  G.chart.update();
+
+  renderAllocation(monthly,esfFunded,wcFunded,G.isDebtTrap,
+    G.esfTgt>0?clamp(G.curESF/G.esfTgt,0,1):1,
+    G.wcTgt >0?clamp(G.curWC /G.wcTgt, 0,1):1,
+    G.curESF,G.curWC,G.esfTgt,G.wcTgt);
+  resetCpanel();
 }
 
 // ── Advanced ──────────────────────────────────────────────────────────────
 function unlockAdvanced(){
-  document.getElementById('advanced-section').style.display = 'block';
-  setTimeout(() => document.getElementById('advanced-section').scrollIntoView({behavior:'smooth',block:'start'}), 50);
+  document.getElementById('advanced-section').style.display='block';
+  setTimeout(()=>document.getElementById('advanced-section').scrollIntoView({behavior:'smooth',block:'start'}),50);
 }
-
-function toggleRE(){
-  document.getElementById('re-inputs').style.display =
-    document.getElementById('re-yes').checked ? 'grid' : 'none';
-}
-
 function toggleDeploy(){
-  document.getElementById('deploy-inputs').style.display =
-    document.getElementById('dep-yes').checked ? 'block' : 'none';
+  document.getElementById('deploy-inputs').style.display=
+    document.getElementById('dep-yes').checked?'block':'none';
 }
 
 function runAdvanced(){
-  const tspPct    = parseFloat(document.getElementById('inp-tsp').value) || 0;
-  const hasRE     = document.getElementById('re-yes').checked;
-  const hasDeploy = document.getElementById('dep-yes').checked;
-  const avail     = G.available;
-  const th        = parseFloat(document.getElementById('inp-take-home').value) || 0;
-  const dbt       = parseFloat(document.getElementById('inp-debt').value) || 0;
-  const exp       = parseFloat(document.getElementById('inp-exp').value) || 0;
+  const tspBal   = parseFloat(document.getElementById('inp-tsp-bal').value)||0;
+  const tspRet   = parseFloat(document.getElementById('inp-tsp-ret').value)||7;
+  const curAge   = parseFloat(document.getElementById('inp-age').value)||0;
+  const sepYrs   = parseFloat(document.getElementById('inp-sep-yrs').value)||0;
+  const tspAmt   = parseFloat(document.getElementById('inp-tsp-contrib').value)||0;
+  const hasDep   = document.getElementById('dep-yes').checked;
+  const th       = parseFloat(document.getElementById('inp-take-home').value)||0;
+  const dbt      = parseFloat(document.getElementById('inp-debt').value)||0;
+  const exp      = parseFloat(document.getElementById('inp-exp').value)||0;
+  const esfPct   = G.esfTgt>0?clamp(G.curESF/G.esfTgt,0,1):1;
+  const wcPct    = G.wcTgt >0?clamp(G.curWC /G.wcTgt, 0,1):1;
 
-  let html = '';
+  if(!curAge){ alert('Enter your current age to generate a retirement projection.'); return; }
 
-  // ── SOP Steps 4 & 5 update ──
-  const esfPct = G.esfTgt > 0 ? clamp((parseFloat(document.getElementById('inp-esf').value)||0)/G.esfTgt, 0, 1) : 1;
-  const wcPct  = G.wcTgt  > 0 ? clamp((parseFloat(document.getElementById('inp-wc').value)||0)/G.wcTgt,   0, 1) : 1;
+  // ── TSP Projection ──
+  const r_mo           = (tspRet/100)/12;
+  const yearsToRet     = Math.max(0,59.5-curAge);
+  const yearsContrib   = Math.min(sepYrs,yearsToRet);
+  const moContrib      = Math.round(yearsContrib*12);
+  const moPostSep      = Math.round(yearsToRet*12)-moContrib;
 
-  const tspStep4 = tspPct < 5 ? 'red' : (tspPct >= 5 && (esfPct<1||wcPct<1)) ? 'amber' : 'green';
-  const tspStatus4 = tspPct < 5 ? tspPct + '% — below BRS match threshold' :
-                     (esfPct<1||wcPct<1) ? tspPct + '% match secured — balance cash reserves first' :
-                     tspPct + '% — match secured and reserves funded';
-
-  const step5cls = !hasRE ? 'locked' : 'amber';
-  const step5txt = !hasRE ? 'No assets declared' : 'CAPEX reserve guidance below';
-
-  html += '<div class="card"><div class="sec">Updated Mission Readiness</div><div class="sop-grid">';
-  html += '<div class="sop-step ' + tspStep4 + '"><div class="sop-num">Step 4</div><div class="sop-name">TSP / IRA</div><div class="sop-status">' + tspStatus4 + '</div></div>';
-  html += '<div class="sop-step ' + step5cls + '"><div class="sop-num">Step 5</div><div class="sop-name">Income Assets</div><div class="sop-status">' + step5txt + '</div></div>';
-
-  if(tspPct < 5){
-    html += '<div class="sop-step red" style="grid-column:1/-1"><div class="sop-num">TSP Alert</div><div class="sop-name">Capture Your Full Match</div><div class="sop-status" style="text-transform:none;letter-spacing:0;font-family:Manrope;font-size:.78rem;margin-top:4px;line-height:1.5">You’re leaving free money on the table. Increase your TSP contribution to at least 5% immediately to secure the full BRS government match.</div></div>';
-  } else if(tspPct > 5 && (esfPct < 1 || wcPct < 1)){
-    html += '<div class="sop-step amber" style="grid-column:1/-1"><div class="sop-num">TSP Recommendation</div><div class="sop-name">Rebalance Toward Cash</div><div class="sop-status" style="text-transform:none;letter-spacing:0;font-family:Manrope;font-size:.78rem;margin-top:4px;line-height:1.5">When your ESF and War Chest are underfunded, you are at risk of financial hardship because the cash you might need immediately is locked in your retirement accounts until age 59½. Consider reducing your TSP contribution temporarily — never below 5% to secure the full match — until your ESF and War Chest are fully funded.</div></div>';
+  let bal=tspBal;
+  if(r_mo>0){
+    if(moContrib>0) bal = bal*Math.pow(1+r_mo,moContrib) + tspAmt*(Math.pow(1+r_mo,moContrib)-1)/r_mo;
+    if(moPostSep>0) bal = bal*Math.pow(1+r_mo,moPostSep);
+  } else {
+    bal += tspAmt*moContrib;
   }
-  html += '</div></div>';
+  const projBal      = Math.round(bal);
+  const monthlyIncome= Math.round(projBal*0.04/12);
 
-  // ── Real Estate CAPEX ──
-  if(hasRE){
-    const reVal  = parseFloat(document.getElementById('inp-re-val').value)  || 0;
-    const reRent = parseFloat(document.getElementById('inp-re-rent').value) || 0;
-    const capex1 = reVal * 0.10;
-    const capex2 = reRent * 0.05;
+  const retCls  = projBal<1e6?'red':projBal<2.5e6?'amber':'green';
+  const retTxt  = projBal<1e6?'Below $1M target — increase contribution rate or timeline':
+                  projBal<2.5e6?'Solid foundation — approaching financial security threshold':
+                  'Strong position — projected balance exceeds $2.5M target';
 
-    html += '<div class="card"><div class="sec">CAPEX Reserve Recommendation</div>' +
-      '<div class="insight"><strong>Establish a CAPEX reserve</strong> for your income-generating property. ' +
-      'Rule of thumb: maintain a reserve equal to <strong>10% of property value</strong> (' + fmtK(capex1) + ') ' +
-      'OR set aside <strong>5% of monthly rents</strong> (' + fmt(capex2) + '/mo) in a dedicated business savings account. ' +
-      'Use whichever amount is higher. This account should be separate from your personal ESF and War Chest — ' +
-      'ideally in a business HYSA tied to the LLC that owns the property once you’ve established one. ' +
-      'This reserve covers repairs, vacancies, and capital improvements without touching your personal War Chest.' +
-      '</div></div>';
+  // ── TSP step 4 guidance ──
+  const tspStep4cls = tspAmt===0?'red':(esfPct<1||wcPct<1)?'amber':'green';
+  const tspStep4txt = tspAmt===0?'No contribution — missing BRS match':
+                      (esfPct<1||wcPct<1)?fmt(tspAmt)+'/mo match secured — balance with cash reserves':
+                      fmt(tspAmt)+'/mo — match secured and reserves funded';
+
+  let html='<div class="card"><div class="sec">TSP &amp; Retirement Projection</div>';
+
+  // Projection metrics
+  html+='<div class="mg" style="grid-template-columns:1fr 1fr;gap:12px;margin-bottom:18px">'+
+    '<div class="m acc"><div class="ml">Projected Balance at 59&#189;</div><div class="mv">'+fmtK(projBal)+'</div><div class="ms">'+Math.round(yearsToRet)+' years · '+tspRet+'% return · contributions for '+Math.round(yearsContrib)+' yrs</div></div>'+
+    '<div class="m '+(retCls==='green'?'g':retCls==='amber'?'':'')+'"><div class="ml">Projected Monthly Income</div><div class="mv" style="color:'+(retCls==='red'?'var(--red)':retCls==='amber'?'#8B6B14':'var(--green)')+'">'+fmt(monthlyIncome)+'</div><div class="ms">4% safe withdrawal rate (Roth assumed)</div></div>'+
+  '</div>';
+
+  // Traffic light
+  html+='<div class="sop-step '+retCls+'" style="padding:14px 16px;margin-bottom:16px"><div class="sop-num">Retirement Readiness</div><div class="sop-name">'+fmtK(projBal)+' projected at 59&#189;</div><div class="sop-status">'+retTxt+'</div></div>';
+
+  // Updated Step 4
+  html+='<div class="sop-step '+tspStep4cls+'" style="padding:14px 16px;margin-bottom:16px"><div class="sop-num">Step 4 — TSP / IRA</div><div class="sop-name">'+fmt(tspAmt)+'/mo contribution</div><div class="sop-status">'+tspStep4txt+'</div></div>';
+
+  // Rebalancing guidance
+  if(tspAmt>0&&(esfPct<1||wcPct<1)){
+    html+='<div class="insight tsp-note"><strong>Rebalance toward cash:</strong> When your ESF and War Chest are underfunded, the cash you might need is locked in your retirement account until age 59&#189;. Consider reducing your TSP contribution temporarily — never below 5% of base pay to keep the full BRS match — until your ESF and War Chest are fully funded. Your projected retirement balance shows you can afford to slow down retirement contributions now without jeopardizing long-term security.</div>';
   }
+
+  // Roth footnote
+  html+='<div class="hint" style="margin-top:4px">* Assumes Roth TSP or Roth IRA — all withdrawals tax-free at 59&#189;. If your TSP is traditional (pre-tax), actual after-tax withdrawals will be lower depending on your tax bracket in retirement. Consult a CFP before making allocation decisions.</div>';
+  html+='</div>';
 
   // ── Deployment Accelerator ──
-  if(hasDeploy){
-    const depMo    = parseInt(document.getElementById('inp-dep-months').value) || 6;
-    const housing  = document.querySelector('input[name="dep-housing"]:checked').value === 'yes';
-    const hasDeps  = document.querySelector('input[name="dep-dep"]:checked').value === 'yes';
-    const isCzte   = document.querySelector('input[name="dep-czte"]:checked').value === 'yes';
+  if(hasDep){
+    const depMo  = parseInt(document.getElementById('inp-dep-months').value)||6;
+    const housing= document.querySelector('input[name="dep-housing"]:checked').value==='yes';
+    const hasDeps= document.querySelector('input[name="dep-dep"]:checked').value==='yes';
+    const isCzte = document.querySelector('input[name="dep-czte"]:checked').value==='yes';
+    const reduction = (housing&&hasDeps)?0.10:housing?0.30:0.60;
+    const totalExp   = dbt+exp;
+    const deployExp  = totalExp*(1-reduction);
+    const normalAvail= th-totalExp-G.tspAmt;
+    const deployAvail= th-deployExp-G.tspAmt;
+    const extraMo    = Math.max(0,deployAvail-normalAvail);
+    const totalExtra = extraMo*depMo;
+    const sdpMonthly = Math.round(10000/depMo);
+    const sdpReturn  = Math.min(10000,sdpMonthly*depMo)*0.10;
 
-    let reduction;
-    if(housing && hasDeps)  reduction = 0.10;
-    else if(housing)         reduction = 0.30;
-    else                     reduction = 0.60;
-
-    const totalExp       = dbt + exp;
-    const deployedExp    = totalExp * (1 - reduction);
-    const deployedAvail  = th - deployedExp;
-    const normalAvail    = avail;
-    const extraPerMonth  = Math.max(0, deployedAvail - normalAvail);
-    const totalExtra     = extraPerMonth * depMo;
-    const sdpMonthly     = 10000 / depMo;
-    const sdpContrib     = Math.min(10000, sdpMonthly * depMo);
-    const sdpReturn      = sdpContrib * 0.10;
-
-    html += '<div class="card"><div class="sec">Deployment Accelerator</div>' +
-      '<div class="deploy-grid">' +
-        '<div class="m acc"><div class="ml">Extra Savings / Month</div><div class="mv">+' + fmt(extraPerMonth) + '</div>' +
-        '<div class="ms">Expenses reduced ' + Math.round(reduction*100) + '% during deployment</div></div>' +
-        '<div class="m g"><div class="ml">Total War Chest Boost</div><div class="mv">+' + fmtK(totalExtra) + '</div>' +
-        '<div class="ms">Over ' + mo(depMo) + ' at deployment savings rate</div></div>' +
-        '<div class="m"><div class="ml">SDP Monthly Deposit</div><div class="mv">' + fmt(sdpMonthly) + '</div>' +
-        '<div class="ms">Maximize $10K SDP for guaranteed +' + fmt(sdpReturn) + ' return</div></div>' +
-      '</div>' +
-      '<div class="insight hysa"><strong>Savings Deposit Program:</strong> Save <strong>' + fmt(sdpMonthly) + '/month</strong> to your SDP account to maximize a guaranteed <strong>10% annual return on up to $10,000</strong> deposited while deployed — that’s a guaranteed <strong>' + fmt(sdpReturn) + ' return</strong> available only in a qualifying combat zone. ' +
-      (isCzte ? 'Your base pay will also be exempt from federal income tax under CZTE — check with your finance office for your specific monthly tax savings.' : 'If your deployment location qualifies as a Combat Zone Tax Exclusion (CZTE) area, your base pay will also be exempt from federal income tax. Confirm with your finance office or the MilPay app.') +
+    html+='<div class="card"><div class="sec">Deployment Accelerator</div>'+
+      '<div class="deploy-grid">'+
+        '<div class="m acc"><div class="ml">Extra Savings / Month</div><div class="mv">+'+fmt(extraMo)+'</div><div class="ms">Expenses reduced '+Math.round(reduction*100)+'% during deployment</div></div>'+
+        '<div class="m g"><div class="ml">War Chest Boost</div><div class="mv">+'+fmtK(totalExtra)+'</div><div class="ms">Over '+moLabel(depMo)+' at deployment rate</div></div>'+
+        '<div class="m"><div class="ml">SDP Monthly Deposit</div><div class="mv">'+fmt(sdpMonthly)+'</div><div class="ms">Maximize for guaranteed +'+fmt(sdpReturn)+' return</div></div>'+
+      '</div>'+
+      '<div class="insight hysa"><strong>Savings Deposit Program:</strong> Save <strong>'+fmt(sdpMonthly)+'/month</strong> to your SDP to maximize a guaranteed 10% annual return on up to $10,000 deposited while deployed — a guaranteed <strong>'+fmt(sdpReturn)+' return</strong> available only in a qualifying combat zone. '+
+      (isCzte?'Your base pay will be exempt from federal income tax under CZTE — confirm your specific monthly savings with your finance office or the MilPay app.':'If your deployment location qualifies as a CZTE area, your base pay will also be exempt from federal income tax. Confirm with your finance office.')+
       '</div></div>';
   }
 
-  document.getElementById('results-advanced').innerHTML = html;
-  document.getElementById('results-advanced').style.display = 'block';
-  setTimeout(() => document.getElementById('results-advanced').scrollIntoView({behavior:'smooth',block:'start'}), 50);
+  document.getElementById('results-advanced').innerHTML=html;
+  document.getElementById('results-advanced').style.display='block';
+  setTimeout(()=>document.getElementById('results-advanced').scrollIntoView({behavior:'smooth',block:'start'}),50);
 }
 </script>
 </body>
