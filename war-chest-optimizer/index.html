@@ -384,14 +384,14 @@ footer a{color:var(--mid);font-weight:600}
       <div class="field">
         <label>Current ESF Balance</label>
         <div class="prefix-wrap"><span class="prefix">$</span>
-          <input type="number" id="inp-esf" min="0" value="0" placeholder="0" oninput="updateAvail()">
+          <input type="number" id="inp-esf" min="0" value="0" placeholder="0" autocomplete="off" oninput="updateAvail()">
         </div>
         <div class="hint">Emergency Savings Fund &mdash; separate HYSA for emergencies only.</div>
       </div>
       <div class="field">
         <label>Current War Chest Balance</label>
         <div class="prefix-wrap"><span class="prefix">$</span>
-          <input type="number" id="inp-wc" min="0" value="0" placeholder="0" oninput="updateAvail()">
+          <input type="number" id="inp-wc" min="0" value="0" placeholder="0" autocomplete="off" oninput="updateAvail()">
         </div>
         <div class="hint">Liquid savings earmarked for asset acquisition &mdash; separate account from ESF.</div>
       </div>
@@ -946,7 +946,7 @@ function renderChart(esfData,wcData,esfTgt,wcTgt,horizon,esfFunded,wcFunded,goal
 
   // Extra savings slider config
   const slider=document.getElementById('extra-slider');
-  slider.max=available; slider.step=Math.max(25,Math.round(available/80)*25);
+  slider.max=available; slider.step=25;
   slider.value=0;
   slider.classList.remove('danger');
   document.getElementById('extra-val-display').textContent='$0 / mo';
@@ -1090,7 +1090,7 @@ function runAdvanced(){
   const monthlyIncome= Math.round(projBal*0.04/12);
 
   const retCls  = projBal<1e6?'red':projBal<2.5e6?'amber':'green';
-  const retTxt  = projBal<1e6?'Below $1M target — increase contribution rate or timeline':
+  const retTxt  = projBal<1e6?'Below $1M target — increase contribution rate':
                   projBal<2.5e6?'Solid foundation — approaching financial security threshold':
                   'Strong position — projected balance exceeds $2.5M target';
 
@@ -1114,10 +1114,23 @@ function runAdvanced(){
   // Updated Step 4
   html+='<div class="sop-step '+tspStep4cls+'" style="padding:14px 16px;margin-bottom:16px"><div class="sop-num">Step 4 — TSP / IRA</div><div class="sop-name">'+fmt(tspAmt)+'/mo contribution</div><div class="sop-status">'+tspStep4txt+'</div></div>';
 
-  // Rebalancing guidance
-  if(tspAmt>0&&(esfPct<1||wcPct<1)){
-    html+='<div class="insight tsp-note"><strong>Rebalance toward cash:</strong> When your ESF and War Chest are underfunded, the cash you might need is locked in your retirement account until age 59&#189;. Consider reducing your TSP contribution temporarily — never below 5% of base pay to keep the full BRS match — until your ESF and War Chest are fully funded. Your projected retirement balance shows you can afford to slow down retirement contributions now without jeopardizing long-term security.</div>';
+  // Rebalancing guidance — nuanced matrix based on retirement trajectory + cash reserve state
+  const cashFunded = (G.esfTgt<=0||G.curESF>=G.esfTgt-0.01)&&(G.wcTgt<=0||G.curWC>=G.wcTgt-0.01);
+  let rebalMsg='';
+  if(!cashFunded&&retCls==='red'){
+    rebalMsg='<strong>Sequence matters when both goals need work:</strong> Rebalance toward cash until your ESF and War Chest are 100% funded. Your TSP savings are below where they should be, so consider disciplined expense cuts over the next 6–9 months to boost savings toward both goals at once. If you must reduce your TSP contribution to hit your cash targets faster, never go below 5% of base pay — that is the floor to keep the full BRS match. Once your ESF and War Chest are fully funded, redirect that entire monthly cash flow directly into an even higher TSP contribution rate to recover lost ground.';
+  } else if(!cashFunded&&retCls==='amber'){
+    rebalMsg='<strong>Fund cash reserves first, then accelerate TSP:</strong> Your retirement trajectory is solid — you can fund your ESF and War Chest now without putting long-term security at risk. Once your cash reserves are fully funded, redirect that monthly savings rate into an accelerated TSP contribution to push toward the $2.5M threshold. Never reduce TSP below 5% for the full BRS match.';
+  } else if(!cashFunded&&retCls==='green'){
+    rebalMsg='<strong>Retirement is on track — redirect toward cash:</strong> Your projected retirement balance gives you room to temporarily redirect savings toward your ESF and War Chest. Once fully funded, return to your current TSP rate or increase it. Your retirement trajectory can absorb a short pause.';
+  } else if(cashFunded&&retCls==='red'){
+    rebalMsg='<strong>Cash reserves funded — shift focus to retirement:</strong> Your War Chest is ready and your ESF is in place. The priority now is your retirement trajectory, which is below the $1M threshold. Increase your TSP contribution rate as aggressively as your budget allows. Every dollar previously directed toward cash savings should now go to TSP.';
+  } else if(cashFunded&&retCls==='amber'){
+    rebalMsg='<strong>Good position — consider boosting TSP:</strong> Your cash reserves are funded and your retirement is on a reasonable trajectory. To close the gap toward the $2.5M threshold, look for opportunities to increase your TSP contribution rate — even an additional 1–2% of base pay compounds significantly over a 20–30 year horizon.';
+  } else if(cashFunded&&retCls==='green'){
+    rebalMsg='<strong>Strong position across the board:</strong> Both your cash reserves and retirement trajectory are in strong shape. Stay the course — and consider when you might be ready to acquire your next income-generating asset.';
   }
+  if(rebalMsg) html+='<div class="insight tsp-note">'+rebalMsg+'</div>';
 
   // Roth footnote
   html+='<div class="hint" style="margin-top:4px">* Assumes Roth TSP or Roth IRA — all withdrawals tax-free at 59&#189;. If your TSP is traditional (pre-tax), actual after-tax withdrawals will be lower depending on your tax bracket in retirement. Consult a CFP before making allocation decisions.</div>';
