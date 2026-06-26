@@ -4,8 +4,6 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>SBP Defeater — Military Survivor's Benefit Plan Calculator</title>
-  <meta name="description" content="Free calculator comparing the military Survivor Benefit Plan (SBP) against a term-life-plus-portfolio strategy over a 30-year retirement." />
-  <link rel="canonical" href="https://sbp.militarywealthcoach.com/" />
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;0,6..72,700;1,6..72,500;1,6..72,600&family=Manrope:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -13,53 +11,55 @@
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
     :root {
-      --dark:     #1A1A1A;
-      --mid:      #A6182C;
-      --gold:     #C9A24B;
-      --bg:       #F7F3EB;
-      --bg-2:     #EFE9DD;
-      --card:     #FFFFFF;
-      --text:     #1A1A1A;
-      --ink-2:    #3D3833;
-      --muted:    #6C645B;
-      --border:   #E3DCCC;
-      --green:    #2F6B43;
-      --red:      #7A1020;
+      /* Editorial palette — names preserved for JS-injected inline styles, values remapped to militarywealthcoach.com */
+      --dark:   #1A1A1A;
+      --mid:    #A6182C;
+      --gold:   #C9A24B;
+      --bg:     #F7F3EB;
+      --bg-2:   #EFE9DD;
+      --card:   #FFFFFF;
+      --text:   #1A1A1A;
+      --ink-2:  #3D3833;
+      --muted:  #6C645B;
+      --border: #E3DCCC;
+      --green:  #2F6B43;
+      --red:    #7A1020;
+      --coral:  #A6182C;
       --gold-soft:#E7D9B0;
+      --red-deep:#7A1020;
     }
     body {
-      font-family: 'Manrope', sans-serif;
+      font-family: 'Manrope', system-ui, -apple-system, sans-serif;
       background: var(--bg); color: var(--text);
       line-height: 1.55; -webkit-font-smoothing: antialiased;
     }
+    h1,h2,h3 { font-family:'Newsreader',Georgia,serif; font-weight:600; letter-spacing:-0.01em; }
 
-    /* ── TOPBAR ── */
-    .topbar { background: var(--dark); }
-    .topbar-inner { max-width:900px; margin:0 auto; padding:.55rem 1.25rem; display:flex; align-items:center; justify-content:space-between; gap:1rem; }
+    /* Utility bar back to the main site */
+    .topbar { background:var(--dark); color:#fff; }
+    .topbar-inner { max-width:880px; margin:0 auto; padding:.55rem 1.25rem; display:flex; align-items:center; justify-content:space-between; gap:1rem; }
     .topbar a { color:#fff; text-decoration:none; }
     .topbar-brand { font-family:'JetBrains Mono',monospace; font-size:.66rem; letter-spacing:.22em; text-transform:uppercase; font-weight:600; color:rgba(255,255,255,.82); }
     .topbar-back { font-family:'JetBrains Mono',monospace; font-size:.66rem; letter-spacing:.18em; text-transform:uppercase; font-weight:600; display:inline-flex; align-items:center; gap:.45rem; color:rgba(255,255,255,.62); transition:color .15s; }
     .topbar-back:hover { color:var(--gold); }
 
-    /* ── HEADER ── */
-    header { background:var(--bg); padding:40px 20px 32px; border-bottom:1px solid var(--border); }
+    header { background: var(--bg); padding: 2.5rem 1.25rem 2rem; border-bottom:1px solid var(--border); }
     .header-inner { max-width:880px; margin:0 auto; }
-    .eyebrow { font-family:'JetBrains Mono',monospace; font-size:.68rem; font-weight:600; letter-spacing:.22em; text-transform:uppercase; color:var(--mid); margin-bottom:12px; display:inline-flex; align-items:center; gap:.65rem; }
+    .eyebrow { font-family:'JetBrains Mono',monospace; font-size:.68rem; font-weight:600; letter-spacing:.22em; text-transform:uppercase; color:var(--mid); margin-bottom:.7rem; display:inline-flex; align-items:center; gap:.65rem; }
     .eyebrow::before { content:''; width:24px; height:1px; background:var(--mid); }
-    .title { font-family:'Newsreader',Georgia,serif; font-size:clamp(2rem,5vw,3rem); font-weight:600; color:var(--text); letter-spacing:-0.015em; line-height:1.04; }
-    .sub   { font-size:1rem; color:var(--ink-2); margin-top:10px; }
+    .title   { font-family:'Newsreader',Georgia,serif; font-size:clamp(2rem,6vw,3rem); font-weight:600; color:var(--text); letter-spacing:-0.015em; line-height:1.04; }
+    .sub     { font-size:1rem; color:var(--ink-2); margin-top:.7rem; }
 
-    .container { max-width:880px; margin:0 auto; padding:1.5rem 1rem 4rem; }
+    .container { max-width: 880px; margin: 0 auto; padding: 2rem 1.25rem 4rem; }
 
     .card {
-      background:var(--card); border-radius:2px; padding:1.5rem;
-      margin-bottom:1.25rem; border:1px solid var(--border);
-      box-shadow:0 1px 2px rgba(26,26,26,.03);
+      background: var(--card); border-radius: 2px; padding: 1.6rem 1.75rem;
+      margin-bottom: 1.25rem; border: 1px solid var(--border);
+      box-shadow: 0 1px 2px rgba(26,26,26,.03);
     }
     .sec {
-      font-family:'JetBrains Mono',monospace;
-      font-size:.7rem; font-weight:600; text-transform:uppercase;
-      letter-spacing:.18em; color:var(--mid); margin-bottom:1.25rem;
+      font-family:'JetBrains Mono',monospace; font-size:.7rem; font-weight:600; text-transform:uppercase;
+      letter-spacing:.18em; color:var(--mid); margin-bottom:1.35rem;
       display:flex; align-items:center; gap:.75rem;
     }
     .sec::after { content:''; flex:1; height:1px; background:var(--border); }
@@ -68,8 +68,8 @@
     .fg { display:grid; grid-template-columns:1fr 1fr; gap:1rem; }
     .s2 { grid-column:span 2; }
     @media(max-width:520px){ .fg{grid-template-columns:1fr} .s2{grid-column:span 1} }
-    .field { display:flex; flex-direction:column; gap:.35rem; }
-    .field label { font-family:'JetBrains Mono',monospace; font-size:.66rem; font-weight:500; letter-spacing:.12em; text-transform:uppercase; color:var(--muted); }
+    .field { display:flex; flex-direction:column; gap:.4rem; }
+    .field label { font-family:'JetBrains Mono',monospace; font-size:.66rem; font-weight:500; text-transform:uppercase; letter-spacing:.12em; color:var(--muted); }
     select, input[type=number] {
       padding:.7rem .9rem; border:1px solid var(--border); border-radius:2px;
       font-family:'Manrope',sans-serif; font-size:.95rem; color:var(--text); background:#fff; width:100%;
@@ -78,17 +78,17 @@
     select {
       appearance:none; -webkit-appearance:none;
       background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6'%3E%3Cpath d='M1 1l4 4 4-4' stroke='%236C645B' stroke-width='1.5' fill='none' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
-      background-repeat:no-repeat; background-position:right .85rem center; padding-right:2.4rem;
+      background-repeat:no-repeat; background-position:right .9rem center; padding-right:2.4rem;
     }
     select:focus, input:focus { outline:none; border-color:var(--mid); box-shadow:0 0 0 3px rgba(166,24,44,.12); }
     .tg { display:flex; gap:.5rem; }
     .tb { flex:1; }
     .tb input[type=radio] { display:none; }
     .tb label {
-      display:block; text-align:center; padding:.62rem .4rem;
+      display:block; text-align:center; padding:.65rem .4rem;
       border:1px solid var(--border); border-radius:2px; cursor:pointer;
-      font-family:'JetBrains Mono',monospace; font-size:.66rem; font-weight:600; color:var(--muted);
-      text-transform:uppercase; letter-spacing:.1em;
+      font-family:'JetBrains Mono',monospace; font-size:.7rem; font-weight:500; color:var(--muted);
+      text-transform:uppercase; letter-spacing:.08em;
       transition:all .15s ease; user-select:none; line-height:1.3;
     }
     .tb input:checked + label { background:var(--dark); border-color:var(--dark); color:#fff; }
@@ -96,47 +96,47 @@
     .collapsible.collapsed { max-height:0; opacity:0; }
 
     .calc-btn {
-      width:100%; padding:1rem; margin-top:1.25rem;
+      width:100%; padding:1rem; margin-top:1.4rem;
       background:var(--mid); color:#fff; border:none; border-radius:2px;
       font-family:'Manrope',sans-serif; font-size:.9rem; font-weight:700; letter-spacing:.02em;
       cursor:pointer; transition:background .15s,transform .1s;
     }
-    .calc-btn:hover  { background:var(--red); }
+    .calc-btn:hover  { background:var(--red-deep); }
     .calc-btn:active { transform:scale(.99); }
 
     /* metrics */
     .mg { display:grid; grid-template-columns:1fr 1fr; gap:.75rem; }
     @media(max-width:520px){ .mg{grid-template-columns:1fr} }
-    .m { background:var(--bg); border-radius:2px; padding:.9rem 1rem; border:1px solid var(--border); }
-    .ml { font-family:'JetBrains Mono',monospace; font-size:.66rem; font-weight:500; text-transform:uppercase; letter-spacing:.12em; color:var(--muted); margin-bottom:.2rem; }
-    .mv { font-family:'Newsreader',Georgia,serif; font-size:1.6rem; font-weight:600; color:var(--dark); line-height:1.15; letter-spacing:-0.01em; }
-    .mv .u { font-family:'Manrope',sans-serif; font-size:.88rem; font-weight:500; }
-    .ms { font-size:.75rem; color:var(--muted); margin-top:.15rem; line-height:1.4; }
+    .m { background:var(--bg); border-radius:2px; padding:1rem 1.1rem; border:1px solid var(--border); }
+    .ml { font-family:'JetBrains Mono',monospace; font-size:.64rem; font-weight:500; text-transform:uppercase; letter-spacing:.12em; color:var(--muted); margin-bottom:.35rem; }
+    .mv { font-family:'Newsreader',serif; font-size:1.8rem; font-weight:600; color:var(--dark); line-height:1.1; }
+    .mv .u { font-family:'Manrope',sans-serif; font-size:.82rem; font-weight:500; color:var(--muted); }
+    .ms { font-size:.76rem; color:var(--muted); margin-top:.25rem; line-height:1.4; }
     .m.acc { background:var(--dark); border-color:var(--dark); }
     .m.acc .ml { color:rgba(255,255,255,.55); }
     .m.acc .mv { color:var(--gold); }
+    .m.acc .mv .u { color:rgba(255,255,255,.5); }
     .m.acc .ms { color:rgba(255,255,255,.5); }
-    .m.g { background:rgba(47,107,67,0.08); border-color:rgba(47,107,67,0.28); }
+    .m.g { background:#F1F6F1; border-color:#CBE0CE; }
     .m.g .mv { color:var(--green); }
-    .m.a { background:var(--gold-soft); border-color:var(--border); }
-    .m.a .mv { color:var(--ink-2); }
+    .m.a { background:var(--bg-2); border-color:var(--gold-soft); }
+    .m.a .mv { color:#8A6A1E; }
 
-    /* info / insight boxes */
-    .ib, .wb {
-      background:var(--bg); border:1px solid var(--border); border-left:3px solid var(--gold);
-      border-radius:2px; padding:1rem 1.15rem; margin-top:.85rem;
-      font-size:.83rem; line-height:1.65; color:var(--ink-2);
-    }
-    .ib strong, .wb strong { color:var(--dark); font-weight:700; }
+    /* info boxes */
+    .ib,.wb { border-radius:2px; padding:1rem 1.15rem; margin-top:.85rem; font-size:.86rem; line-height:1.65; }
+    .ib { background:var(--bg); border:1px solid var(--border); border-left:3px solid var(--gold); color:var(--ink-2); }
+    .wb { background:var(--bg); border:1px solid var(--border); border-left:3px solid var(--mid); color:var(--ink-2); }
 
-    /* ── CHART ── */
+    /* ── CHART ───────────────────────────────────── */
     .chart-wrap { position:relative; height:300px; margin-bottom:1rem; }
     @media(min-width:600px){ .chart-wrap{height:370px;} }
 
-    .slider-row { display:flex; align-items:center; gap:.75rem; margin-bottom:.75rem; }
+    .slider-row {
+      display:flex; align-items:center; gap:.75rem; margin-bottom:.75rem;
+    }
     .slider-row .slider-label {
-      font-family:'JetBrains Mono',monospace; font-size:.66rem; font-weight:500;
-      letter-spacing:.06em; color:var(--muted); white-space:nowrap; min-width:52px;
+      font-family:'JetBrains Mono',monospace; font-size:.66rem; font-weight:500; letter-spacing:.06em; color:var(--muted);
+      white-space:nowrap; min-width:52px;
     }
     .slider-row .slider-label:last-child { text-align:right; }
 
@@ -158,45 +158,45 @@
     /* chart info panel */
     .cpanel {
       background:var(--bg); border-radius:2px; border:1px solid var(--border);
-      padding:.9rem 1rem; margin-top:.25rem;
+      padding:1rem 1.1rem; margin-top:.25rem;
     }
     .cp-row1 {
-      font-family:'JetBrains Mono',monospace; font-size:.66rem; font-weight:500;
-      color:var(--muted); text-transform:uppercase; letter-spacing:.1em; margin-bottom:.65rem;
+      font-family:'JetBrains Mono',monospace; font-size:.68rem; font-weight:500; color:var(--muted);
+      text-transform:uppercase; letter-spacing:.1em;
+      margin-bottom:.75rem;
     }
     .cp-row2 {
       display:grid; grid-template-columns:1fr auto 1fr; gap:.5rem;
-      align-items:center; margin-bottom:.65rem;
+      align-items:center; margin-bottom:.75rem;
     }
-    .cp-val-label { font-family:'JetBrains Mono',monospace; font-size:.6rem; font-weight:500; text-transform:uppercase; letter-spacing:.1em; color:var(--muted); margin-bottom:.1rem; }
-    .cp-val-num   { font-family:'Newsreader',Georgia,serif; font-size:1.35rem; font-weight:600; letter-spacing:-0.01em; }
+    .cp-val-label { font-family:'JetBrains Mono',monospace; font-size:.62rem; font-weight:500; text-transform:uppercase; letter-spacing:.1em; color:var(--muted); margin-bottom:.2rem; }
+    .cp-val-num   { font-family:'Newsreader',serif; font-size:1.5rem; font-weight:600; }
     .cp-verdict   {
-      text-align:center; padding:.4rem .6rem; border-radius:2px;
-      font-family:'JetBrains Mono',monospace; font-size:.62rem; font-weight:700;
-      text-transform:uppercase; letter-spacing:.1em; white-space:nowrap;
+      text-align:center; padding:.45rem .65rem; border-radius:2px;
+      font-family:'JetBrains Mono',monospace; font-size:.66rem; font-weight:600; text-transform:uppercase; letter-spacing:.08em;
+      white-space:nowrap;
     }
-    .cp-verdict.win  { background:rgba(47,107,67,0.12); color:var(--green); }
-    .cp-verdict.sbp  { background:rgba(122,16,32,0.10); color:var(--red); }
+    .cp-verdict.win  { background:#E4EFE6; color:var(--green); }
+    .cp-verdict.sbp  { background:#F4E0E2; color:var(--red); }
     .cp-verdict.even { background:var(--bg-2); color:var(--muted); }
     .cp-breakeven {
-      font-size:.82rem; border-top:1px solid var(--border);
-      padding-top:.55rem; color:var(--ink-2); line-height:1.55;
+      font-size:.84rem; border-top:1px solid var(--border);
+      padding-top:.65rem; color:var(--ink-2); line-height:1.55;
     }
     .cp-breakeven strong { color:var(--dark); }
 
     /* table */
-    .tn { font-size:.82rem; color:var(--muted); margin-bottom:.8rem; line-height:1.55; }
+    .tn { font-size:.8rem; color:var(--muted); margin-bottom:.8rem; line-height:1.55; }
     .ts { overflow-x:auto; border-radius:2px; border:1px solid var(--border); }
-    table { width:100%; border-collapse:collapse; font-size:.79rem; }
+    table { width:100%; border-collapse:collapse; font-size:.8rem; }
     thead { background:var(--dark); }
     th {
-      padding:.7rem .75rem; text-align:right;
-      font-family:'JetBrains Mono',monospace; font-size:.6rem; font-weight:500;
+      padding:.7rem .8rem; text-align:right; font-family:'JetBrains Mono',monospace; font-size:.6rem; font-weight:500;
       text-transform:uppercase; letter-spacing:.1em; color:rgba(255,255,255,.85); white-space:nowrap;
     }
     th:first-child { text-align:left; }
     td {
-      padding:.58rem .75rem; border-bottom:1px solid var(--border);
+      padding:.62rem .8rem; border-bottom:1px solid var(--border);
       text-align:right; font-variant-numeric:tabular-nums; vertical-align:top;
     }
     td:first-child { text-align:left; font-weight:600; }
@@ -204,36 +204,35 @@
     tr:nth-child(even) { background:var(--bg); }
     tr.expiry-row td { border-top:2px solid var(--gold); }
 
-    .tag { display:inline-block; padding:.2rem .5rem; border-radius:2px; font-family:'JetBrains Mono',monospace; font-size:.6rem; font-weight:600; text-transform:uppercase; letter-spacing:.1em; }
-    .tg-green { background:rgba(47,107,67,0.12); color:var(--green); }
-    .tg-gold  { background:var(--gold-soft); color:var(--ink-2); }
+    .tag { display:inline-block; padding:.22rem .55rem; border-radius:2px; font-family:'JetBrains Mono',monospace; font-size:.6rem; font-weight:600; text-transform:uppercase; letter-spacing:.06em; }
+    .tg-green { background:#E4EFE6; color:var(--green); }
+    .tg-gold  { background:var(--gold-soft); color:#8A6A1E; }
     .tg-gray  { background:var(--bg-2); color:var(--muted); }
-    .tg-red   { background:rgba(122,16,32,0.10); color:var(--red); }
-    .cs  { font-size:.68rem; color:var(--muted); margin-top:.1rem; font-weight:400; }
-    .dim { color:var(--muted); font-style:italic; font-size:.73rem; }
+    .tg-red   { background:#F4E0E2; color:var(--red); }
+    .cs  { font-family:'JetBrains Mono',monospace; font-size:.64rem; color:var(--muted); margin-top:.15rem; font-weight:400; letter-spacing:.02em; }
+    .dim { color:var(--muted); font-style:italic; font-size:.74rem; }
 
     .asmpt {
-      font-size:.72rem; color:var(--muted); margin-top:.75rem; line-height:1.6;
-      background:var(--bg); border-radius:2px; padding:.65rem .85rem; border:1px solid var(--border);
+      font-size:.74rem; color:var(--muted); margin-top:.75rem; line-height:1.6;
+      background:var(--bg); border-radius:2px; padding:.75rem .95rem; border:1px solid var(--border);
     }
     .asmpt strong { color:var(--text); }
 
     /* bottom line */
     .bl {
-      font-size:.97rem; line-height:1.8; color:var(--ink-2);
-      margin-top:1rem; padding:1.1rem 1.25rem;
-      background:var(--bg); border-radius:2px; border:1px solid var(--border);
+      font-size:.98rem; line-height:1.85; color:var(--ink-2);
+      margin-top:1rem; padding:1.25rem 1.4rem;
+      background:var(--bg); border-radius:2px; border:1px solid var(--border); border-left:3px solid var(--gold);
     }
     .bl strong { color:var(--dark); }
-    .bl .num   { font-family:'Newsreader',Georgia,serif; font-size:1.2rem; font-weight:600; color:var(--dark); letter-spacing:-0.01em; }
-    .bl .gold  { color:var(--mid); }
+    .bl .num   { font-family:'Newsreader',serif; font-size:1.35rem; font-weight:600; color:var(--dark); }
+    .bl .gold  { color:#8A6A1E; }
 
     footer {
       text-align:center; padding:2rem 1.25rem 2.5rem;
       font-size:.72rem; color:var(--muted); line-height:1.8;
-      border-top:1px solid var(--border);
+      max-width:880px; margin:0 auto; border-top:1px solid var(--border);
     }
-    footer a { color:var(--mid); text-decoration:none; font-weight:600; }
     #results { display:none; }
   </style>
 </head>
@@ -242,15 +241,15 @@
 <div class="topbar">
   <div class="topbar-inner">
     <a class="topbar-brand" href="https://militarywealthcoach.com">Military Wealth Coach</a>
-    <a class="topbar-back" href="https://militarywealthcoach.com/apps"><span aria-hidden="true">&#8592;</span> All Tools</a>
+    <a class="topbar-back" href="https://militarywealthcoach.com/apps"><span aria-hidden="true">←</span> All Tools</a>
   </div>
 </div>
 
 <header>
   <div class="header-inner">
-    <div class="eyebrow">U.S. Military Retirement Planning</div>
-    <div class="title">SBP Defeater</div>
-    <div class="sub">Survivor&#8217;s Benefit Plan Decision Support Tool</div>
+    <div class="eyebrow">SBP Defeater</div>
+    <h1 class="title">SBP Defeater</h1>
+    <p class="sub">Survivor's Benefit Plan decision support — see exactly when self-insuring beats the premium.</p>
   </div>
 </header>
 
@@ -269,11 +268,6 @@
             <option value="E-5">E-5</option><option value="E-6">E-6</option>
             <option value="E-7" selected>E-7</option>
             <option value="E-8">E-8</option><option value="E-9">E-9</option>
-          </optgroup>
-          <optgroup label="── Warrant Officers ──">
-            <option value="W-1">W-1</option><option value="W-2">W-2</option>
-            <option value="W-3">W-3</option><option value="W-4">W-4</option>
-            <option value="W-5">W-5</option>
           </optgroup>
           <optgroup label="── Officers ──">
             <option value="O-1">O-1</option><option value="O-2">O-2</option>
@@ -375,125 +369,8 @@
   </div>
 </div>
 
-    <!-- ── CONSULT CTA (shared block — Calendly + HubSpot Enquire) ── -->
-    <section class="mwc-consult">
-      <div class="mwc-consult-inner">
-        <div class="mwc-consult-head">
-          <div class="mwc-consult-eyebrow">Book your consult</div>
-          <h2 class="mwc-consult-title">30 minutes. <em>Free.</em> No pitch.</h2>
-          <p class="mwc-consult-sub">That&rsquo;s what the numbers say you <em>could</em> be building. The next question is <em>how</em> &mdash; so let me show you. Pick the route that fits: book a time outright, or send a message first and I&rsquo;ll help you decide.</p>
-        </div>
-        <div class="mwc-consult-grid">
-          <div class="mwc-consult-card">
-            <div class="mwc-card-tag">Ready to book</div>
-            <h3 class="mwc-card-h">You know it&rsquo;s time. Grab a slot.</h3>
-            <p class="mwc-card-p">Pick any open time on my calendar and we&rsquo;re locked in. No back-and-forth.</p>
-            <a class="mwc-cta-btn mwc-cta-gold" href="https://calendly.com/coach-military-wealth/new-client-consultation" target="_blank" rel="noopener">Book my free 30-min consult &rarr;</a>
-            <div class="mwc-card-note">Opens Calendly &middot; pick any slot that works for you.</div>
-          </div>
-          <div class="mwc-consult-card mwc-card-alt">
-            <div class="mwc-card-tag">Still deciding</div>
-            <h3 class="mwc-card-h">Still unsure how to proceed?</h3>
-            <p class="mwc-card-p">Shoot a back azimuth with this contact form and I&rsquo;ll help you decide. I read every message and reply within 24 hours.</p>
-            <button class="mwc-cta-btn mwc-cta-red" onclick="openHubSpotForm('consult')">Enquire Now &rarr;</button>
-            <div class="mwc-card-note">Opens the secure HubSpot contact form. Never shared, never sold.</div>
-          </div>
-        </div>
-        <p class="mwc-news-link">Want to be first for new insights and early access to other financial tools? <a href="#" onclick="event.preventDefault();window.ml&&window.ml('show','TvJ3v8',true)">Join the newsletter &rarr;</a></p>
-      </div>
-    </section>
-
-    <style id="mwc-consult-css">
-    .mwc-consult{background:var(--dark,#1A1A1A);padding:64px 20px;border-top:1px solid var(--border,#E3DCCC)}
-    .mwc-consult-inner{max-width:880px;margin:0 auto}
-    .mwc-consult-head{text-align:center;max-width:620px;margin:0 auto 42px}
-    .mwc-consult-eyebrow{font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.22em;text-transform:uppercase;color:var(--gold,#C9A24B);font-weight:600;margin-bottom:18px}
-    .mwc-consult-title{font-family:'Newsreader',Georgia,serif;font-weight:600;font-size:clamp(2rem,4.5vw,3rem);line-height:1.04;color:#fff;letter-spacing:-.015em;margin:0}
-    .mwc-consult-title em{font-style:italic;color:var(--gold,#C9A24B)}
-    .mwc-consult-sub{font-size:1rem;color:rgba(255,255,255,.78);line-height:1.55;margin-top:14px}
-    .mwc-consult-grid{display:grid;grid-template-columns:1fr 1fr;gap:20px}
-    @media(max-width:640px){.mwc-consult-grid{grid-template-columns:1fr}}
-    .mwc-consult-card{display:flex;flex-direction:column;background:var(--card,#fff);border-radius:2px;border-top:4px solid var(--gold,#C9A24B);padding:30px;box-shadow:0 24px 50px -24px rgba(0,0,0,.5)}
-    .mwc-consult-card.mwc-card-alt{border-top-color:var(--mid,#A6182C)}
-    .mwc-card-tag{font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.22em;text-transform:uppercase;color:var(--mid,#A6182C);font-weight:700;margin-bottom:12px}
-    .mwc-card-h{font-family:'Newsreader',Georgia,serif;font-size:1.5rem;font-weight:600;line-height:1.12;color:var(--dark,#1A1A1A);margin:0 0 10px}
-    .mwc-card-p{font-size:.92rem;color:var(--ink-2,#3D3833);line-height:1.55;margin:0 0 22px}
-    .mwc-cta-btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;width:100%;padding:14px 20px;border-radius:2px;font-family:'Manrope',sans-serif;font-weight:700;font-size:.92rem;text-decoration:none;cursor:pointer;border:0;margin-top:auto;transition:background .15s,opacity .15s}
-    .mwc-cta-gold{background:var(--gold,#C9A24B);color:var(--dark,#1A1A1A)}
-    .mwc-cta-gold:hover{opacity:.88}
-    .mwc-cta-red{background:var(--mid,#A6182C);color:#fff}
-    .mwc-cta-red:hover{background:var(--red,#7A1020)}
-    .mwc-card-note{font-size:11.5px;color:var(--muted,#6C645B);margin-top:13px;text-align:center}
-    .mwc-consult-sub em{font-style:italic;color:var(--gold,#C9A24B);font-weight:600}
-    .mwc-news-link{text-align:center;margin:30px auto 0;font-size:13px;color:rgba(255,255,255,.72);line-height:1.5;max-width:540px}
-    .mwc-news-link a{color:var(--gold,#C9A24B);font-weight:600;text-decoration:none;white-space:nowrap}
-    .mwc-news-link a:hover{text-decoration:underline}
-    /* modal */
-    .mwc-modal-ov{position:fixed;inset:0;z-index:2000;display:flex;align-items:flex-start;justify-content:center;padding:6vh 20px 40px;background:rgba(19,32,46,0.55);backdrop-filter:blur(4px);overflow-y:auto}
-    .mwc-modal{position:relative;width:100%;max-width:520px;background:var(--bg,#F7F3EB);border:1px solid var(--dark,#1A1A1A);border-top:4px solid var(--mid,#A6182C);border-radius:2px;box-shadow:0 40px 90px -25px rgba(0,0,0,0.5)}
-    .mwc-modal-hd{padding:26px 30px 18px;border-bottom:1px solid var(--border,#E3DCCC)}
-    .mwc-modal-eyebrow{font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:0.22em;text-transform:uppercase;color:var(--mid,#A6182C);font-weight:700;margin-bottom:10px}
-    .mwc-modal-title{font-family:'Newsreader',serif;font-size:26px;font-weight:600;line-height:1.12;color:var(--dark,#1A1A1A)}
-    .mwc-modal-blurb{font-size:14.5px;color:var(--ink-2,#3D3833);line-height:1.5;margin-top:10px}
-    .mwc-modal-bd{padding:24px 30px 30px}
-    .mwc-modal-x{position:absolute;top:16px;right:16px;width:34px;height:34px;display:flex;align-items:center;justify-content:center;border:1px solid var(--border,#E3DCCC);border-radius:50%;background:#fff;color:var(--dark,#1A1A1A);font-size:18px;line-height:1;cursor:pointer}
-    .mwc-modal-x:hover{background:var(--mid,#A6182C);color:#fff;border-color:var(--mid,#A6182C)}
-    .mwc-modal-bd .hs-form-field{margin-bottom:15px}
-    .mwc-modal-bd .hs-form-field>label{display:block;font-size:12.5px;font-weight:600;color:var(--dark,#1A1A1A);margin-bottom:6px;font-family:'Manrope',system-ui,sans-serif}
-    .mwc-modal-bd .hs-input{width:100%;padding:12px 14px;background:#fff;border:1px solid var(--border,#E3DCCC);border-radius:2px;font:inherit;font-size:14.5px;color:var(--dark,#1A1A1A);outline:none}
-    .mwc-modal-bd textarea.hs-input{min-height:90px;resize:vertical}
-    .mwc-modal-bd .hs-input:focus{border-color:var(--mid,#A6182C);box-shadow:0 0 0 3px rgba(166,24,44,0.12)}
-    .mwc-modal-bd .hs-button{background:var(--mid,#A6182C);color:#fff;border:0;border-radius:2px;padding:14px 24px;font-weight:600;font-size:15px;cursor:pointer;width:100%;margin-top:6px}
-    .mwc-modal-bd .hs-button:hover{background:var(--red,#7A1020)}
-    .mwc-modal-bd .hs-error-msg,.mwc-modal-bd .hs-error-msgs label{color:var(--mid,#A6182C);font-size:12.5px}
-    .mwc-modal-bd .hs_submit{margin-top:8px}
-    </style>
-
-    <script>
-    /* Consult CTA — HubSpot modal (vanilla port of the React chrome wiring) */
-    (function(){
-      if (!window.ml){ (function(w,d,e,u,f,l,n){w[f]=w[f]||function(){(w[f].q=w[f].q||[]).push(arguments);},l=d.createElement(e),l.async=1,l.src=u,n=d.getElementsByTagName(e)[0],n.parentNode.insertBefore(l,n);})(window,document,'script','https://assets.mailerlite.com/js/universal.js','ml'); window.ml('account','2383560'); }
-      if (window.openHubSpotForm) return;
-      var HUBSPOT = { portalId:'148573238', region:'eu1', scriptSrc:'//js-eu1.hsforms.net/forms/embed/v2.js' };
-      var HS_FORMS = { consult:{ formId:'512050a3-49fd-42ed-861f-750531bc1441', title:'Free 30-Minute Consultation', blurb:'Tell me where you are and what is blocking you. I will reach out within 24 hours.' } };
-      function ensureHubSpotScript(){
-        return new Promise(function(resolve){
-          if (window.hbspt) return resolve();
-          var existing = document.getElementById('hs-embed-v2');
-          if (existing){ var t=setInterval(function(){ if(window.hbspt){clearInterval(t);resolve();} },50); return; }
-          var s=document.createElement('script');
-          s.id='hs-embed-v2'; s.src=HUBSPOT.scriptSrc; s.charset='utf-8'; s.type='text/javascript';
-          s.onload=function(){ var t=setInterval(function(){ if(window.hbspt){clearInterval(t);resolve();} },50); };
-          document.head.appendChild(s);
-        });
-      }
-      function closeFormModal(){ var ov=document.getElementById('mwc-modal-ov'); if(ov) ov.remove(); document.removeEventListener('keydown', _mwcEsc); }
-      function _mwcEsc(e){ if(e.key==='Escape') closeFormModal(); }
-      function openHubSpotForm(key){
-        var cfg=HS_FORMS[key]; if(!cfg){ return; }
-        closeFormModal();
-        var ov=document.createElement('div'); ov.className='mwc-modal-ov'; ov.id='mwc-modal-ov';
-        ov.addEventListener('click', function(e){ if(e.target===ov) closeFormModal(); });
-        var targetId='hs-modal-target';
-        ov.innerHTML='<div class="mwc-modal" role="dialog" aria-modal="true" aria-label="'+cfg.title+'">'+
-          '<button class="mwc-modal-x" aria-label="Close" onclick="closeFormModal()">&times;</button>'+
-          '<div class="mwc-modal-hd"><div class="mwc-modal-eyebrow">Military Wealth Coach</div>'+
-          '<div class="mwc-modal-title">'+cfg.title+'</div>'+
-          (cfg.blurb?'<div class="mwc-modal-blurb">'+cfg.blurb+'</div>':'')+'</div>'+
-          '<div class="mwc-modal-bd"><div id="'+targetId+'"></div></div></div>';
-        document.body.appendChild(ov);
-        document.addEventListener('keydown', _mwcEsc);
-        var target=ov.querySelector('#'+targetId);
-        target.innerHTML='<div style="font-family:\'JetBrains Mono\',monospace;font-size:11px;letter-spacing:.1em;color:#6C645B;text-align:center;padding:20px">Loading form&hellip;</div>';
-        ensureHubSpotScript().then(function(){ target.innerHTML=''; window.hbspt.forms.create({ portalId:HUBSPOT.portalId, formId:cfg.formId, region:HUBSPOT.region, target:'#'+targetId }); });
-      }
-      window.openHubSpotForm=openHubSpotForm; window.closeFormModal=closeFormModal; window._mwcEsc=_mwcEsc;
-    })();
-    </script>
-
-
 <footer>
-  <strong>Disclaimer:</strong> Educational estimates only &mdash; not financial or legal advice.
+  <strong>Disclaimer:</strong> Educational estimates only — not financial or legal advice.
   Pay figures are approximate 2025 values. SBP elections are irrevocable at retirement; verify rules with DFAS.
   Life insurance rates are illustrative estimates for healthy non-smokers and vary by health, insurer, and state.
   Life expectancy uses blended (gender-neutral) SSA 2021 approximations. Index fund returns are not guaranteed.
@@ -514,11 +391,6 @@ const PAY_TABLE = {
          [16,5838],[18,6074],[20,6259],[22,6467],[24,6718]],
   'E-9':[[10,6199],[12,6408],[14,6614],[16,6922],[18,7130],
          [20,7478],[22,7733],[24,7951],[26,8399]],
-  'W-1':[[0,3639],[2,4057],[3,4286],[4,4528],[6,4667],[8,4812],[10,4953],[12,5116],[14,5285],[16,5432]],
-  'W-2':[[0,4187],[2,4748],[4,4959],[6,5234],[8,5470],[10,5699],[12,5934],[14,6184],[16,6443]],
-  'W-3':[[0,4797],[2,5338],[3,5532],[4,5744],[6,6021],[8,6333],[10,6638],[12,6914],[14,7186],[16,7453],[18,7708],[20,7947],[22,8173]],
-  'W-4':[[0,5296],[2,5815],[4,6026],[6,6292],[8,6590],[10,6942],[12,7282],[14,7589],[16,7892],[18,8237],[20,8577],[22,8873],[24,9143]],
-  'W-5':[[0,7506],[4,7801],[6,8106],[8,8447],[10,8761],[12,9139],[14,9503],[16,9887],[18,10248],[20,10637],[22,11024],[24,11425]],
   'O-1':[[0,3637],[2,3784],[4,4587]],
   'O-2':[[0,4187],[2,4771],[3,5469],[4,5571],[6,5718]],
   'O-3':[[0,4836],[2,5474],[3,5896],[4,6117],[6,6414],[8,6744],[10,6967],[12,7186]],
@@ -557,7 +429,7 @@ function pmtFor(tgt,r,yrs){ const m=r/12,n=yrs*12; return m===0?tgt/n:tgt*m/(Mat
 function isOfficer(g){ return g.startsWith('O'); }
 function fmt(n){ return '$'+Math.round(n).toLocaleString('en-US'); }
 function fmtB(n){ if(n>=1e6)return '$'+(n/1e6).toFixed(2)+'M'; if(n>=1e5)return '$'+Math.round(n/1000)+'K'; return fmt(n); }
-function fmtT(n){
+function fmtT(n){ // short for tooltip
   if(n>=1e6)return '$'+(n/1e6).toFixed(2)+'M';
   if(n>=1e5)return '$'+Math.round(n/1000)+'K';
   return '$'+Math.round(n).toLocaleString();
@@ -567,8 +439,7 @@ function fmtT(n){
 function autoFillAge(){
   const g=document.getElementById('grade').value;
   const y=parseInt(document.getElementById('yos').value)||20;
-  const base = g.startsWith('O') ? 22 : g.startsWith('W') ? 20 : 18;
-  const a=base+y;
+  const a=(isOfficer(g)?22:18)+y;
   document.getElementById('retireAge').value=a;
   document.getElementById('spouseAge').value=a;
 }
@@ -598,6 +469,7 @@ function computePts(spBenAnn,spAge,liCov,termYrs,mthNeeded,inv){
 }
 
 function findBreakeven(pts){
+  // Last year where combined transitions from below SBP to above SBP
   let be=null;
   for(let i=0;i<pts.length-1;i++){
     const d1=pts[i].comb-pts[i].sbpV;
@@ -607,7 +479,7 @@ function findBreakeven(pts){
       be=pts[i].yr+t*(pts[i+1].yr-pts[i].yr);
     }
   }
-  return be;
+  return be; // null = combined always wins
 }
 
 function interpPt(yr){
@@ -636,12 +508,15 @@ const crosshairPlugin = {
     if(x<ca.left||x>ca.right) return;
 
     ctx.save();
-    ctx.strokeStyle='rgba(201,162,75,0.65)';
+    // vertical line
+    ctx.strokeStyle='rgba(27,58,47,0.55)';
     ctx.lineWidth=1.5; ctx.setLineDash([4,3]);
     ctx.beginPath(); ctx.moveTo(x,ca.top); ctx.lineTo(x,ca.bottom); ctx.stroke();
 
+    // dots on each dataset
     chart.data.datasets.forEach((ds,i)=>{
       const lbl=chart.data.labels;
+      // linear interpolation
       let yVal=null;
       for(let j=0;j<lbl.length-1;j++){
         if(chart._chYr>=lbl[j]&&chart._chYr<=lbl[j+1]){
@@ -670,9 +545,9 @@ const annotPlugin = {
     const tx=sc.x.getPixelForValue(chart._termYrs||0);
     if(tx>=ca.left&&tx<=ca.right){
       ctx.save();
-      ctx.strokeStyle='#C9A24B'; ctx.lineWidth=2; ctx.setLineDash([7,4]);
+      ctx.strokeStyle='#C9A84C'; ctx.lineWidth=2; ctx.setLineDash([7,4]);
       ctx.beginPath(); ctx.moveTo(tx,ca.top); ctx.lineTo(tx,ca.bottom); ctx.stroke();
-      ctx.fillStyle='#6C645B'; ctx.font='600 10px Manrope,sans-serif';
+      ctx.fillStyle='#B45309'; ctx.font='bold 10px -apple-system,sans-serif';
       ctx.textAlign='left'; ctx.setLineDash([]);
       ctx.fillText('Term Expires ▼', tx+4, ca.top+13);
       ctx.restore();
@@ -683,11 +558,13 @@ const annotPlugin = {
     if(be!==null&&be!==undefined){
       const bx=sc.x.getPixelForValue(be);
       if(bx>=ca.left&&bx<=ca.right){
+        // dashed vertical
         ctx.save();
-        ctx.strokeStyle='#2F6B43'; ctx.lineWidth=1.5; ctx.setLineDash([3,3]);
+        ctx.strokeStyle='#1B3A2F'; ctx.lineWidth=1.5; ctx.setLineDash([3,3]);
         ctx.beginPath(); ctx.moveTo(bx,ca.top); ctx.lineTo(bx,ca.bottom); ctx.stroke();
         ctx.setLineDash([]);
 
+        // find y at breakeven (average of two lines since they cross here)
         let sbpY=null;
         const lbl=chart.data.labels, d0=chart.data.datasets[0].data;
         for(let j=0;j<lbl.length-1;j++){
@@ -698,17 +575,20 @@ const annotPlugin = {
         }
         if(sbpY!==null){
           const by=sc.y.getPixelForValue(sbpY);
+          // glow circle
           ctx.beginPath(); ctx.arc(bx,by,10,0,Math.PI*2);
-          ctx.fillStyle='rgba(47,107,67,0.12)'; ctx.fill();
+          ctx.fillStyle='rgba(27,58,47,0.12)'; ctx.fill();
+          // inner circle
           ctx.beginPath(); ctx.arc(bx,by,6,0,Math.PI*2);
-          ctx.fillStyle='#2F6B43'; ctx.fill();
+          ctx.fillStyle='#1B3A2F'; ctx.fill();
           ctx.strokeStyle='#fff'; ctx.lineWidth=2; ctx.stroke();
+          // label
           const labelLeft=bx>(ca.left+ca.right)/2;
-          ctx.fillStyle='#2F6B43'; ctx.font='600 10px Manrope,sans-serif';
+          ctx.fillStyle='#1B3A2F'; ctx.font='bold 10px -apple-system,sans-serif';
           ctx.textAlign=labelLeft?'right':'left';
           const lx=labelLeft?bx-13:bx+13;
           ctx.fillText('Breakeven', lx, by-11);
-          ctx.fillText('Year '+be.toFixed(1), lx, by+1);
+          ctx.fillText(`Year ${be.toFixed(1)}`, lx, by+1);
         }
         ctx.restore();
       }
@@ -728,9 +608,11 @@ function renderChart(spBenAnn,spAge,retireAge,liCov,termYrs,mthNeeded,inv){
   const sbpData   = G.pts.map(p=>p.sbpV);
   const combData  = G.pts.map(p=>p.comb);
 
+  // Update slider labels
   document.getElementById('slMin').textContent='Age '+retireAge;
   document.getElementById('slMax').textContent='Age '+(retireAge+30);
 
+  // Initialize slider at breakeven (or year 10)
   const initYr = G.breakeven!==null ? Math.min(30,Math.max(0,G.breakeven)) : 10;
   document.getElementById('chartSlider').value=initYr.toFixed(1);
 
@@ -746,7 +628,7 @@ function renderChart(spBenAnn,spAge,retireAge,liCov,termYrs,mthNeeded,inv){
         {
           label:'SBP Value',
           data:sbpData,
-          borderColor:'#A6182C',
+          borderColor:'#C0392B',
           borderWidth:2.5,
           pointRadius:0,
           tension:.3,
@@ -756,15 +638,15 @@ function renderChart(spBenAnn,spAge,retireAge,liCov,termYrs,mthNeeded,inv){
         {
           label:'Combined (LI + Portfolio)',
           data:combData,
-          borderColor:'#2F6B43',
+          borderColor:'#2D6A4F',
           borderWidth:2.5,
           pointRadius:0,
           tension:.3,
           order:0,
           fill:{
             target:0,
-            above:'rgba(47,107,67,0.12)',
-            below:'rgba(166,24,44,0.10)'
+            above:'rgba(45,106,79,0.13)',   // combined > sbp → green
+            below:'rgba(192,57,43,0.12)'    // combined < sbp → red
           }
         }
       ]
@@ -776,28 +658,26 @@ function renderChart(spBenAnn,spAge,retireAge,liCov,termYrs,mthNeeded,inv){
       plugins:{
         legend:{
           display:true, position:'top',
-          labels:{ font:{family:'Manrope, sans-serif',size:12}, color:'#1A1A1A', usePointStyle:true, pointStyleWidth:20 }
+          labels:{ font:{size:12}, color:'#1C1C1C', usePointStyle:true, pointStyleWidth:20 }
         },
         tooltip:{ enabled:false }
       },
       scales:{
         x:{
           type:'linear', min:0, max:30,
-          title:{ display:true, text:'Years After Retirement', font:{family:'Manrope, sans-serif',size:11}, color:'#6C645B' },
+          title:{ display:true, text:'Years After Retirement', font:{size:11}, color:'#6B7280' },
           ticks:{
-            stepSize:5, color:'#6C645B',
-            font:{ family:'Manrope, sans-serif' },
-            callback:v=>{ const a=retireAge+v; return 'Yr '+v+'\nAge '+a; }
+            stepSize:5,
+            callback:v=>{ const a=retireAge+v; return `Yr ${v}\nAge ${a}`; }
           },
-          grid:{ color:'rgba(26,26,26,0.06)' }
+          grid:{ color:'rgba(0,0,0,0.04)' }
         },
         y:{
-          title:{ display:true, text:'Projected Value', font:{family:'Manrope, sans-serif',size:11}, color:'#6C645B' },
+          title:{ display:true, text:'Projected Value', font:{size:11}, color:'#6B7280' },
           ticks:{
-            color:'#6C645B', font:{ family:'Manrope, sans-serif' },
             callback:v=>v>=1e6?'$'+(v/1e6).toFixed(1)+'M':'$'+Math.round(v/1000)+'K'
           },
-          grid:{ color:'rgba(26,26,26,0.06)' }
+          grid:{ color:'rgba(0,0,0,0.05)' }
         }
       }
     }
@@ -806,11 +686,13 @@ function renderChart(spBenAnn,spAge,retireAge,liCov,termYrs,mthNeeded,inv){
   G.chart._termYrs   = termYrs;
   G.chart._breakeven = G.breakeven;
 
+  // Canvas mouse/touch events
   canvas.style.cursor='crosshair';
   canvas.onmousemove = e=>{ const yr=canvasToYear(e); if(yr!==null){updateCrosshair(yr,false);} };
   canvas.onmouseleave= ()=>{ G.chart._chYr=undefined; G.chart.update('none'); };
   canvas.ontouchmove = e=>{ e.preventDefault(); const yr=canvasToYear(e.touches[0]); if(yr!==null)updateCrosshair(yr,true); };
 
+  // Initial panel
   updateCrosshair(initYr, true);
 }
 
@@ -850,41 +732,43 @@ function updateCrosshair(yr, syncSlider){
     verdictClass='even'; verdictText='≈ Even';
   } else if(p.comb>=p.sbpV){
     verdictClass='win';
-    verdictText='Combined +'+fmtT(diff);
+    verdictText=`Combined +${fmtT(diff)}`;
   } else {
     verdictClass='sbp';
-    verdictText='SBP +'+fmtT(Math.abs(diff));
+    verdictText=`SBP +${fmtT(Math.abs(diff))}`;
   }
 
   let beHtml='';
   if(G.breakeven===null){
-    beHtml='<strong>Combined always leads</strong> — SBP is never the superior choice at any point in the retirement timeline.';
+    beHtml=`<strong>Combined always leads</strong> — SBP is never the superior choice at any point in the retirement timeline.`;
   } else {
     const beAge=(G.retireAge+G.breakeven).toFixed(1);
     const beYr=G.breakeven.toFixed(1);
     if(yr<G.breakeven){
-      beHtml='<strong>Breakeven: Year '+beYr+' (Age '+beAge+')</strong> — SBP is the better choice until then. If you pass away before age '+beAge+', SBP would have been worth it.';
+      beHtml=`<strong>Breakeven: Year ${beYr} (Age ${beAge})</strong> — SBP is the better choice until then.
+               If you pass away before age ${beAge}, SBP would have been worth it.`;
     } else {
-      beHtml='<strong>Breakeven: Year '+beYr+' (Age '+beAge+')</strong> — Combined has been the better choice since then. Every year past age '+beAge+' the Combined advantage grows.';
+      beHtml=`<strong>Breakeven: Year ${beYr} (Age ${beAge})</strong> — Combined has been the better choice since then.
+               Every year past age ${beAge} the Combined advantage grows.`;
     }
   }
 
-  document.getElementById('cpanel').innerHTML=
-    '<div class="cp-row1">Year '+yrDisp+' · Your Age: <strong>'+ageDisp+'</strong> · Spouse/Partner Age: <strong>'+spAgeDisp+'</strong></div>'+
-    '<div class="cp-row2">'+
-      '<div>'+
-        '<div class="cp-val-label">SBP → Spouse/Partner</div>'+
-        '<div class="cp-val-num" style="color:#A6182C">'+fmtT(p.sbpV)+'</div>'+
-        '<div class="cs">'+p.spLE+'-yr actuarial stream</div>'+
-      '</div>'+
-      '<div class="cp-verdict '+verdictClass+'">'+verdictText+'</div>'+
-      '<div style="text-align:right">'+
-        '<div class="cp-val-label">Combined (LI + Portfolio)</div>'+
-        '<div class="cp-val-num" style="color:#2F6B43">'+fmtT(p.comb)+'</div>'+
-        '<div class="cs">LI: '+fmtT(p.li)+' · Port: '+fmtT(p.port)+'</div>'+
-      '</div>'+
-    '</div>'+
-    '<div class="cp-breakeven">'+beHtml+'</div>';
+  document.getElementById('cpanel').innerHTML=`
+    <div class="cp-row1">Year ${yrDisp} &nbsp;·&nbsp; Your Age: <strong>${ageDisp}</strong> &nbsp;·&nbsp; Spouse/Partner Age: <strong>${spAgeDisp}</strong></div>
+    <div class="cp-row2">
+      <div>
+        <div class="cp-val-label">SBP → Spouse/Partner</div>
+        <div class="cp-val-num" style="color:#C0392B">${fmtT(p.sbpV)}</div>
+        <div class="cs">${p.spLE}-yr actuarial stream</div>
+      </div>
+      <div class="cp-verdict ${verdictClass}">${verdictText}</div>
+      <div style="text-align:right">
+        <div class="cp-val-label">Combined (LI + Portfolio)</div>
+        <div class="cp-val-num" style="color:#2D6A4F">${fmtT(p.comb)}</div>
+        <div class="cs">LI: ${fmtT(p.li)} · Port: ${fmtT(p.port)}</div>
+      </div>
+    </div>
+    <div class="cp-breakeven">${beHtml}</div>`;
 }
 
 // ── Main calculation ───────────────────────────────────────────────────────
@@ -938,38 +822,38 @@ function calculate(){
 
 // ── Render: pension ────────────────────────────────────────────────────────
 function renderPension(base,retPay,redPay,lumpAmt,sys,lsPct,replPct,retAge){
-  let h=
-    '<div class="m"><div class="ml">Base Pay (High-3 Avg)</div><div class="mv">'+fmt(base)+'<span class="u">/mo</span></div><div class="ms">Approx. 2025 rate · '+fmt(base*12)+'/yr</div></div>'+
-    '<div class="m acc"><div class="ml">Gross Retirement Pay</div><div class="mv">'+fmt(retPay)+'<span class="u">/mo</span></div><div class="ms">'+replPct.toFixed(0)+'% replacement · '+fmt(retPay*12)+'/yr</div></div>';
-  if(sys==='brs'&&lsPct>0) h+=
-    '<div class="m a"><div class="ml">BRS Lump Sum (Est.)</div><div class="mv">'+fmtB(lumpAmt)+'</div><div class="ms">Paid at retirement · DoD actuarial approximation</div></div>'+
-    '<div class="m"><div class="ml">Reduced Pay Until Age 67</div><div class="mv">'+fmt(redPay)+'<span class="u">/mo</span></div><div class="ms">Restored to '+fmt(retPay)+'/mo at 67 · SBP uses full pay</div></div>';
+  let h=`
+    <div class="m"><div class="ml">Base Pay (High-3 Avg)</div><div class="mv">${fmt(base)}<span class="u">/mo</span></div><div class="ms">Approx. 2025 rate · ${fmt(base*12)}/yr</div></div>
+    <div class="m acc"><div class="ml">Gross Retirement Pay</div><div class="mv">${fmt(retPay)}<span class="u">/mo</span></div><div class="ms">${replPct.toFixed(0)}% replacement · ${fmt(retPay*12)}/yr</div></div>`;
+  if(sys==='brs'&&lsPct>0) h+=`
+    <div class="m a"><div class="ml">BRS Lump Sum (Est.)</div><div class="mv">${fmtB(lumpAmt)}</div><div class="ms">Paid at retirement · DoD actuarial approximation</div></div>
+    <div class="m"><div class="ml">Reduced Pay Until Age 67</div><div class="mv">${fmt(redPay)}<span class="u">/mo</span></div><div class="ms">Restored to ${fmt(retPay)}/mo at 67 · SBP uses full pay</div></div>`;
   document.getElementById('pm').innerHTML=h;
 }
 
 // ── Render: SBP cost ───────────────────────────────────────────────────────
 function renderSBP(sbpMo,sbpATMo,spMo,liCov,liRate,tax,retAge,termYrs){
-  document.getElementById('sm').innerHTML=
-    '<div class="m acc"><div class="ml">SBP Monthly Premium</div><div class="mv">'+fmt(sbpMo)+'<span class="u">/mo</span></div><div class="ms">6.5% of retirement pay · '+fmt(sbpMo*12)+'/yr · pre-tax</div></div>'+
-    '<div class="m g"><div class="ml">Spouse/Partner SBP Benefit</div><div class="mv">'+fmt(spMo)+'<span class="u">/mo</span></div><div class="ms">55% of retirement pay · COLA-adjusted for their lifetime</div></div>'+
-    '<div class="m"><div class="ml">Net Take-Home If Declined</div><div class="mv">'+fmt(sbpATMo)+'<span class="u">/mo</span></div><div class="ms">After '+(tax*100).toFixed(0)+'% tax · '+fmt(sbpATMo*12)+'/yr freed up</div></div>'+
-    '<div class="m"><div class="ml">Term Life Equivalent</div><div class="mv">'+fmtB(liCov)+'</div><div class="ms">'+termYrs+'-yr term · age '+retAge+' · ~'+fmt(liRate)+'/mo per $100K</div></div>';
-  document.getElementById('si').innerHTML=
-    '<div class="ib"><strong>The alternative strategy:</strong> Use the '+fmt(sbpATMo)+'/month freed up by declining SBP to fund a '+termYrs+'-year term life policy ('+fmtB(liCov)+' coverage), and <em>additionally</em> invest a fixed monthly amount into an index fund. The chart below shows the exact year this combined approach permanently surpasses SBP.</div>';
+  document.getElementById('sm').innerHTML=`
+    <div class="m acc"><div class="ml">SBP Monthly Premium</div><div class="mv">${fmt(sbpMo)}<span class="u">/mo</span></div><div class="ms">6.5% of retirement pay · ${fmt(sbpMo*12)}/yr · pre-tax</div></div>
+    <div class="m g"><div class="ml">Spouse/Partner SBP Benefit</div><div class="mv">${fmt(spMo)}<span class="u">/mo</span></div><div class="ms">55% of retirement pay · COLA-adjusted for their lifetime</div></div>
+    <div class="m"><div class="ml">Net Take-Home If Declined</div><div class="mv">${fmt(sbpATMo)}<span class="u">/mo</span></div><div class="ms">After ${(tax*100).toFixed(0)}% tax · ${fmt(sbpATMo*12)}/yr freed up</div></div>
+    <div class="m"><div class="ml">Term Life Equivalent</div><div class="mv">${fmtB(liCov)}</div><div class="ms">${termYrs}-yr term · age ${retAge} · ~${fmt(liRate)}/mo per $100K</div></div>`;
+  document.getElementById('si').innerHTML=`
+    <div class="ib"><strong>The alternative strategy:</strong> Use the ${fmt(sbpATMo)}/month freed up by declining SBP to fund a ${termYrs}-year term life policy (${fmtB(liCov)} coverage), and <em>additionally</em> invest a fixed monthly amount into an index fund. The chart below shows the exact year this combined approach permanently surpasses SBP.</div>`;
 }
 
 // ── Render: FV table ───────────────────────────────────────────────────────
 function renderFV(sbpMo,spBenAnn,liCov,sbpATMo,retAge,spAge,termYrs,mthNeeded,inv,sbpValExp){
   const COLA=.025, scenarios=[5,10,15,20,25,30];
   const retPct=(inv*100).toFixed(0);
-  const thead='<thead><tr>'+
-    '<th>Year of Death</th>'+
-    '<th>SBP → Spouse<br><span style="font-weight:400;font-size:.6rem;opacity:.75">Actuarial · 2.5% COLA</span></th>'+
-    '<th>Life Insurance<br><span style="font-weight:400;font-size:.6rem;opacity:.75">'+termYrs+'-yr term</span></th>'+
-    '<th>Portfolio<br><span style="font-weight:400;font-size:.6rem;opacity:.75">'+fmt(mthNeeded)+'/mo @ '+retPct+'%</span></th>'+
-    '<th>Combined<br><span style="font-weight:400;font-size:.6rem;opacity:.75">LI + Portfolio</span></th>'+
-    '<th>Result</th>'+
-  '</tr></thead>';
+  const thead=`<thead><tr>
+    <th>Year of Death</th>
+    <th>SBP → Spouse<br><span style="font-weight:400;font-size:.6rem;opacity:.75">Actuarial · 2.5% COLA</span></th>
+    <th>Life Insurance<br><span style="font-weight:400;font-size:.6rem;opacity:.75">${termYrs}-yr term</span></th>
+    <th>Portfolio<br><span style="font-weight:400;font-size:.6rem;opacity:.75">${fmt(mthNeeded)}/mo @ ${retPct}%</span></th>
+    <th>Combined<br><span style="font-weight:400;font-size:.6rem;opacity:.75">LI + Portfolio</span></th>
+    <th>Result</th>
+  </tr></thead>`;
   let rows='', sbpWinsYears=[], combinedWinsFrom=null;
   for(const yr of scenarios){
     const spAgeNow=spAge+yr, spLE=getLE(spAgeNow);
@@ -983,24 +867,24 @@ function renderFV(sbpMo,spBenAnn,liCov,sbpATMo,retAge,spAge,termYrs,mthNeeded,in
     if(pctEdge<.015){verdict='Even';vClass='tg-gray';}
     else if(combined>=sbpVal){verdict='Combined';vClass='tg-green';if(combinedWinsFrom===null)combinedWinsFrom=yr;}
     else{verdict='SBP';vClass='tg-red';sbpWinsYears.push(yr);}
-    const liCell=yr>termYrs?'<span class="dim">$0 — expired</span>':fmtB(liPayout);
-    rows+='<tr'+(yr===termYrs?' class="expiry-row"':'')+'>'+
-      '<td>Year '+yr+'<div class="cs">You: '+(retAge+yr)+' · Spouse: '+spAgeNow+', ~'+spLE+' yrs</div></td>'+
-      '<td style="color:var(--mid);font-weight:700">'+fmtB(sbpVal)+'<div class="cs">'+spLE+'-yr stream</div></td>'+
-      '<td>'+liCell+'</td>'+
-      '<td style="color:var(--green);font-weight:600">'+fmtB(port)+'</td>'+
-      '<td style="font-weight:800;color:'+(combined>=sbpVal*.985?'var(--green)':'var(--red)')+'">'+fmtB(combined)+(margin>=0?'<div class="cs">+'+fmtB(Math.abs(margin))+'</div>':'<div class="cs" style="color:var(--red)">−'+fmtB(Math.abs(margin))+'</div>')+'</td>'+
-      '<td><span class="tag '+vClass+'">'+verdict+'</span></td>'+
-    '</tr>';
+    const liCell=yr>termYrs?`<span class="dim">$0 — expired</span>`:fmtB(liPayout);
+    rows+=`<tr${yr===termYrs?' class="expiry-row"':''}>
+      <td>Year ${yr}<div class="cs">You: ${retAge+yr} · Spouse: ${spAgeNow}, ~${spLE} yrs</div></td>
+      <td style="color:var(--coral,#C0392B);font-weight:700">${fmtB(sbpVal)}<div class="cs">${spLE}-yr stream</div></td>
+      <td>${liCell}</td>
+      <td style="color:var(--mid);font-weight:600">${fmtB(port)}</td>
+      <td style="font-weight:800;color:${combined>=sbpVal*.985?'var(--green)':'var(--red)'}">${fmtB(combined)}${margin>=0?`<div class="cs">+${fmtB(Math.abs(margin))}</div>`:`<div class="cs" style="color:var(--red)">−${fmtB(Math.abs(margin))}</div>`}</td>
+      <td><span class="tag ${vClass}">${verdict}</span></td>
+    </tr>`;
   }
-  document.getElementById('fvt').innerHTML=thead+'<tbody>'+rows+'</tbody>';
-  document.getElementById('fva').innerHTML='<div class="asmpt"><strong>Assumptions:</strong> Spouse/partner benefit years from blended SSA actuarial life expectancy. SBP grows at 2.5%/yr COLA. Life insurance: '+termYrs+'-yr level term funded from '+fmt(sbpATMo)+'/mo SBP savings. Portfolio: '+fmt(mthNeeded)+'/mo at '+retPct+'% return, sized to equal SBP value at term expiry. Gold border = term expires. Values are nominal totals.</div>';
+  document.getElementById('fvt').innerHTML=thead+`<tbody>${rows}</tbody>`;
+  document.getElementById('fva').innerHTML=`<div class="asmpt"><strong>Assumptions:</strong> Spouse/partner benefit years from blended SSA actuarial life expectancy. SBP grows at 2.5%/yr COLA. Life insurance: ${termYrs}-yr level term funded from ${fmt(sbpATMo)}/mo SBP savings. Portfolio: ${fmt(mthNeeded)}/mo at ${retPct}% return, sized to equal SBP value at term expiry. Gold border = term expires. Values are nominal totals.</div>`;
   let insight='';
   if(sbpWinsYears.length===0){
-    insight='<div class="ib" style="margin-top:.85rem"><strong>Conclusion:</strong> The combined strategy matches or beats SBP in <strong>every modeled scenario</strong>. During the term, the death benefit covers the gap. After the term expires, the portfolio takes over and continues growing at '+retPct+'% vs. SBP’s 2.5% COLA — the lead only widens.</div>';
+    insight=`<div class="ib" style="margin-top:.85rem"><strong>Conclusion:</strong> The combined strategy matches or beats SBP in <strong>every modeled scenario</strong>. During the term, the death benefit covers the gap. After the term expires, the portfolio takes over and continues growing at ${retPct}% vs. SBP's 2.5% COLA — the lead only widens.</div>`;
   } else {
-    const yrsText=sbpWinsYears.map(y=>'Year '+y).join(', ');
-    insight='<div class="ib" style="margin-top:.85rem"><strong>Conclusion:</strong> SBP edges out the combined strategy in '+yrsText+' — typically because the actuarial SBP value is highest when a spouse/partner is young with many remaining years. From <strong>Year '+combinedWinsFrom+'</strong> onward, Combined wins and the advantage compounds every year. SBP is the better choice only for those who expect to pass away in the first '+sbpWinsYears[sbpWinsYears.length-1]+' years of retirement.</div>';
+    const yrsText=sbpWinsYears.map(y=>`Year ${y}`).join(', ');
+    insight=`<div class="ib" style="margin-top:.85rem"><strong>Conclusion:</strong> SBP edges out the combined strategy in ${yrsText} — typically because the actuarial SBP value is highest when a spouse/partner is young with many remaining years. From <strong>Year ${combinedWinsFrom}</strong> onward, Combined wins and the advantage compounds every year. SBP is the better choice only for those who expect to pass away in the first ${sbpWinsYears[sbpWinsYears.length-1]} years of retirement.</div>`;
   }
   document.getElementById('fvi').innerHTML=insight;
 }
@@ -1009,23 +893,23 @@ function renderFV(sbpMo,spBenAnn,liCov,sbpATMo,retAge,spAge,termYrs,mthNeeded,in
 function renderBL(sbpValExp,mthNeeded,termYrs,sbpATMo,inv,liCov,retAge,spAge,spAgeExp,spLEExp){
   const retPct=(inv*100).toFixed(0);
   const cheaper=mthNeeded<=sbpATMo;
-  document.getElementById('blm').innerHTML=
-    '<div class="m a"><div class="ml">SBP Value at Term Expiry — Year '+termYrs+'</div><div class="mv">'+fmtB(sbpValExp)+'</div><div class="ms">Spouse age '+spAgeExp+' · ~'+spLEExp+' yrs remaining · 2.5% COLA stream</div></div>'+
-    '<div class="m acc"><div class="ml">Monthly Portfolio Contribution Needed</div><div class="mv">'+fmt(mthNeeded)+'<span class="u">/mo</span></div><div class="ms">'+(cheaper?'Less than the '+fmt(sbpATMo)+'/mo you save by declining SBP':fmt(mthNeeded-sbpATMo)+'/mo more than the '+fmt(sbpATMo)+'/mo SBP savings')+'</div></div>';
+  document.getElementById('blm').innerHTML=`
+    <div class="m a"><div class="ml">SBP Value at Term Expiry — Year ${termYrs}</div><div class="mv">${fmtB(sbpValExp)}</div><div class="ms">Spouse age ${spAgeExp} · ~${spLEExp} yrs remaining · 2.5% COLA stream</div></div>
+    <div class="m acc"><div class="ml">Monthly Portfolio Contribution Needed</div><div class="mv">${fmt(mthNeeded)}<span class="u">/mo</span></div><div class="ms">${cheaper?`Less than the ${fmt(sbpATMo)}/mo you save by declining SBP`:`${fmt(mthNeeded-sbpATMo)}/mo more than the ${fmt(sbpATMo)}/mo SBP savings`}</div></div>`;
   const liNote=cheaper
-    ?'Your '+fmt(sbpATMo)+'/month SBP savings funds the entire term life policy <em>and</em> covers the portfolio contribution — the combined strategy costs nothing extra compared to keeping SBP.'
-    :'Your '+fmt(sbpATMo)+'/month SBP savings funds the term life policy. The portfolio requires an additional <strong>'+fmt(mthNeeded)+'/month</strong>, but the account is fully yours, keeps growing, and is inheritable by your spouse/partner and heirs.';
+    ?`Your ${fmt(sbpATMo)}/month SBP savings funds the entire term life policy <em>and</em> covers the portfolio contribution — the combined strategy costs nothing extra compared to keeping SBP.`
+    :`Your ${fmt(sbpATMo)}/month SBP savings funds the term life policy. The portfolio requires an additional <strong>${fmt(mthNeeded)}/month</strong>, but the account is fully yours, keeps growing, and is inheritable by your spouse/partner and heirs.`;
   const be=G.breakeven;
   const beNote=be!==null
-    ?'The exact breakeven — visible in the chart above — falls at <strong>Year '+be.toFixed(1)+' (Age '+(retAge+be).toFixed(1)+')</strong>. If you pass away before that point, SBP would have been the better choice. After it, the combined strategy wins permanently.'
-    :'Based on your numbers, the combined strategy leads from <strong>Year 0</strong> — SBP is never the mathematically superior choice at any point in the retirement timeline.';
-  document.getElementById('bls').innerHTML=
-    '<div class="bl">'+
-      'When your <strong>'+termYrs+'-year term policy expires</strong>, your spouse/partner’s projected SBP benefit stream would be worth approximately <span class="num gold">'+fmtB(sbpValExp)+'</span>.'+
-      ' Invest <span class="num">'+fmt(mthNeeded)+'/month</span> into the TSP C-Fund or an S&amp;P 500 index fund at '+retPct+'% annually, and your account reaches that exact value when the term expires — then keeps compounding.'+
-      '<br><br>'+liNote+'<br><br>'+beNote+
-      '<br><br><strong>The takeaway:</strong> After term expiry, your portfolio compounds at <strong>'+retPct+'%</strong> annually while SBP’s actuarial value shrinks as your spouse/partner’s remaining life expectancy decreases. SBP is the mathematically superior choice <em>only</em> for those who expect to pass away within the first '+(termYrs<=20?'10–15':'15–20')+' years of retirement — or senior flag/general officers retiring at 55 or later where the SBP base is large enough that term insurance can’t match it early on.'+
-    '</div>';
+    ?`The exact breakeven — visible in the chart above — falls at <strong>Year ${be.toFixed(1)} (Age ${(retAge+be).toFixed(1)})</strong>. If you pass away before that point, SBP would have been the better choice. After it, the combined strategy wins permanently.`
+    :`Based on your numbers, the combined strategy leads from <strong>Year 0</strong> — SBP is never the mathematically superior choice at any point in the retirement timeline.`;
+  document.getElementById('bls').innerHTML=`
+    <div class="bl">
+      When your <strong>${termYrs}-year term policy expires</strong>, your spouse/partner's projected SBP benefit stream would be worth approximately <span class="num gold">${fmtB(sbpValExp)}</span>.
+      Invest <span class="num">${fmt(mthNeeded)}/month</span> into the TSP C-Fund or an S&amp;P 500 index fund at ${retPct}% annually, and your account reaches that exact value when the term expires — then keeps compounding.
+      <br><br>${liNote}<br><br>${beNote}
+      <br><br><strong>The takeaway:</strong> After term expiry, your portfolio compounds at <strong>${retPct}%</strong> annually while SBP's actuarial value shrinks as your spouse/partner's remaining life expectancy decreases. SBP is the mathematically superior choice <em>only</em> for those who expect to pass away within the first ${termYrs<=20?'10–15':'15–20'} years of retirement — or senior flag/general officers retiring at 55 or later where the SBP base is large enough that term insurance can't match it early on.
+    </div>`;
 }
 
 autoFillAge();
