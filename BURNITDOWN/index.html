@@ -1,0 +1,1130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Burn It Down Calculator — Military Wealth Coach</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;0,6..72,700;1,6..72,500;1,6..72,600&family=Manrope:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --dark:    #1A1A1A;
+  --mid:     #A6182C;
+  --gold:    #C9A24B;
+  --bg:      #F7F3EB;
+  --bg-2:    #EFE9DD;
+  --card:    #FFFFFF;
+  --text:    #1A1A1A;
+  --ink-2:   #3D3833;
+  --muted:   #6C645B;
+  --border:  #E3DCCC;
+  --green:   #2F6B43;
+  --red:     #7A1020;
+  --gold-soft:#E7D9B0;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:var(--bg);color:var(--text);font-family:'Manrope',sans-serif;font-size:16px;line-height:1.55;-webkit-font-smoothing:antialiased}
+.mono{font-family:'JetBrains Mono',monospace}
+.serif{font-family:'Newsreader',serif}
+
+.topbar{background:var(--dark);color:#fff;padding:.85rem 1.5rem;display:flex;justify-content:space-between;align-items:center;font-family:'JetBrains Mono',monospace;font-size:.78rem;letter-spacing:.03em}
+.topbar a{color:#fff;text-decoration:none;opacity:.9}
+.topbar a:hover{opacity:1}
+
+.wrap{max-width:920px;margin:0 auto;padding:0 1.25rem}
+
+header.hero{padding:2.75rem 0 2rem}
+.eyebrow{font-family:'JetBrains Mono',monospace;color:var(--mid);font-size:.8rem;letter-spacing:.08em;text-transform:uppercase;display:flex;align-items:center;gap:.75rem;margin-bottom:.9rem}
+.eyebrow::after{content:'';flex:1;height:1px;background:var(--border);max-width:120px}
+h1{font-family:'Newsreader',serif;font-weight:600;letter-spacing:-0.01em;font-size:2.3rem;line-height:1.12;margin-bottom:.65rem}
+.sub{color:var(--ink-2);font-size:1.05rem;max-width:640px}
+
+.assumptions-banner{background:var(--bg-2);border:1px solid var(--border);border-radius:2px;padding:1rem 1.25rem;margin-bottom:1.75rem;font-size:.85rem;color:var(--ink-2)}
+.assumptions-banner .ab-title{font-family:'JetBrains Mono',monospace;text-transform:uppercase;letter-spacing:.06em;color:var(--mid);font-size:.72rem;margin-bottom:.5rem;display:block}
+.assumptions-banner ul{list-style:none;display:grid;grid-template-columns:1fr 1fr;gap:.35rem .1rem}
+.assumptions-banner li::before{content:'\2014  ';color:var(--muted)}
+@media (max-width:640px){.assumptions-banner ul{grid-template-columns:1fr}}
+
+.sec-label{font-family:'JetBrains Mono',monospace;color:var(--mid);text-transform:uppercase;letter-spacing:.06em;font-size:.78rem;display:flex;align-items:center;gap:.75rem;margin:2.25rem 0 1rem}
+.sec-label::after{content:'';flex:1;height:1px;background:var(--border)}
+.sec-label .phase-num{background:var(--mid);color:#fff;border-radius:2px;padding:.1rem .45rem;font-size:.7rem}
+
+.card{background:var(--card);border:1px solid var(--border);border-radius:2px;padding:1.5rem;margin-bottom:1.25rem;box-shadow:0 1px 2px rgba(26,26,26,.03)}
+.card-title{font-family:'JetBrains Mono',monospace;color:var(--mid);text-transform:uppercase;letter-spacing:.05em;font-size:.75rem;display:flex;align-items:center;gap:.6rem;margin-bottom:1.1rem}
+.card-title::after{content:'';flex:1;height:1px;background:var(--border)}
+
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:1rem}
+.grid3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:1rem}
+@media (max-width:640px){.grid2,.grid3{grid-template-columns:1fr}}
+
+.field{margin-bottom:1rem}
+.field label{display:block;font-family:'JetBrains Mono',monospace;font-size:.72rem;text-transform:uppercase;letter-spacing:.04em;color:var(--muted);margin-bottom:.4rem}
+.field input[type=text],.field input[type=number],.field select{width:100%;padding:.65rem .75rem;border:1px solid var(--border);border-radius:2px;font-family:'Manrope',sans-serif;font-size:.95rem;background:#fff;color:var(--text)}
+.field input:focus,.field select:focus{outline:none;border-color:var(--mid);box-shadow:0 0 0 3px rgba(166,24,44,.12)}
+.prefix-wrap{position:relative}
+.prefix-wrap .prefix{position:absolute;left:11px;top:50%;transform:translateY(-50%);color:var(--muted);font-size:.95rem;pointer-events:none}
+.field .prefix-wrap input{padding-left:52px}
+.field-note{font-size:.78rem;color:var(--muted);margin-top:.35rem}
+
+.toggle-row{display:flex;gap:.5rem;flex-wrap:wrap}
+.toggle-btn{flex:1;min-width:110px;padding:.6rem .5rem;text-align:center;border:1px solid var(--border);border-radius:2px;background:#fff;cursor:pointer;font-size:.85rem;font-weight:600;color:var(--ink-2);transition:.15s}
+.toggle-btn.active{background:var(--mid);border-color:var(--mid);color:#fff}
+
+.switch-row{display:flex;align-items:center;justify-content:space-between;gap:1rem;padding:.5rem 0}
+.switch-label{font-size:.92rem;color:var(--ink-2)}
+.switch-label .sub2{display:block;font-size:.78rem;color:var(--muted);margin-top:.15rem}
+.switch{position:relative;display:inline-block;width:42px;height:23px;flex:none}
+.switch input{opacity:0;width:0;height:0}
+.slider-toggle{position:absolute;cursor:pointer;inset:0;background:var(--border);transition:.2s;border-radius:23px}
+.slider-toggle::before{content:'';position:absolute;height:17px;width:17px;left:3px;bottom:3px;background:#fff;transition:.2s;border-radius:50%;box-shadow:0 1px 3px rgba(0,0,0,.25)}
+input:checked + .slider-toggle{background:var(--mid)}
+input:checked + .slider-toggle::before{transform:translateX(19px)}
+
+input[type=range]{width:100%;height:4px;padding:0;border:none;border-radius:2px;background:var(--border);appearance:none;-webkit-appearance:none;cursor:pointer}
+input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:20px;height:20px;border-radius:50%;background:var(--mid);border:3px solid #fff;box-shadow:0 1px 4px rgba(26,26,26,.28)}
+input[type=range]::-moz-range-thumb{width:20px;height:20px;border-radius:50%;background:var(--mid);border:3px solid #fff}
+
+.age-slider-wrap{padding:.5rem 0 0}
+.age-slider-readout{font-family:'Newsreader',serif;font-size:1.6rem;color:var(--mid);text-align:center;margin-bottom:.6rem}
+.age-slider-readout span{font-size:1rem;color:var(--muted);font-family:'Manrope',sans-serif}
+.milestone-ticks{position:relative;height:14px;margin:.4rem 0 .2rem}
+.milestone-tick{position:absolute;top:0;width:2px;height:8px;background:var(--border)}
+.milestone-callout{background:var(--bg-2);border-left:3px solid var(--gold);border-radius:2px;padding:.85rem 1rem;margin-top:.85rem;font-size:.88rem;color:var(--ink-2)}
+.milestone-callout b{color:var(--dark)}
+.milestone-next{font-size:.78rem;color:var(--muted);margin-top:.4rem}
+
+.accordion-toggle{cursor:pointer;display:flex;justify-content:space-between;align-items:center}
+.accordion-body{display:none;margin-top:1.25rem;padding-top:1.25rem;border-top:1px dashed var(--border)}
+.accordion-body.open{display:block}
+.accordion-chevron{transition:.2s;font-size:.8rem;color:var(--mid)}
+.accordion-chevron.open{transform:rotate(180deg)}
+
+.btn{display:inline-block;background:var(--mid);color:#fff;border:none;border-radius:2px;padding:.85rem 1.5rem;font-family:'Manrope',sans-serif;font-weight:700;font-size:.95rem;cursor:pointer;text-decoration:none;text-align:center;transition:.15s}
+.btn:hover{background:var(--red)}
+.btn-block{display:block;width:100%}
+.btn-ghost{background:transparent;color:var(--mid);border:1px solid var(--mid)}
+.btn-ghost:hover{background:var(--mid);color:#fff}
+
+.dark-panel{background:var(--dark);color:#fff;border-radius:2px;padding:1.75rem;text-align:center}
+.dark-panel .dp-label{font-family:'JetBrains Mono',monospace;text-transform:uppercase;letter-spacing:.06em;font-size:.75rem;color:#bbb}
+.dark-panel .dp-num{font-family:'Newsreader',serif;font-size:2.6rem;color:var(--gold);margin:.3rem 0}
+.dark-panel .dp-sub{font-size:.85rem;color:#ccc}
+
+.callout{background:var(--card);border:1px solid var(--border);border-left:3px solid var(--mid);border-radius:2px;padding:1.25rem 1.4rem;margin-bottom:1.1rem}
+.callout.win{border-left-color:var(--green)}
+.callout.loss{border-left-color:var(--red)}
+.callout h3{font-family:'Newsreader',serif;font-size:1.2rem;margin-bottom:.5rem}
+.callout p{color:var(--ink-2);font-size:.95rem}
+.callout .big{font-family:'Newsreader',serif;font-size:1.6rem;color:var(--mid)}
+
+#phase7-lock{display:none}
+#phase7-lock .insight{background:var(--bg-2);border:1px dashed var(--border);border-radius:2px;padding:1.25rem;text-align:center;color:var(--muted);font-size:.92rem}
+#phase7{display:none}
+
+.tiles{display:grid;grid-template-columns:repeat(4,1fr);gap:.85rem;margin-top:1rem}
+@media (max-width:900px){.tiles{grid-template-columns:1fr 1fr}}
+@media (max-width:480px){.tiles{grid-template-columns:1fr}}
+.tile{background:var(--card);border:1px solid var(--border);border-radius:2px;padding:1.1rem;text-align:center}
+.tile.recommended{border-color:var(--gold);box-shadow:0 0 0 1px var(--gold)}
+.tile .t-name{font-family:'JetBrains Mono',monospace;text-transform:uppercase;letter-spacing:.05em;font-size:.7rem;color:var(--muted);margin-bottom:.6rem}
+.tile .t-amt{font-family:'Newsreader',serif;font-size:1.5rem;color:var(--mid)}
+.tile .t-amt-sub{font-size:.72rem;color:var(--muted);margin-bottom:.6rem}
+.tile .t-rate{font-size:.82rem;color:var(--ink-2);margin-bottom:.5rem}
+.tile .t-prob{font-family:'Newsreader',serif;font-size:1.1rem;padding:.4rem;border-radius:2px}
+.tile .t-prob.high{background:rgba(47,107,67,.1);color:var(--green)}
+.tile .t-prob.mid{background:rgba(201,162,75,.15);color:#8a6d1f}
+.tile .t-prob.low{background:rgba(122,16,32,.08);color:var(--red)}
+.tile .t-prob-label{font-size:.68rem;color:var(--muted);margin-top:.25rem}
+
+.disclosure{font-size:.76rem;color:var(--muted);margin-top:.5rem;line-height:1.5}
+.disclosure b{color:var(--ink-2)}
+
+.footer-cta{background:var(--dark);color:#fff;border-radius:2px;padding:2rem;margin:2.5rem 0;text-align:center}
+.footer-cta h3{font-family:'Newsreader',serif;font-size:1.5rem;color:var(--gold);margin-bottom:.6rem}
+.footer-cta p{color:#ccc;margin-bottom:1.25rem;max-width:520px;margin-left:auto;margin-right:auto}
+.footer-cta input[type=email]{width:100%;max-width:340px;padding:.75rem;border-radius:2px;border:none;margin-bottom:.75rem;font-family:'Manrope',sans-serif}
+
+.site-footer{padding:2rem 0 3rem;font-size:.78rem;color:var(--muted);text-align:center}
+.site-footer a{color:var(--mid)}
+
+.spinner{display:inline-block;width:16px;height:16px;border:2px solid rgba(255,255,255,.35);border-top-color:#fff;border-radius:50%;animation:spin .7s linear infinite;margin-right:.5rem;vertical-align:-3px}
+@keyframes spin{to{transform:rotate(360deg)}}
+
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <a href="https://militarywealthcoach.com" class="mono">Military Wealth Coach</a>
+  <a href="https://militarywealthcoach.com/apps" class="mono">← All Tools</a>
+</div>
+
+<div class="wrap">
+<header class="hero">
+  <div class="eyebrow">Burn It Down Calculator</div>
+  <h1>How much can you actually spend in retirement?</h1>
+  <p class="sub">The 4% Rule was built for someone else’s risk profile. See what conventional advice says you can spend, what your real, inflation-adjusted retirement will cost, and — if you want it — how much you could spend and still choose your own odds of dying with zero.</p>
+</header>
+
+<div class="assumptions-banner">
+  <span class="ab-title">Built-in assumptions — read before you enter numbers</span>
+  <ul>
+    <li>Federal tax only — no state income tax modeled</li>
+    <li>Full concurrent receipt of pension + VA disability assumed</li>
+    <li>Social Security is not modeled (deliberately excluded)</li>
+    <li>Retirement accounts assumed penalty-free at 59½ unless Advanced Bridge is enabled</li>
+    <li>Spending stays flat in real (inflation-adjusted) terms after retirement</li>
+    <li>All figures are modeled estimates, not guarantees or financial advice</li>
+  </ul>
+</div>
+
+<!-- ============ PHASE 1: SAVINGS STACK ============ -->
+<div class="sec-label"><span class="phase-num">1</span> The Savings Stack</div>
+
+<div class="card">
+  <div class="card-title">You Today</div>
+  <div class="grid3">
+    <div class="field">
+      <label>Your Current Age</label>
+      <input type="number" id="curAge" value="30" min="17" max="75">
+    </div>
+    <div class="field">
+      <label>Household Filing Status</label>
+      <select id="filingStatus">
+        <option value="single">Single</option>
+        <option value="mfj" selected>Married Filing Jointly</option>
+      </select>
+    </div>
+    <div class="field">
+      <label>Household Income &amp; Marginal Tax Bracket</label>
+      <select id="taxBracket">
+        <option value="10">10%</option>
+        <option value="12" selected>12%</option>
+        <option value="22">22%</option>
+        <option value="24">24%</option>
+        <option value="32">32%</option>
+        <option value="35">35%</option>
+        <option value="37">37%</option>
+      </select>
+    </div>
+  </div>
+</div>
+
+<div class="card">
+  <div class="card-title">Retirement Accounts (TSP / 401k / IRA)</div>
+  <div class="grid2">
+    <div class="field">
+      <label>Current Traditional Balance</label>
+      <div class="prefix-wrap"><span class="prefix">$</span><input type="text" inputmode="numeric" id="tradBal" value="25000"></div>
+    </div>
+    <div class="field">
+      <label>Current Roth Balance</label>
+      <div class="prefix-wrap"><span class="prefix">$</span><input type="text" inputmode="numeric" id="rothBal" value="10000"></div>
+    </div>
+    <div class="field">
+      <label>Monthly Contribution (Traditional + Roth combined)</label>
+      <div class="prefix-wrap"><span class="prefix">$</span><input type="text" inputmode="numeric" id="retContrib" value="500"></div>
+    </div>
+    <div class="field">
+      <label>Expected Annual Return</label>
+      <div class="prefix-wrap"><input type="text" inputmode="numeric" id="retReturn" value="8" style="padding-left:.75rem"><span class="prefix" style="left:auto;right:11px">%</span></div>
+    </div>
+  </div>
+  <div class="switch-row">
+    <div class="switch-label">Grow contribution with future pay raises
+      <span class="sub2">Off = contribution stays flat in dollar terms. On = grows each year at your inflation assumption below.</span>
+    </div>
+    <label class="switch"><input type="checkbox" id="growContrib"><span class="slider-toggle"></span></label>
+  </div>
+</div>
+
+<div class="card">
+  <div class="card-title">Non-Retirement Savings (funds early retirement, the "Bridge")</div>
+  <div class="grid2">
+    <div class="field">
+      <label>Current HYSA / Cash Balance</label>
+      <div class="prefix-wrap"><span class="prefix">$</span><input type="text" inputmode="numeric" id="hysaBal" value="15000"></div>
+    </div>
+    <div class="field">
+      <label>Current Taxable Brokerage Balance</label>
+      <div class="prefix-wrap"><span class="prefix">$</span><input type="text" inputmode="numeric" id="brokBal" value="5000"></div>
+    </div>
+    <div class="field">
+      <label>HYSA Monthly Contribution</label>
+      <div class="prefix-wrap"><span class="prefix">$</span><input type="text" inputmode="numeric" id="hysaContrib" value="0"></div>
+    </div>
+    <div class="field">
+      <label>Brokerage Monthly Contribution</label>
+      <div class="prefix-wrap"><span class="prefix">$</span><input type="text" inputmode="numeric" id="brokContrib" value="0"></div>
+    </div>
+    <div class="field">
+      <label>HYSA Expected Return</label>
+      <div class="prefix-wrap"><input type="text" inputmode="numeric" id="hysaReturn" value="4" style="padding-left:.75rem"><span class="prefix" style="left:auto;right:11px">%</span></div>
+    </div>
+    <div class="field">
+      <label>Brokerage Expected Return</label>
+      <div class="prefix-wrap"><input type="text" inputmode="numeric" id="brokReturn" value="7" style="padding-left:.75rem"><span class="prefix" style="left:auto;right:11px">%</span></div>
+    </div>
+  </div>
+</div>
+
+<div class="card">
+  <div class="card-title">Planned Retirement Age</div>
+  <div class="age-slider-wrap">
+    <div class="age-slider-readout" id="ageReadout">59.5 <span>years old</span></div>
+    <input type="range" id="retAge" min="50" max="74" step="0.5" value="59.5">
+    <div class="milestone-callout" id="milestoneCallout"></div>
+  </div>
+  <div class="switch-row" style="margin-top:1rem">
+    <div class="switch-label">Advanced Bridge — model Rule of 55 / 72(t) early access
+      <span class="sub2">Off by default. If enabled, penalty-free access to retirement accounts starts at your planned retirement age (if 55+) instead of waiting until 59½.</span>
+    </div>
+    <label class="switch"><input type="checkbox" id="advBridge"><span class="slider-toggle"></span></label>
+  </div>
+  <div class="disclosure" id="bridgeDisclosure" style="display:none">This is not tax advice. Rule of 55 applies only to your current employer’s TSP/401(k); 72(t) SEPP schedules are strict — an incorrect schedule triggers retroactive penalties and interest on every prior distribution (IRS Rev. Rul. 2002-62). Consult a tax professional before acting on this.</div>
+</div>
+
+<!-- ============ PHASE 2: REAL COST OF LIVING ============ -->
+<div class="sec-label"><span class="phase-num">2</span> The Real Cost of Living</div>
+<div class="card">
+  <div class="grid2">
+    <div class="field">
+      <label>Current Monthly Household Expenses</label>
+      <div class="prefix-wrap"><span class="prefix">$</span><input type="text" inputmode="numeric" id="curExpenses" value="5000"></div>
+    </div>
+    <div class="field">
+      <label>Inflation Assumption</label>
+      <div class="prefix-wrap"><input type="text" inputmode="numeric" id="inflation" value="3.1" style="padding-left:.75rem"><span class="prefix" style="left:auto;right:11px">%</span></div>
+      <div class="field-note">Default approximates the ~110-year CPI-U average. Current SSA/CBO forward projections run closer to 2.3–2.6% — edit if you want a more current-relevant estimate.</div>
+    </div>
+  </div>
+  <div class="field">
+    <label>Planned Retirement Lifestyle</label>
+    <div class="toggle-row" id="lifestyleToggle">
+      <div class="toggle-btn" data-val="-15">Downsize (–15%)</div>
+      <div class="toggle-btn active" data-val="0">Maintain</div>
+      <div class="toggle-btn" data-val="25">Expand (+25%)</div>
+    </div>
+    <div class="field-note">The 70% Rule is then applied on top: retirees typically replace 55–80% of working-years spending once payroll taxes, retirement contributions, commuting, and the "PCS tax" of uniforms and moves disappear.</div>
+  </div>
+</div>
+
+<!-- ============ PHASE 3: INCOME STACK ============ -->
+<div class="sec-label"><span class="phase-num">3</span> The Income Stack</div>
+<div class="card">
+  <div class="card-title">Pension</div>
+  <div class="grid3">
+    <div class="field">
+      <label>Retirement System</label>
+      <select id="retSystem">
+        <option value="legacy">Legacy High-3</option>
+        <option value="brs" selected>Blended Retirement System (BRS)</option>
+      </select>
+    </div>
+    <div class="field">
+      <label>Current Pay Grade</label>
+      <select id="gradeNow"></select>
+    </div>
+    <div class="field">
+      <label>Pay Grade at Retirement</label>
+      <select id="gradeRet"></select>
+    </div>
+    <div class="field">
+      <label>Years of Service at Retirement</label>
+      <input type="number" id="yosRet" value="20" min="20" max="40">
+    </div>
+  </div>
+</div>
+
+<div class="card">
+  <div class="card-title">VA Disability Compensation</div>
+  <div class="grid2">
+    <div class="field">
+      <label>Projected VA Disability Rating</label>
+      <select id="vaRating">
+        <option value="0">0% (none)</option>
+        <option value="10">10%</option><option value="20">20%</option><option value="30">30%</option>
+        <option value="40">40%</option><option value="50">50%</option><option value="60">60%</option>
+        <option value="70" selected>70%</option><option value="80">80%</option><option value="90">90%</option><option value="100">100%</option>
+      </select>
+    </div>
+    <div class="field">
+      <label>Dependency Status</label>
+      <select id="vaDependency">
+        <option value="alone">Veteran Alone</option>
+        <option value="spouse" selected>Veteran + Spouse</option>
+        <option value="spouseChild">Veteran + Spouse + Child</option>
+      </select>
+    </div>
+  </div>
+  <div class="disclosure">VA disability compensation is federally tax-exempt and grows with the same COLA assumption as your expenses. This tool assumes full concurrent receipt of pension and VA disability regardless of rating (a simplification of the Concurrent Retirement and Disability Pay rule — in reality, ratings under 50% can trigger a dollar-for-dollar offset against retired pay).</div>
+</div>
+
+<div class="card">
+  <div class="switch-row">
+    <div class="switch-label">Second Career Pension
+      <span class="sub2">A flat, non-military pension you expect from a post-service career.</span>
+    </div>
+    <label class="switch"><input type="checkbox" id="secondCareerToggle"><span class="slider-toggle"></span></label>
+  </div>
+  <div class="grid2" id="secondCareerFields" style="display:none;margin-top:.75rem">
+    <div class="field">
+      <label>Projected Annual Pension</label>
+      <div class="prefix-wrap"><span class="prefix">$</span><input type="text" inputmode="numeric" id="secondCareerAmt" value="20000"></div>
+    </div>
+    <div class="field">
+      <label>Age It Begins</label>
+      <input type="number" id="secondCareerAge" value="65" min="45" max="80">
+    </div>
+  </div>
+</div>
+
+<!-- ============ PHASE 4: SPOUSE / PARTNER ============ -->
+<div class="sec-label"><span class="phase-num">4</span> Spouse / Partner</div>
+<div class="card">
+  <div class="accordion-toggle" id="spouseAccordionToggle">
+    <div class="switch-label">Include a spouse or partner in this plan
+      <span class="sub2">Adds their savings and income to a combined household plan.</span>
+    </div>
+    <span class="accordion-chevron mono" id="spouseChevron">▼</span>
+  </div>
+  <div class="accordion-body" id="spouseAccordionBody">
+    <div class="grid3">
+      <div class="field">
+        <label>Spouse Current Age</label>
+        <input type="number" id="spAge" value="30" min="17" max="75">
+      </div>
+      <div class="field">
+        <label>Spouse Traditional Balance</label>
+        <div class="prefix-wrap"><span class="prefix">$</span><input type="text" inputmode="numeric" id="spTradBal" value="0"></div>
+      </div>
+      <div class="field">
+        <label>Spouse Roth Balance</label>
+        <div class="prefix-wrap"><span class="prefix">$</span><input type="text" inputmode="numeric" id="spRothBal" value="0"></div>
+      </div>
+      <div class="field">
+        <label>Spouse Monthly Contribution</label>
+        <div class="prefix-wrap"><span class="prefix">$</span><input type="text" inputmode="numeric" id="spContrib" value="0"></div>
+      </div>
+      <div class="field">
+        <label>Spouse Expected Return</label>
+        <div class="prefix-wrap"><input type="text" inputmode="numeric" id="spReturn" value="8" style="padding-left:.75rem"><span class="prefix" style="left:auto;right:11px">%</span></div>
+      </div>
+      <div class="field">
+        <label>Spouse Pension / Second Career</label>
+        <div class="prefix-wrap"><span class="prefix">$</span><input type="text" inputmode="numeric" id="spPension" value="0"></div>
+      </div>
+    </div>
+    <div class="callout" style="margin-top:1rem">
+      <h3>A note on planning for two lifetimes</h3>
+      <p>One spouse typically outlives the other — which means it may not be optimal for either of you to plan around fully depleting your household’s retirement savings. This calculator does not model joint-life survival odds; that kind of deliberate, two-life planning is exactly what an Accredited Financial Counselor can help you build.</p>
+      <a class="btn" style="margin-top:.75rem" href="https://calendly.com/coach-military-wealth/new-client-consultation" target="_blank" rel="noopener">Book a Free 30-Minute Consultation</a>
+    </div>
+  </div>
+</div>
+
+<!-- ============ PHASE 5: TAX TREATMENT ============ -->
+<div class="sec-label"><span class="phase-num">5</span> Tax Treatment</div>
+<div class="card">
+  <div class="switch-row">
+    <div class="switch-label">Convert Traditional balances to Roth before retirement
+      <span class="sub2">Models a Roth Conversion Ladder — each converted amount is taxable in the year of conversion and needs 5 tax years of seasoning before penalty-free withdrawal.</span>
+    </div>
+    <label class="switch"><input type="checkbox" id="rothConvertToggle"><span class="slider-toggle"></span></label>
+  </div>
+  <div class="field" id="rothWindowField" style="display:none;margin-top:.75rem">
+    <label>Conversion Window (years before retirement)</label>
+    <input type="number" id="rothWindow" value="5" min="1" max="20">
+  </div>
+  <div class="disclosure">Traditional withdrawals and pension income are taxed as ordinary income at your marginal bracket above; VA disability and Roth withdrawals are never taxed. <b>State income tax is not modeled</b> — most states fully or partially exempt military retirement pay, but your state may differ. A financial counselor or tax professional can tell you exactly how your state treats this income.</div>
+</div>
+
+<button class="btn btn-block" id="calcBtn" style="font-size:1.05rem;padding:1rem">Calculate My Plan</button>
+
+<!-- ============ PHASE 6: STANDARD PLAN ============ -->
+<div id="phase6" style="display:none">
+  <div class="sec-label" style="margin-top:2.5rem"><span class="phase-num">6</span> The Standard Plan</div>
+  <div id="standardPlanOutput"></div>
+
+  <div id="phase7-lock">
+    <div class="insight">Your Standard Plan is above. Ready to see what changes when you stop following the herd?</div>
+    <button class="btn btn-block" id="revealBtn" style="margin-top:1rem">But why follow the herd when you can make it your own?</button>
+  </div>
+</div>
+
+<!-- ============ PHASE 7: FOUR-TILE COMPARISON ============ -->
+<div id="phase7">
+  <div class="sec-label"><span class="phase-num">7</span> Make It Your Own</div>
+  <div class="card">
+    <div class="grid3">
+      <div class="field">
+        <label>Conservative Target Success Rate</label>
+        <div class="prefix-wrap"><input type="text" inputmode="numeric" id="consTarget" value="99" style="padding-left:.75rem"><span class="prefix" style="left:auto;right:11px">%</span></div>
+      </div>
+      <div class="field">
+        <label>Longevity Horizon (age)</label>
+        <input type="number" id="horizonAge" value="100" min="80" max="105">
+      </div>
+      <div class="field">
+        <label>Aggressive: Target Age to Hit $0</label>
+        <input type="number" id="aggAge" value="95" min="70" max="105">
+      </div>
+    </div>
+    <div class="field">
+      <label>Aggressive: Probability of Hitting $0 By That Age</label>
+      <div class="prefix-wrap"><input type="text" inputmode="numeric" id="aggProb" value="50" style="padding-left:.75rem"><span class="prefix" style="left:auto;right:11px">%</span></div>
+      <div class="field-note">"A 50% chance my portfolio hits zero before age 95, and a 50% chance it doesn’t" — the Die-With-Zero philosophy, with an actual probabilistic bound instead of a guess.</div>
+    </div>
+    <button class="btn btn-block" id="runMcBtn">Run My Four Scenarios</button>
+    <div id="mcStatus" style="text-align:center;margin-top:.75rem;font-size:.85rem;color:var(--muted)"></div>
+  </div>
+  <div class="tiles" id="tilesOutput"></div>
+  <div class="disclosure" style="margin-top:.75rem">Every probability shown is a modeled estimate from a Monte Carlo simulation over historical market return sequences — not a guarantee or a prediction. Conservative, Standard, and Actual differ only in withdrawal amount, not investment allocation, so you can see exactly what one variable costs you in risk.</div>
+</div>
+
+<div class="footer-cta">
+  <h3>Get the Burn It Down Guide</h3>
+  <p>How to turn your pension, VA disability, and TSP into a real retirement number — not just a rule of thumb.</p>
+  <input type="email" id="emailCapture" placeholder="you@email.com">
+  <br>
+  <button class="btn" id="emailSubmit">Send Me the Guide</button>
+</div>
+
+<div class="site-footer">
+  Pay tables: Military.com 2026 Active Duty Pay. VA compensation: 2026 VA disability rates. Not financial advice — projections use historical and modeled assumptions; actual results will vary. <a href="https://militarywealthcoach.com">MilitaryWealthCoach.com</a>
+</div>
+
+</div><!-- /wrap -->
+
+<script>
+/* ============================================================
+   DATA
+   ============================================================ */
+
+// Pay grade order matches BAH_W/BAH_WO convention: E1-E9, W1-W5, O1E-O3E, O1-O10 (27 grades)
+const GRADES = ['E1','E2','E3','E4','E5','E6','E7','E8','E9','W1','W2','W3','W4','W5','O1E','O2E','O3E','O1','O2','O3','O4','O5','O6','O7','O8','O9','O10'];
+const GRADE_LABELS = {
+  E1:'E-1',E2:'E-2',E3:'E-3',E4:'E-4',E5:'E-5',E6:'E-6',E7:'E-7',E8:'E-8',E9:'E-9',
+  W1:'W-1',W2:'W-2',W3:'W-3',W4:'W-4',W5:'W-5',
+  O1E:'O-1E',O2E:'O-2E',O3E:'O-3E',
+  O1:'O-1',O2:'O-2',O3:'O-3',O4:'O-4',O5:'O-5',O6:'O-6',O7:'O-7',O8:'O-8',O9:'O-9',O10:'O-10'
+};
+
+// YOS bands (years) matching the 2026 Active Duty Pay table columns
+const YOS_BANDS = [0,2,3,4,6,8,10,12,14,16,18,20,22,24,26,28,30,32,34,36,38,40];
+
+// 2026 Active Duty Pay table (Military.com / DoD, updated Jan. 15, 2026). null = not yet eligible
+// at that grade/YOS combination (e.g. O-10 has no published rate below 20 years).
+const PAY_TABLE = {
+  O10: [null,null,null,null,null,null,null,null,null,null,null,18999.90,18999.90,18999.90,18999.90,18999.90,18999.90,18999.90,18999.90,18999.90,18999.90,18999.90],
+  O9:  [null,null,null,null,null,null,null,null,null,null,null,18999.90,18999.90,18999.90,18999.90,18999.90,18999.90,18999.90,18999.90,18999.90,18999.90,18999.90],
+  O8:  [13888.50,14343.90,14645.40,14729.40,15106.50,15735.30,15882.00,16479.60,16651.80,17166.60,17911.80,18598.20,18999.90,18999.90,18999.90,18999.90,18999.90,18999.90,18999.90,18999.90,18999.90,18999.90],
+  O7:  [11540.10,12076.20,12324.30,12522.00,12878.70,13231.80,13639.20,14045.70,14454.30,15735.30,16817.70,16817.70,16817.70,16817.70,16904.40,16904.40,17242.20,17242.20,17242.20,17242.20,17242.20,17242.20],
+  O6:  [8751.30,9613.80,10245.00,10245.00,10284.30,10725.00,10783.50,10783.50,11396.40,12479.70,13115.40,13751.10,14112.90,14479.20,15188.70,15188.70,15408.30,15408.30,15408.30,15408.30,15408.30,15408.30],
+  O5:  [7295.40,8218.20,8787.00,8894.10,9249.60,9461.40,9928.50,10271.70,10715.10,11391.30,11713.80,12032.70,12394.80,12394.80,12394.80,12394.80,12394.80,12394.80,12394.80,12394.80,12394.80,12394.80],
+  O4:  [6294.60,7286.40,7773.60,7881.00,8332.20,8816.40,9420.00,9888.30,10214.40,10401.60,10509.90,10509.90,10509.90,10509.90,10509.90,10509.90,10509.90,10509.90,10509.90,10509.90,10509.90,10509.90],
+  O3:  [5534.10,6273.90,6770.40,7382.70,7737.00,8125.50,8375.70,8788.20,9004.20,9004.20,9004.20,9004.20,9004.20,9004.20,9004.20,9004.20,9004.20,9004.20,9004.20,9004.20,9004.20,9004.20],
+  O2:  [4782.00,5446.20,6272.40,6484.50,6617.70,6617.70,6617.70,6617.70,6617.70,6617.70,6617.70,6617.70,6617.70,6617.70,6617.70,6617.70,6617.70,6617.70,6617.70,6617.70,6617.70,6617.70],
+  O1:  [4150.20,4320.00,5222.40,5222.40,5222.40,5222.40,5222.40,5222.40,5222.40,5222.40,5222.40,5222.40,5222.40,5222.40,5222.40,5222.40,5222.40,5222.40,5222.40,5222.40,5222.40,5222.40],
+  O3E: [null,null,null,7382.70,7737.00,8125.50,8375.70,8788.20,9137.10,9336.90,9609.60,9609.60,9609.60,9609.60,9609.60,9609.60,9609.60,9609.60,9609.60,9609.60,9609.60,9609.60],
+  O2E: [null,null,null,6484.50,6617.70,6828.00,7183.80,7458.90,7663.50,7663.50,7663.50,7663.50,7663.50,7663.50,7663.50,7663.50,7663.50,7663.50,7663.50,7663.50,7663.50,null],
+  O1E: [null,null,null,5222.40,5576.70,5783.10,5993.70,6200.70,6484.50,6484.50,6484.50,6484.50,6484.50,6484.50,6484.50,6484.50,6484.50,6484.50,6484.50,6484.50,6484.50,6484.50],
+  W5:  [null,null,null,null,null,null,null,null,null,null,null,10169.70,10685.70,11070.30,11495.10,11495.10,12070.80,12070.80,12673.50,12673.50,13308.30,13308.30],
+  W4:  [5719.80,6152.10,6328.50,6502.20,6801.90,7098.00,7398.00,7848.30,8243.70,8619.90,8928.60,9228.90,9669.60,10032.00,10445.40,10445.40,10653.60,10653.60,10653.60,10653.60,10653.60,10653.60],
+  W3:  [5223.30,5440.50,5664.30,5736.90,5970.90,6431.10,6910.50,7136.40,7397.70,7665.90,8150.40,8476.50,8671.80,8879.70,9162.60,9162.60,9162.60,9162.60,9162.60,9162.60,9162.60,9162.60],
+  W2:  [4621.80,5058.90,5193.30,5286.00,5585.40,6051.00,6282.60,6509.40,6787.50,7005.00,7201.50,7437.00,7591.50,7714.20,7714.20,7714.20,7714.20,7714.20,7714.20,7714.20,7714.20,7714.20],
+  W1:  [4056.60,4493.70,4611.00,4859.10,5152.20,5584.20,5786.10,6069.30,6346.50,6564.90,6766.20,7010.10,7010.10,7010.10,7010.10,7010.10,7010.10,7010.10,7010.10,7010.10,7010.10,7010.10],
+  E9:  [null,null,null,null,null,null,6910.20,7066.50,7263.60,7496.10,7730.70,8105.10,8423.10,8756.70,9267.90,9267.90,9730.20,9730.20,10217.40,10217.40,10729.20,10729.20],
+  E8:  [null,null,null,null,null,5656.50,5907.00,6061.80,6247.20,6448.20,6811.20,6995.40,7308.30,7481.70,7908.90,7908.90,8067.30,8067.30,8067.30,8067.30,8067.30,8067.30],
+  E7:  [3932.10,4291.50,4456.20,4673.10,4843.80,5135.70,5300.40,5591.70,5835.00,6000.90,6177.30,6245.70,6475.20,6598.20,7067.40,7067.40,7067.40,7067.40,7067.40,7067.40,7067.40,7067.40],
+  E6:  [3401.10,3743.10,3908.10,4068.90,4235.70,4612.80,4759.50,5043.30,5130.30,5193.60,5267.70,5267.70,5267.70,5267.70,5267.70,5267.70,5267.70,5267.70,5267.70,5267.70,5267.70,5267.70],
+  E5:  [3342.90,3598.20,3775.80,3946.80,4110.00,4299.90,4395.30,4421.70,4421.70,4421.70,4421.70,4421.70,4421.70,4421.70,4421.70,4421.70,4421.70,4421.70,4421.70,4421.70,4421.70,4421.70],
+  E4:  [3142.20,3303.00,3482.40,3658.50,3815.40,3815.40,3815.40,3815.40,3815.40,3815.40,3815.40,3815.40,3815.40,3815.40,3815.40,3815.40,3815.40,3815.40,3815.40,3815.40,3815.40,3815.40],
+  E3:  [2836.80,3015.00,3198.00,3198.00,3198.00,3198.00,3198.00,3198.00,3198.00,3198.00,3198.00,3198.00,3198.00,3198.00,3198.00,3198.00,3198.00,3198.00,3198.00,3198.00,3198.00,3198.00],
+  E2:  [2697.90,2697.90,2697.90,2697.90,2697.90,2697.90,2697.90,2697.90,2697.90,2697.90,2697.90,2697.90,2697.90,2697.90,2697.90,2697.90,2697.90,2697.90,2697.90,2697.90,2697.90,2697.90],
+  E1:  [2407.20,2407.20,2407.20,2407.20,2407.20,2407.20,2407.20,2407.20,2407.20,2407.20,2407.20,2407.20,2407.20,2407.20,2407.20,2407.20,2407.20,2407.20,2407.20,2407.20,2407.20,2407.20]
+};
+
+function lookupBasePay(grade, yos){
+  const row = PAY_TABLE[grade];
+  if (!row) return null;
+  let val = null;
+  for (let i=0;i<YOS_BANDS.length;i++){
+    if (YOS_BANDS[i] <= yos) val = row[i];
+  }
+  return val;
+}
+
+// VA disability compensation, 2026 monthly rates. Ratings 10/20% pay the same regardless of
+// dependency status (VA only adds a dependent amount at 30%+).
+const VA_TABLE = {
+  10:{alone:180.42, spouse:180.42, spouseChild:180.42},
+  20:{alone:356.66, spouse:356.66, spouseChild:356.66},
+  30:{alone:552.47, spouse:617.80, spouseChild:666.27},
+  40:{alone:795.84, spouse:883.30, spouseChild:947.57},
+  50:{alone:1132.90, spouse:1242.48, spouseChild:1322.56},
+  60:{alone:1435.02, spouse:1566.72, spouseChild:1662.62},
+  70:{alone:1808.45, spouse:1961.23, spouseChild:2073.98},
+  80:{alone:2102.15, spouse:2277.06, spouseChild:2405.61},
+  90:{alone:2362.30, spouse:2559.34, spouseChild:2703.70},
+  100:{alone:3938.58, spouse:4158.17, spouseChild:4318.98}
+};
+
+// Longevity table — static reference, same for every user regardless of actual age (deliberate
+// behavioral-economics choice: modeled on a 30-year-old-today cohort so the horizon reads as
+// credible to young users). Never used to alter the simulation itself, context/disclosure only.
+const LONGEVITY = [
+  {yrs:0, age:60, prob:100}, {yrs:5, age:65, prob:97}, {yrs:10, age:70, prob:93},
+  {yrs:15, age:75, prob:88}, {yrs:20, age:80, prob:79}, {yrs:25, age:85, prob:65},
+  {yrs:30, age:90, prob:45}, {yrs:35, age:95, prob:21}, {yrs:40, age:100, prob:6}
+];
+
+// Historical 60/40 blended REAL annual returns, 1928-2025 (98 years). Built from S&P 500 total
+// return + 10-year US Treasury Bond return (Damodaran NYU Stern historical dataset), blended 60/40,
+// deflated by that year's US CPI (officialdata.org). Used as the resampling pool for the block-
+// bootstrap Monte Carlo engine.
+const HIST_REAL_RETURNS = [28.84,-3.3,-11.18,-20.16,9.1,37.77,-0.59,26.99,19.43,-23.41,21.79,2.56,-4.93,-12.83,1.39,9.33,10.54,20.28,-11.2,-9.51,-3.58,14.26,17.18,5.75,9.69,0.18,31.86,19.47,2.04,-6.65,21.92,5.45,3.09,15.64,-3.97,12.75,9.9,6.02,-7.46,10.24,3.46,-11.77,2.95,7.73,8.89,-12.56,-23.22,13.3,14.12,-9.55,-3.71,0.03,3.83,-8.94,18.1,11.12,4.66,24.59,18.6,-2.07,8.71,20.17,-4.5,19.12,5.08,8.42,-4.85,28.09,10.91,21.06,21.08,6.87,-2.05,-7.52,-8.58,14.56,5.44,0.63,6.7,4.4,-17.07,11.52,10.46,4.38,8.48,13.99,10.62,1.22,6,11.71,-4.91,20.46,13.94,10.14,-24.03,12.55,11.06,10.73];
+
+// Milestones for the Planned Retirement Age slider (informational only — no Social Security
+// income is modeled anywhere in this tool; these are educational context, not inputs to Phase 3).
+const AGE_MILESTONES = [
+  {age:50, label:'Retire Early', detail:'No guaranteed retirement income yet — the Bridge (your HYSA + brokerage) has to cover everything.'},
+  {age:55, label:'Retire Early from Federal Service', detail:'Early withdrawal eligibility if you enable Advanced Bridge (Rule of 55 / 72(t)).'},
+  {age:59.5, label:'Full Access to Retirement Accounts', detail:'Traditional and Roth TSP/401(k)/IRA withdrawals are penalty-free.'},
+  {age:62, label:'Partial Social Security Benefit', detail:'Earliest Social Security claiming age (reduced benefit). Not modeled in this tool’s income stack.'},
+  {age:67, label:'Current Full Retirement Age', detail:'100% Social Security benefit at today’s Full Retirement Age. Not modeled in this tool’s income stack.'},
+  {age:70, label:'Maximum Social Security Benefit', detail:'Delayed claiming boosts Social Security to roughly 125% of the full benefit. Not modeled in this tool’s income stack.'},
+  {age:74, label:'Late Retirement', detail:'Required Minimum Distributions are active on Traditional retirement accounts.'}
+];
+
+/* ============================================================
+   HELPERS
+   ============================================================ */
+function num(id){ const v = parseFloat(String(document.getElementById(id).value).replace(/[^0-9.\-]/g,'')); return isNaN(v) ? 0 : v; }
+function fmt$(n, decimals){ decimals = decimals || 0; const s = Math.abs(n).toLocaleString('en-US',{minimumFractionDigits:decimals,maximumFractionDigits:decimals}); return (n<0?'-':'') + '$' + s; }
+function fmtPct(n, decimals){ decimals = decimals===undefined?1:decimals; return n.toFixed(decimals) + '%'; }
+
+function populateGradeSelects(){
+  ['gradeNow','gradeRet'].forEach(id=>{
+    const sel = document.getElementById(id);
+    GRADES.forEach(g=>{
+      const opt = document.createElement('option');
+      opt.value = g; opt.textContent = GRADE_LABELS[g];
+      if (g==='E5' && id==='gradeNow') opt.selected = true;
+      if (g==='E7' && id==='gradeRet') opt.selected = true;
+      sel.appendChild(opt);
+    });
+  });
+}
+populateGradeSelects();
+
+/* ============================================================
+   UI WIRING
+   ============================================================ */
+document.querySelectorAll('#lifestyleToggle .toggle-btn').forEach(btn=>{
+  btn.addEventListener('click', ()=>{
+    document.querySelectorAll('#lifestyleToggle .toggle-btn').forEach(b=>b.classList.remove('active'));
+    btn.classList.add('active');
+  });
+});
+
+document.getElementById('secondCareerToggle').addEventListener('change', e=>{
+  document.getElementById('secondCareerFields').style.display = e.target.checked ? 'grid' : 'none';
+});
+
+document.getElementById('advBridge').addEventListener('change', e=>{
+  document.getElementById('bridgeDisclosure').style.display = e.target.checked ? 'block' : 'none';
+});
+
+document.getElementById('rothConvertToggle').addEventListener('change', e=>{
+  document.getElementById('rothWindowField').style.display = e.target.checked ? 'block' : 'none';
+});
+
+document.getElementById('spouseAccordionToggle').addEventListener('click', ()=>{
+  const body = document.getElementById('spouseAccordionBody');
+  const chevron = document.getElementById('spouseChevron');
+  body.classList.toggle('open');
+  chevron.classList.toggle('open');
+});
+
+function renderMilestoneCallout(){
+  const val = parseFloat(document.getElementById('retAge').value);
+  document.getElementById('ageReadout').innerHTML = val.toFixed(1).replace('.0','') + ' <span>years old</span>';
+  let current = AGE_MILESTONES[0], next = null;
+  for (let i=0;i<AGE_MILESTONES.length;i++){
+    if (AGE_MILESTONES[i].age <= val) current = AGE_MILESTONES[i];
+    if (AGE_MILESTONES[i].age > val && !next) next = AGE_MILESTONES[i];
+  }
+  let html = '<b>' + current.age + ' — ' + current.label + ':</b> ' + current.detail;
+  if (next) html += '<div class="milestone-next">Next milestone: age ' + next.age + ' — ' + next.label + '</div>';
+  document.getElementById('milestoneCallout').innerHTML = html;
+}
+document.getElementById('retAge').addEventListener('input', renderMilestoneCallout);
+renderMilestoneCallout();
+
+/* ============================================================
+   PHASE 1 — SAVINGS STACK PROJECTION
+   ============================================================ */
+// Monthly compounding loop so fractional retirement ages (e.g. 59.5) and growing contributions
+// (pay-raise toggle) both work without needing a closed-form growing-annuity formula.
+function projectPool(startBalance, monthlyContrib, annualReturnPct, months, growAnnually, growRatePct){
+  let bal = startBalance;
+  let contrib = monthlyContrib;
+  const mRate = annualReturnPct/100/12;
+  for (let m=0; m<months; m++){
+    bal += bal * mRate;
+    bal += contrib;
+    if (growAnnually && (m+1)%12===0) contrib *= (1+growRatePct/100);
+  }
+  return bal;
+}
+
+/* ============================================================
+   PHASE 3 — INCOME STACK
+   ============================================================ */
+function calcHigh3Monthly(grade, yosAtRetirement, yearsUntilRetirement, inflationPct){
+  const base = lookupBasePay(grade, yosAtRetirement);
+  if (base===null) return null;
+  return base * Math.pow(1+inflationPct/100, yearsUntilRetirement);
+}
+
+function calcPensionAnnual(system, high3Monthly, yos){
+  if (high3Monthly===null) return 0;
+  const mult = system==='legacy' ? 0.025 : 0.02;
+  return mult * yos * high3Monthly * 12;
+}
+
+function lookupVaAnnual(rating, dependency){
+  if (!rating || rating==0) return 0;
+  const row = VA_TABLE[rating];
+  if (!row) return 0;
+  return row[dependency] * 12;
+}
+
+/* ============================================================
+   MAIN CALCULATION — PHASES 1-6
+   ============================================================ */
+let STATE = {};
+
+function readInputs(){
+  const lifestyleBtn = document.querySelector('#lifestyleToggle .toggle-btn.active');
+  return {
+    curAge: num('curAge'),
+    filingStatus: document.getElementById('filingStatus').value,
+    taxBracket: num('taxBracket'),
+
+    tradBal: num('tradBal'), rothBal: num('rothBal'), retContrib: num('retContrib'),
+    retReturn: num('retReturn'), growContrib: document.getElementById('growContrib').checked,
+
+    hysaBal: num('hysaBal'), brokBal: num('brokBal'),
+    hysaContrib: num('hysaContrib'), brokContrib: num('brokContrib'),
+    hysaReturn: num('hysaReturn'), brokReturn: num('brokReturn'),
+
+    retAge: parseFloat(document.getElementById('retAge').value),
+    advBridge: document.getElementById('advBridge').checked,
+
+    curExpenses: num('curExpenses'),
+    inflation: num('inflation'),
+    lifestylePct: lifestyleBtn ? parseFloat(lifestyleBtn.dataset.val) : 0,
+
+    retSystem: document.getElementById('retSystem').value,
+    gradeNow: document.getElementById('gradeNow').value,
+    gradeRet: document.getElementById('gradeRet').value,
+    yosRet: num('yosRet'),
+    vaRating: parseInt(document.getElementById('vaRating').value,10),
+    vaDependency: document.getElementById('vaDependency').value,
+    secondCareerOn: document.getElementById('secondCareerToggle').checked,
+    secondCareerAmt: num('secondCareerAmt'),
+    secondCareerAge: num('secondCareerAge'),
+
+    spouseOn: document.getElementById('spouseAccordionBody').classList.contains('open'),
+    spAge: num('spAge'), spTradBal: num('spTradBal'), spRothBal: num('spRothBal'),
+    spContrib: num('spContrib'), spReturn: num('spReturn'), spPension: num('spPension'),
+
+    rothConvertOn: document.getElementById('rothConvertToggle').checked,
+    rothWindow: num('rothWindow')
+  };
+}
+
+function runDeterministicModel(){
+  const IN = readInputs();
+  const yearsToRetirement = Math.max(0, IN.retAge - IN.curAge);
+  const monthsToRetirement = Math.round(yearsToRetirement*12);
+
+  // --- Phase 1: Savings Stack ---
+  const retirementBalance = projectPool(IN.tradBal+IN.rothBal, IN.retContrib, IN.retReturn, monthsToRetirement, IN.growContrib, IN.inflation);
+  const hysaAtRetirement = projectPool(IN.hysaBal, IN.hysaContrib, IN.hysaReturn, monthsToRetirement, false, 0);
+  const brokAtRetirement = projectPool(IN.brokBal, IN.brokContrib, IN.brokReturn, monthsToRetirement, false, 0);
+  const nonRetirementBalance = hysaAtRetirement + brokAtRetirement;
+
+  let spouseRetirementBalance = 0;
+  if (IN.spouseOn){
+    const spYearsToRet = Math.max(0, IN.retAge - IN.spAge);
+    spouseRetirementBalance = projectPool(IN.spTradBal+IN.spRothBal, IN.spContrib, IN.spReturn, Math.round(spYearsToRet*12), false, 0);
+  }
+
+  const totalRetirementBalance = retirementBalance + spouseRetirementBalance;
+  const totalBalance = totalRetirementBalance + nonRetirementBalance;
+
+  // Bridge: effective penalty-free access age
+  let accessAge = 59.5;
+  if (IN.advBridge && IN.retAge >= 55) accessAge = IN.retAge;
+  const bridgeYears = Math.max(0, accessAge - IN.retAge);
+  let bridgeSufficiency = null;
+  if (bridgeYears > 0){
+    // simple year-by-year drawdown of non-retirement pool during the bridge: brokerage first, HYSA last
+    const yr1CostReal = calcYear1CostOfLiving(IN);
+    let broke = brokAtRetirement, hysa = hysaAtRetirement, shortfall = 0;
+    for (let y=0; y<Math.ceil(bridgeYears); y++){
+      const need = yr1CostReal; // flat real spending
+      broke *= (1+IN.brokReturn/100);
+      hysa *= (1+IN.hysaReturn/100);
+      let fromBrok = Math.min(need, Math.max(0,broke));
+      broke -= fromBrok;
+      let remaining = need - fromBrok;
+      let fromHysa = Math.min(remaining, Math.max(0,hysa));
+      hysa -= fromHysa;
+      remaining -= fromHysa;
+      if (remaining > 0) shortfall += remaining;
+    }
+    bridgeSufficiency = { funded: shortfall<=0, shortfall: shortfall };
+  }
+
+  // --- Phase 2: Real Cost of Living ---
+  const yr1CostAnnual = calcYear1CostOfLiving(IN);
+
+  // --- Phase 3: Income Stack (real, year-1-of-retirement dollars in nominal-at-retirement terms) ---
+  const yearsUntilRet = yearsToRetirement;
+  const high3 = calcHigh3Monthly(IN.gradeRet, IN.yosRet, yearsUntilRet, IN.inflation);
+  const pensionAnnual = calcPensionAnnual(IN.retSystem, high3, IN.yosRet);
+  const vaAnnualToday = lookupVaAnnual(IN.vaRating, IN.vaDependency);
+  const vaAnnual = vaAnnualToday * Math.pow(1+IN.inflation/100, yearsUntilRet);
+  const secondCareerAnnual = IN.secondCareerOn ? IN.secondCareerAmt * Math.pow(1+IN.inflation/100, yearsUntilRet) : 0;
+  const secondCareerStartsImmediately = IN.secondCareerOn && IN.secondCareerAge <= IN.retAge;
+  const spousePensionAnnual = IN.spouseOn ? IN.spPension * Math.pow(1+IN.inflation/100, yearsUntilRet) : 0;
+
+  const guaranteedIncomeYr1 = pensionAnnual + vaAnnual + spousePensionAnnual + (secondCareerStartsImmediately ? secondCareerAnnual : 0);
+  const deferredIncomeEvents = [];
+  if (IN.secondCareerOn && !secondCareerStartsImmediately){
+    deferredIncomeEvents.push({ yearOffset: Math.round(IN.secondCareerAge - IN.retAge), amount: secondCareerAnnual });
+  }
+
+  // --- Phase 5: Tax ---
+  const marginalRate = IN.taxBracket/100;
+  // taxable share of income = pension + second career + spouse pension (Traditional-source ordinary income); VA is exempt
+  const taxableGuaranteedYr1 = pensionAnnual + spousePensionAnnual + (secondCareerStartsImmediately ? secondCareerAnnual : 0);
+  const taxOnGuaranteedYr1 = taxableGuaranteedYr1 * marginalRate;
+  const afterTaxGuaranteedYr1 = guaranteedIncomeYr1 - taxOnGuaranteedYr1;
+
+  // --- Phase 6: Standard Plan ---
+  const swrAnnual = totalBalance * 0.04;
+  const swrMonthly = swrAnnual/12;
+  // 4% Rule withdrawal itself: assume same Traditional/Roth mix as overall retirement balance for tax purposes
+  const tradShare = (IN.tradBal / Math.max(1,(IN.tradBal+IN.rothBal)));
+  const swrTaxable = swrAnnual * tradShare;
+  const swrAfterTax = swrAnnual - swrTaxable*marginalRate;
+  const totalIncomeAfterTax = swrAfterTax + afterTaxGuaranteedYr1;
+  const surplus = totalIncomeAfterTax - yr1CostAnnual;
+
+  STATE = {
+    IN, yearsToRetirement, retirementBalance, spouseRetirementBalance, totalRetirementBalance,
+    hysaAtRetirement, brokAtRetirement, nonRetirementBalance, totalBalance,
+    accessAge, bridgeYears, bridgeSufficiency,
+    yr1CostAnnual, pensionAnnual, vaAnnual, secondCareerAnnual, secondCareerStartsImmediately,
+    spousePensionAnnual, guaranteedIncomeYr1, deferredIncomeEvents,
+    marginalRate, afterTaxGuaranteedYr1, tradShare,
+    swrAnnual, swrMonthly, swrAfterTax, totalIncomeAfterTax, surplus
+  };
+  return STATE;
+}
+
+function calcYear1CostOfLiving(IN){
+  const toggled = IN.curExpenses * (1 + IN.lifestylePct/100);
+  const replaced = toggled * 0.70;
+  const yearsUntilRet = Math.max(0, IN.retAge - IN.curAge);
+  const nominal = replaced * 12 * Math.pow(1+IN.inflation/100, yearsUntilRet);
+  return nominal;
+}
+
+/* ============================================================
+   RENDER — PHASE 6 STANDARD PLAN
+   ============================================================ */
+function renderStandardPlan(S){
+  const el = document.getElementById('standardPlanOutput');
+  const longevityNote = LONGEVITY[LONGEVITY.length-1];
+  let html = '';
+
+  html += '<div class="dark-panel" style="margin-bottom:1.1rem">';
+  html += '<div class="dp-label">The 4% Rule</div>';
+  html += '<div class="dp-num">' + fmt$(S.swrMonthly) + '/mo</div>';
+  html += '<div class="dp-sub">' + fmt$(S.swrAnnual) + '/yr — 4% of your ' + fmt$(S.totalBalance) + ' total investable balance (' + fmt$(S.totalRetirementBalance) + ' retirement + ' + fmt$(S.nonRetirementBalance) + ' non-retirement)</div>';
+  html += '</div>';
+
+  html += '<div class="callout ' + (S.surplus>=0?'win':'loss') + '">';
+  html += '<h3>' + (S.surplus>=0 ? 'You’re running a surplus' : 'You’re running a shortfall') + '</h3>';
+  html += '<p>Following the 4% Rule (after tax) plus your after-tax guaranteed income (pension, VA disability' + (S.IN.spouseOn?', spouse pension':'') + (S.IN.secondCareerOn?', second career':'') + '), against your real, inflation-adjusted, after-tax cost of living at retirement:</p>';
+  html += '<div class="big">' + (S.surplus>=0?'+':'') + fmt$(S.surplus) + '/yr (' + (S.surplus>=0?'+':'') + fmt$(S.surplus/12) + '/mo)</div>';
+  html += '<p style="margin-top:.5rem">Guaranteed income (after tax): ' + fmt$(S.afterTaxGuaranteedYr1) + '/yr &middot; 4% Rule (after tax): ' + fmt$(S.swrAfterTax) + '/yr &middot; Your real cost of living: ' + fmt$(S.yr1CostAnnual) + '/yr</p>';
+  html += '</div>';
+
+  if (S.bridgeYears > 0){
+    html += '<div class="callout ' + (S.bridgeSufficiency.funded?'win':'loss') + '">';
+    html += '<h3>Bridge Sufficiency Check</h3>';
+    html += '<p>You plan to retire at ' + S.IN.retAge + ', but retirement accounts aren’t accessible until age ' + S.accessAge + ' — a ' + S.bridgeYears.toFixed(1) + '-year Bridge funded by your HYSA and brokerage balances (brokerage drawn first, HYSA held back as emergency liquidity).</p>';
+    html += '<p style="margin-top:.5rem">' + (S.bridgeSufficiency.funded ? '<b>Your Bridge is fully funded.</b>' : '<b>Bridge shortfall: ' + fmt$(S.bridgeSufficiency.shortfall) + '</b> over the bridge period at current savings rates.') + '</p>';
+    html += '</div>';
+  }
+
+  html += '<div class="disclosure">Even though this plan models to age ' + document.getElementById('horizonAge').value + ', actuarial tables show you have at least a ' + longevityNote.prob + '% chance of surviving to ' + longevityNote.age + ' as of today — and that chance improves every year you live. You cannot afford to plan like your grandparents or parents did, to live until 75 or 80: you must plan for 40 years in retirement. We build this model using future life expectancy, not that of past generations.</div>';
+
+  el.innerHTML = html;
+  document.getElementById('phase6').style.display = 'block';
+  document.getElementById('phase7-lock').style.display = 'block';
+}
+
+document.getElementById('calcBtn').addEventListener('click', ()=>{
+  const S = runDeterministicModel();
+  renderStandardPlan(S);
+  document.getElementById('phase6').scrollIntoView({behavior:'smooth', block:'start'});
+});
+
+document.getElementById('revealBtn').addEventListener('click', ()=>{
+  document.getElementById('phase7').style.display = 'block';
+  document.getElementById('phase7').scrollIntoView({behavior:'smooth', block:'start'});
+});
+
+/* ============================================================
+   PHASE 7 — MONTE CARLO ENGINE (Web Worker)
+   ============================================================ */
+const WORKER_SRC = `
+const HIST = ${JSON.stringify(HIST_REAL_RETURNS)};
+const BLOCK_LEN = 10;
+
+function buildBootstrapPath(years){
+  const path = [];
+  while (path.length < years){
+    const start = Math.floor(Math.random()*HIST.length);
+    for (let i=0; i<BLOCK_LEN && path.length<years; i++){
+      path.push(HIST[(start+i)%HIST.length]);
+    }
+  }
+  return path;
+}
+
+function residualNeed(y, baseNeed, events){
+  let need = baseNeed;
+  for (const e of events) if (y >= e.yearOffset) need -= e.amount;
+  return Math.max(0, need);
+}
+
+// Runs one trial against a given return path (bootstrapped or a literal historical window).
+// bucketOn=false replicates classic Bengen/Trinity conditions (straight portfolio withdrawal, no
+// cash buffer).
+function simulateTrial(portfolioStart, bufferStart, years, baseNeed, events, bucketOn, bufferYears, bufferYieldPct, targetAgeOffset, returns){
+  let portfolio = portfolioStart, buffer = bucketOn ? bufferStart : 0;
+  let ruined = false, ruinYearOffset = null;
+  for (let y=0; y<years; y++){
+    const need = residualNeed(y, baseNeed, events);
+    const priorReturn = y===0 ? null : returns[y-1];
+    const bufferTarget = bucketOn ? bufferYears * need : 0;
+
+    if (priorReturn !== null && priorReturn > 0 && buffer < bufferTarget){
+      const shortfall = bufferTarget - buffer;
+      const transfer = Math.min(need, shortfall, Math.max(0,portfolio));
+      portfolio -= transfer; buffer += transfer;
+    }
+
+    const avail = portfolio + buffer;
+    if (need > avail + 1e-9){
+      if (!ruined){ ruined = true; ruinYearOffset = y; }
+      portfolio = 0; buffer = 0;
+    } else {
+      let fromBuffer = 0, fromPortfolio = 0;
+      if (priorReturn !== null && priorReturn < 0 && buffer > 0){
+        fromBuffer = Math.min(need, buffer);
+        fromPortfolio = need - fromBuffer;
+      } else {
+        fromPortfolio = Math.min(need, portfolio);
+        fromBuffer = need - fromPortfolio;
+      }
+      portfolio -= fromPortfolio;
+      buffer -= fromBuffer;
+    }
+    portfolio *= (1 + returns[y]/100);
+    if (bucketOn) buffer *= (1 + bufferYieldPct/100);
+  }
+  return {
+    success: !ruined,
+    ruinByTarget: ruined && targetAgeOffset!==null && ruinYearOffset <= targetAgeOffset,
+    endBalance: portfolio + buffer
+  };
+}
+
+function runBootstrapTrials(withdrawalAnnual, portfolioTotal, years, baseNeedYr1, events, bucketOn, bufferYears, bufferYieldPct, targetAgeOffset, trials){
+  const scale = withdrawalAnnual / baseNeedYr1;
+  const scaledEvents = events.map(e => ({yearOffset:e.yearOffset, amount:e.amount*scale}));
+  const bufferTargetYr1 = bucketOn ? bufferYears * withdrawalAnnual : 0;
+  const portfolioStart = Math.max(0, portfolioTotal - bufferTargetYr1);
+  let successCount=0, ruinCount=0;
+  const endBalances = [];
+  for (let t=0;t<trials;t++){
+    const r = simulateTrial(portfolioStart, bufferTargetYr1, years, withdrawalAnnual, scaledEvents, bucketOn, bufferYears, bufferYieldPct, targetAgeOffset, buildBootstrapPath(years));
+    if (r.success) successCount++;
+    if (r.ruinByTarget) ruinCount++;
+    endBalances.push(r.endBalance);
+  }
+  endBalances.sort((a,b)=>a-b);
+  const pct = p => endBalances[Math.min(endBalances.length-1, Math.floor(p*endBalances.length))];
+  return {
+    successProb: successCount/trials*100,
+    ruinByTargetProb: ruinCount/trials*100,
+    p10: pct(0.10), p50: pct(0.50), p90: pct(0.90),
+    portfolioStart, method:'bootstrap'
+  };
+}
+
+// STANDARD tile only — literally replicates Bengen/Trinity methodology: test every real,
+// chronologically-ordered N-year window that has actually occurred in market history (1928-2025),
+// not invented recombinations of it. No bucket (bucketOn is always false here).
+function runRollingHistoricalTrials(withdrawalAnnual, portfolioTotal, years, baseNeedYr1, events){
+  const scale = withdrawalAnnual / baseNeedYr1;
+  const scaledEvents = events.map(e => ({yearOffset:e.yearOffset, amount:e.amount*scale}));
+  const portfolioStart = portfolioTotal;
+  const maxStart = Math.max(0, HIST.length - years);
+  let successCount = 0;
+  const endBalances = [];
+  for (let start=0; start<=maxStart; start++){
+    const path = HIST.slice(start, start+years);
+    const r = simulateTrial(portfolioStart, 0, years, withdrawalAnnual, scaledEvents, false, 0, 0, null, path);
+    if (r.success) successCount++;
+    endBalances.push(r.endBalance);
+  }
+  endBalances.sort((a,b)=>a-b);
+  const pct = p => endBalances[Math.min(endBalances.length-1, Math.floor(p*endBalances.length))];
+  return {
+    successProb: successCount/endBalances.length*100,
+    ruinByTargetProb: 0,
+    p10: pct(0.10), p50: pct(0.50), p90: pct(0.90),
+    portfolioStart, method:'rolling-historical', windowCount: endBalances.length
+  };
+}
+
+function solve(evalFn, target, lo, hi, decreasing, iterations){
+  for (let i=0;i<iterations;i++){
+    const mid = (lo+hi)/2;
+    const val = evalFn(mid);
+    if (decreasing) { if (val > target) lo = mid; else hi = mid; }
+    else { if (val < target) lo = mid; else hi = mid; }
+  }
+  return (lo+hi)/2;
+}
+
+onmessage = function(e){
+  const P = e.data;
+  const trials = P.trials || 10000;
+  const results = {};
+
+  // STANDARD tile — no bucket, straight 4% of total balance. Replicates the literal Bengen/Trinity
+  // methodology: every real rolling historical window, not bootstrapped recombinations of it.
+  results.standard = runRollingHistoricalTrials(P.swrAnnual, P.totalBalance, P.years, P.baseNeedYr1, P.events);
+  results.standard.withdrawal = P.swrAnnual;
+  results.standard.rate = P.swrAnnual / P.totalBalance * 100;
+
+  // ACTUAL tile — direct calc, bucket on, bootstrapped (tests our strategy, not a named study)
+  results.actual = runBootstrapTrials(P.actualNeedAnnual, P.totalBalance, P.years, P.baseNeedYr1, P.events, true, P.bufferYears, P.bufferYieldPct, null, trials);
+  results.actual.withdrawal = P.actualNeedAnnual;
+  results.actual.rate = P.actualNeedAnnual / results.actual.portfolioStart * 100;
+
+  // CONSERVATIVE tile — solve for withdrawal hitting consTarget% success, bucket on, bootstrapped
+  const consW = solve(
+    w => runBootstrapTrials(w, P.totalBalance, P.years, P.baseNeedYr1, P.events, true, P.bufferYears, P.bufferYieldPct, null, Math.max(300,trials/6)).successProb,
+    P.consTarget, 0, P.totalBalance*0.15, true, 18
+  );
+  results.conservative = runBootstrapTrials(consW, P.totalBalance, P.years, P.baseNeedYr1, P.events, true, P.bufferYears, P.bufferYieldPct, null, trials);
+  results.conservative.withdrawal = consW;
+  results.conservative.rate = consW / results.conservative.portfolioStart * 100;
+
+  // AGGRESSIVE tile — solve for withdrawal hitting aggProb% chance of ruin by aggAge, bucket on, bootstrapped
+  const aggW = solve(
+    w => runBootstrapTrials(w, P.totalBalance, P.years, P.baseNeedYr1, P.events, true, P.bufferYears, P.bufferYieldPct, P.aggAgeOffset, Math.max(300,trials/6)).ruinByTargetProb,
+    P.aggProb, 0, P.totalBalance*0.30, false, 18
+  );
+  results.aggressive = runBootstrapTrials(aggW, P.totalBalance, P.years, P.baseNeedYr1, P.events, true, P.bufferYears, P.bufferYieldPct, P.aggAgeOffset, trials);
+  results.aggressive.withdrawal = aggW;
+  results.aggressive.rate = aggW / results.aggressive.portfolioStart * 100;
+
+  postMessage(results);
+};
+`;
+
+function runMonteCarlo(){
+  const S = STATE;
+  const IN = S.IN;
+  const horizonAge = num('horizonAge');
+  const years = Math.max(1, Math.round(horizonAge - IN.retAge));
+  const consTarget = num('consTarget');
+  const aggProb = num('aggProb');
+  const aggAgeOffset = Math.max(0, Math.round(num('aggAge') - IN.retAge));
+  const bufferYears = 4, bufferYieldPct = 0;
+  S.mcYears = years;
+
+  const payload = {
+    totalBalance: S.totalBalance,
+    years, trials: 10000,
+    baseNeedYr1: S.yr1CostAnnual - S.guaranteedIncomeYr1 > 0 ? S.yr1CostAnnual : S.yr1CostAnnual,
+    swrAnnual: S.swrAnnual,
+    actualNeedAnnual: Math.max(0, S.yr1CostAnnual - S.afterTaxGuaranteedYr1),
+    events: S.deferredIncomeEvents,
+    bufferYears, bufferYieldPct,
+    consTarget, aggProb, aggAgeOffset
+  };
+  // baseNeedYr1 used only to scale deferred-income events proportionally when solving different
+  // withdrawal levels; anchor it to the Actual tile's real residual need.
+  payload.baseNeedYr1 = payload.actualNeedAnnual > 0 ? payload.actualNeedAnnual : 1;
+
+  const blob = new Blob([WORKER_SRC], {type:'application/javascript'});
+  const worker = new Worker(URL.createObjectURL(blob));
+
+  document.getElementById('mcStatus').innerHTML = '<span class="spinner" style="border-color:rgba(166,24,44,.3);border-top-color:var(--mid)"></span>Running 30,000+ simulated trials and every real historical market window…';
+  document.getElementById('runMcBtn').disabled = true;
+
+  worker.onmessage = function(e){
+    renderTiles(e.data, S);
+    document.getElementById('mcStatus').textContent = '';
+    document.getElementById('runMcBtn').disabled = false;
+    worker.terminate();
+  };
+  worker.postMessage(payload);
+}
+document.getElementById('runMcBtn').addEventListener('click', runMonteCarlo);
+
+function probClass(p){ return p>=85 ? 'high' : (p>=60 ? 'mid' : 'low'); }
+
+function renderTiles(R, S){
+  const tiles = [
+    {key:'conservative', name:'Conservative', desc:'Maximum caution'},
+    {key:'standard', name:'Standard (4% Rule)', desc:'The conventional baseline'},
+    {key:'actual', name:'Actual', desc:'Funds your real plan', recommended:true},
+    {key:'aggressive', name:'Aggressive (Burn It Down)', desc:'Die with zero, on purpose'}
+  ];
+  let html = '';
+  tiles.forEach(t=>{
+    const d = R[t.key];
+    const probLabel = t.key==='aggressive' ? 'Chance of Hitting $0 by Target Age' : 'Modeled Probability of Success';
+    const probVal = t.key==='aggressive' ? d.ruinByTargetProb : d.successProb;
+    html += '<div class="tile' + (t.recommended?' recommended':'') + '">';
+    html += '<div class="t-name">' + t.name + '</div>';
+    html += '<div class="t-amt">' + fmt$(d.withdrawal/12) + '</div>';
+    html += '<div class="t-amt-sub">per month (' + fmt$(d.withdrawal) + '/yr)</div>';
+    html += '<div class="t-rate">' + fmtPct(d.rate) + ' withdrawal rate</div>';
+    html += '<div class="t-prob ' + probClass(t.key==='aggressive' ? 100-Math.abs(probVal-num('aggProb')) : probVal) + '">' + fmtPct(probVal,0) + '</div>';
+    html += '<div class="t-prob-label">' + probLabel + '</div>';
+    html += '<div class="t-prob-label" style="margin-top:.35rem;font-style:italic">' + (d.method==='rolling-historical' ? 'Tested against every real ' + S.mcYears + '-year period since 1928 (' + d.windowCount + ' windows)' : 'Modeled across 10,000 simulated market scenarios') + '</div>';
+    html += '</div>';
+  });
+  document.getElementById('tilesOutput').innerHTML = html;
+}
+</script>
+</body>
+</html>
