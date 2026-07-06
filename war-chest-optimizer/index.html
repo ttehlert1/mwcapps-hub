@@ -4,6 +4,8 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>War Chest Optimizer | Military Wealth Coach</title>
+<meta name="description" content="Free emergency-fund calculator for service members: set your savings rate, model your war-chest timeline, and stress-test it against a deployment, PCS, or separation.">
+<link rel="canonical" href="https://chest.militarywealthcoach.com/">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;0,6..72,700;1,6..72,500;1,6..72,600&family=Manrope:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -457,12 +459,122 @@ footer a{color:var(--mid);font-weight:600}
     </div>
 
     <!-- Courses CTA -->
-    <div class="courses-cta">
-      <div class="courses-eyebrow">Military Wealth Coach</div>
-      <div class="courses-title">Ready to build your <em>full</em> wealth plan?</div>
-      <div class="courses-body">Our courses walk you through every step of the Six-Step SOP &mdash; from eliminating bad debt to acquiring your first income-generating asset. Every course includes downloadable worksheets and planners so you can execute, not just learn.</div>
-      <a class="btn-courses" href="https://militarywealthcoach.com/courses">Explore Courses &rarr;</a>
-    </div>
+        <!-- ── CONSULT CTA (shared block — Calendly + HubSpot Enquire) ── -->
+    <section class="mwc-consult">
+      <div class="mwc-consult-inner">
+        <div class="mwc-consult-head">
+          <div class="mwc-consult-eyebrow">Book your consult</div>
+          <h2 class="mwc-consult-title">30 minutes. <em>Free.</em> No pitch.</h2>
+          <p class="mwc-consult-sub">That&rsquo;s what the numbers say you <em>could</em> be building. The next question is <em>how</em> &mdash; so let me show you. Pick the route that fits: book a time outright, or send a message first and I&rsquo;ll help you decide.</p>
+        </div>
+        <div class="mwc-consult-grid">
+          <div class="mwc-consult-card">
+            <div class="mwc-card-tag">Ready to book</div>
+            <h3 class="mwc-card-h">You know it&rsquo;s time. Grab a slot.</h3>
+            <p class="mwc-card-p">Pick any open time on my calendar and we&rsquo;re locked in. No back-and-forth.</p>
+            <a class="mwc-cta-btn mwc-cta-gold" href="https://calendly.com/coach-military-wealth/new-client-consultation" target="_blank" rel="noopener">Book my free 30-min consult &rarr;</a>
+            <div class="mwc-card-note">Opens Calendly &middot; pick any slot that works for you.</div>
+          </div>
+          <div class="mwc-consult-card mwc-card-alt">
+            <div class="mwc-card-tag">Still deciding</div>
+            <h3 class="mwc-card-h">Still unsure how to proceed?</h3>
+            <p class="mwc-card-p">Shoot a back azimuth with this contact form and I&rsquo;ll help you decide. I read every message and reply within 24 hours.</p>
+            <button class="mwc-cta-btn mwc-cta-red" onclick="openHubSpotForm('consult')">Enquire Now &rarr;</button>
+            <div class="mwc-card-note">Opens the secure HubSpot contact form. Never shared, never sold.</div>
+          </div>
+        </div>
+        <p class="mwc-news-link">Want to be first for new insights and early access to other financial tools? <a href="#" onclick="event.preventDefault();window.ml&&window.ml('show','TvJ3v8',true)">Join the newsletter &rarr;</a></p>
+      </div>
+    </section>
+
+    <style id="mwc-consult-css">
+    .mwc-consult{background:var(--dark,#1A1A1A);padding:64px 20px;border-top:1px solid var(--border,#E3DCCC)}
+    .mwc-consult-inner{max-width:880px;margin:0 auto}
+    .mwc-consult-head{text-align:center;max-width:620px;margin:0 auto 42px}
+    .mwc-consult-eyebrow{font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.22em;text-transform:uppercase;color:var(--gold,#C9A24B);font-weight:600;margin-bottom:18px}
+    .mwc-consult-title{font-family:'Newsreader',Georgia,serif;font-weight:600;font-size:clamp(2rem,4.5vw,3rem);line-height:1.04;color:#fff;letter-spacing:-.015em;margin:0}
+    .mwc-consult-title em{font-style:italic;color:var(--gold,#C9A24B)}
+    .mwc-consult-sub{font-size:1rem;color:rgba(255,255,255,.78);line-height:1.55;margin-top:14px}
+    .mwc-consult-grid{display:grid;grid-template-columns:1fr 1fr;gap:20px}
+    @media(max-width:640px){.mwc-consult-grid{grid-template-columns:1fr}}
+    .mwc-consult-card{display:flex;flex-direction:column;background:var(--card,#fff);border-radius:2px;border-top:4px solid var(--gold,#C9A24B);padding:30px;box-shadow:0 24px 50px -24px rgba(0,0,0,.5)}
+    .mwc-consult-card.mwc-card-alt{border-top-color:var(--mid,#A6182C)}
+    .mwc-card-tag{font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.22em;text-transform:uppercase;color:var(--mid,#A6182C);font-weight:700;margin-bottom:12px}
+    .mwc-card-h{font-family:'Newsreader',Georgia,serif;font-size:1.5rem;font-weight:600;line-height:1.12;color:var(--dark,#1A1A1A);margin:0 0 10px}
+    .mwc-card-p{font-size:.92rem;color:var(--ink-2,#3D3833);line-height:1.55;margin:0 0 22px}
+    .mwc-cta-btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;width:100%;padding:14px 20px;border-radius:2px;font-family:'Manrope',sans-serif;font-weight:700;font-size:.92rem;text-decoration:none;cursor:pointer;border:0;margin-top:auto;transition:background .15s,opacity .15s}
+    .mwc-cta-gold{background:var(--gold,#C9A24B);color:var(--dark,#1A1A1A)}
+    .mwc-cta-gold:hover{opacity:.88}
+    .mwc-cta-red{background:var(--mid,#A6182C);color:#fff}
+    .mwc-cta-red:hover{background:var(--red,#7A1020)}
+    .mwc-card-note{font-size:11.5px;color:var(--muted,#6C645B);margin-top:13px;text-align:center}
+    .mwc-consult-sub em{font-style:italic;color:var(--gold,#C9A24B);font-weight:600}
+    .mwc-news-link{text-align:center;margin:30px auto 0;font-size:13px;color:rgba(255,255,255,.72);line-height:1.5;max-width:540px}
+    .mwc-news-link a{color:var(--gold,#C9A24B);font-weight:600;text-decoration:none;white-space:nowrap}
+    .mwc-news-link a:hover{text-decoration:underline}
+    /* modal */
+    .mwc-modal-ov{position:fixed;inset:0;z-index:2000;display:flex;align-items:flex-start;justify-content:center;padding:6vh 20px 40px;background:rgba(19,32,46,0.55);backdrop-filter:blur(4px);overflow-y:auto}
+    .mwc-modal{position:relative;width:100%;max-width:520px;background:var(--bg,#F7F3EB);border:1px solid var(--dark,#1A1A1A);border-top:4px solid var(--mid,#A6182C);border-radius:2px;box-shadow:0 40px 90px -25px rgba(0,0,0,0.5)}
+    .mwc-modal-hd{padding:26px 30px 18px;border-bottom:1px solid var(--border,#E3DCCC)}
+    .mwc-modal-eyebrow{font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:0.22em;text-transform:uppercase;color:var(--mid,#A6182C);font-weight:700;margin-bottom:10px}
+    .mwc-modal-title{font-family:'Newsreader',serif;font-size:26px;font-weight:600;line-height:1.12;color:var(--dark,#1A1A1A)}
+    .mwc-modal-blurb{font-size:14.5px;color:var(--ink-2,#3D3833);line-height:1.5;margin-top:10px}
+    .mwc-modal-bd{padding:24px 30px 30px}
+    .mwc-modal-x{position:absolute;top:16px;right:16px;width:34px;height:34px;display:flex;align-items:center;justify-content:center;border:1px solid var(--border,#E3DCCC);border-radius:50%;background:#fff;color:var(--dark,#1A1A1A);font-size:18px;line-height:1;cursor:pointer}
+    .mwc-modal-x:hover{background:var(--mid,#A6182C);color:#fff;border-color:var(--mid,#A6182C)}
+    .mwc-modal-bd .hs-form-field{margin-bottom:15px}
+    .mwc-modal-bd .hs-form-field>label{display:block;font-size:12.5px;font-weight:600;color:var(--dark,#1A1A1A);margin-bottom:6px;font-family:'Manrope',system-ui,sans-serif}
+    .mwc-modal-bd .hs-input{width:100%;padding:12px 14px;background:#fff;border:1px solid var(--border,#E3DCCC);border-radius:2px;font:inherit;font-size:14.5px;color:var(--dark,#1A1A1A);outline:none}
+    .mwc-modal-bd textarea.hs-input{min-height:90px;resize:vertical}
+    .mwc-modal-bd .hs-input:focus{border-color:var(--mid,#A6182C);box-shadow:0 0 0 3px rgba(166,24,44,0.12)}
+    .mwc-modal-bd .hs-button{background:var(--mid,#A6182C);color:#fff;border:0;border-radius:2px;padding:14px 24px;font-weight:600;font-size:15px;cursor:pointer;width:100%;margin-top:6px}
+    .mwc-modal-bd .hs-button:hover{background:var(--red,#7A1020)}
+    .mwc-modal-bd .hs-error-msg,.mwc-modal-bd .hs-error-msgs label{color:var(--mid,#A6182C);font-size:12.5px}
+    .mwc-modal-bd .hs_submit{margin-top:8px}
+    </style>
+
+    <script>
+    /* Consult CTA — HubSpot modal (vanilla port of the React chrome wiring) */
+    (function(){
+      if (!window.ml){ (function(w,d,e,u,f,l,n){w[f]=w[f]||function(){(w[f].q=w[f].q||[]).push(arguments);},l=d.createElement(e),l.async=1,l.src=u,n=d.getElementsByTagName(e)[0],n.parentNode.insertBefore(l,n);})(window,document,'script','https://assets.mailerlite.com/js/universal.js','ml'); window.ml('account','2383560'); }
+      if (window.openHubSpotForm) return;
+      var HUBSPOT = { portalId:'148573238', region:'eu1', scriptSrc:'//js-eu1.hsforms.net/forms/embed/v2.js' };
+      var HS_FORMS = { consult:{ formId:'512050a3-49fd-42ed-861f-750531bc1441', title:'Free 30-Minute Consultation', blurb:'Tell me where you are and what is blocking you. I will reach out within 24 hours.' } };
+      function ensureHubSpotScript(){
+        return new Promise(function(resolve){
+          if (window.hbspt) return resolve();
+          var existing = document.getElementById('hs-embed-v2');
+          if (existing){ var t=setInterval(function(){ if(window.hbspt){clearInterval(t);resolve();} },50); return; }
+          var s=document.createElement('script');
+          s.id='hs-embed-v2'; s.src=HUBSPOT.scriptSrc; s.charset='utf-8'; s.type='text/javascript';
+          s.onload=function(){ var t=setInterval(function(){ if(window.hbspt){clearInterval(t);resolve();} },50); };
+          document.head.appendChild(s);
+        });
+      }
+      function closeFormModal(){ var ov=document.getElementById('mwc-modal-ov'); if(ov) ov.remove(); document.removeEventListener('keydown', _mwcEsc); }
+      function _mwcEsc(e){ if(e.key==='Escape') closeFormModal(); }
+      function openHubSpotForm(key){
+        var cfg=HS_FORMS[key]; if(!cfg){ return; }
+        closeFormModal();
+        var ov=document.createElement('div'); ov.className='mwc-modal-ov'; ov.id='mwc-modal-ov';
+        ov.addEventListener('click', function(e){ if(e.target===ov) closeFormModal(); });
+        var targetId='hs-modal-target';
+        ov.innerHTML='<div class="mwc-modal" role="dialog" aria-modal="true" aria-label="'+cfg.title+'">'+
+          '<button class="mwc-modal-x" aria-label="Close" onclick="closeFormModal()">&times;</button>'+
+          '<div class="mwc-modal-hd"><div class="mwc-modal-eyebrow">Military Wealth Coach</div>'+
+          '<div class="mwc-modal-title">'+cfg.title+'</div>'+
+          (cfg.blurb?'<div class="mwc-modal-blurb">'+cfg.blurb+'</div>':'')+'</div>'+
+          '<div class="mwc-modal-bd"><div id="'+targetId+'"></div></div></div>';
+        document.body.appendChild(ov);
+        document.addEventListener('keydown', _mwcEsc);
+        var target=ov.querySelector('#'+targetId);
+        target.innerHTML='<div style="font-family:\'JetBrains Mono\',monospace;font-size:11px;letter-spacing:.1em;color:#6C645B;text-align:center;padding:20px">Loading form&hellip;</div>';
+        ensureHubSpotScript().then(function(){ target.innerHTML=''; window.hbspt.forms.create({ portalId:HUBSPOT.portalId, formId:cfg.formId, region:HUBSPOT.region, target:'#'+targetId }); });
+      }
+      window.openHubSpotForm=openHubSpotForm; window.closeFormModal=closeFormModal; window._mwcEsc=_mwcEsc;
+    })();
+    </script>
+
 
     <!-- Unlock Advanced -->
     <div class="unlock-bar">
