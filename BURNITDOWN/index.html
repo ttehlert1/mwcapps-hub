@@ -111,6 +111,17 @@ input[type=range]::-moz-range-thumb{width:20px;height:20px;border-radius:50%;bac
 .dark-panel .dp-num{font-family:'Newsreader',serif;font-size:2.6rem;color:var(--gold);margin:.3rem 0}
 .dark-panel .dp-sub{font-size:.85rem;color:#ccc}
 
+.stat-grid{display:grid;grid-template-columns:1fr 1fr;gap:.85rem;margin-bottom:.85rem}
+.stat-grid .full{grid-column:1/-1}
+.stat-card{background:var(--card);border:1px solid var(--border);border-radius:2px;padding:1.25rem;text-align:center}
+.stat-card .sc-label{font-family:'JetBrains Mono',monospace;text-transform:uppercase;letter-spacing:.05em;font-size:.72rem;color:var(--muted);margin-bottom:.5rem}
+.stat-card .sc-num{font-family:'Newsreader',serif;font-size:1.7rem;color:var(--mid)}
+.stat-card .sc-num.dash{color:var(--border)}
+.stat-card .sc-sub{font-size:.8rem;color:var(--muted);margin-top:.2rem}
+.reco-box{background:var(--bg-2);border-left:3px solid var(--gold);border-radius:2px;padding:1rem 1.1rem;margin-top:.85rem;font-size:.9rem;color:var(--ink-2)}
+.reco-box b{color:var(--dark)}
+.reco-box .reco-or{font-family:'JetBrains Mono',monospace;text-transform:uppercase;font-size:.7rem;color:var(--mid);letter-spacing:.05em;display:block;margin:.6rem 0 .3rem}
+
 .callout{background:var(--card);border:1px solid var(--border);border-left:3px solid var(--mid);border-radius:2px;padding:1.25rem 1.4rem;margin-bottom:1.1rem}
 .callout.win{border-left-color:var(--green)}
 .callout.loss{border-left-color:var(--red)}
@@ -171,7 +182,7 @@ input[type=range]::-moz-range-thumb{width:20px;height:20px;border-radius:50%;bac
   <span class="ab-title">Built-in assumptions — read before you enter numbers</span>
   <ul>
     <li>Federal tax only — no state income tax modeled</li>
-    <li>Full concurrent receipt of pension + VA disability assumed</li>
+    <li>Pension and VA disability are both optional — enable only what applies to you</li>
     <li>Social Security is not modeled (deliberately excluded)</li>
     <li>Retirement accounts assumed penalty-free at 59½ unless Advanced Bridge is enabled</li>
     <li>Spending stays flat in real (inflation-adjusted) terms after retirement</li>
@@ -313,37 +324,58 @@ input[type=range]::-moz-range-thumb{width:20px;height:20px;border-radius:50%;bac
 <!-- ============ PHASE 3: INCOME STACK ============ -->
 <div class="sec-label"><span class="phase-num">3</span> The Income Stack</div>
 <div class="card">
-  <div class="card-title">Pension</div>
-  <div class="grid3">
-    <div class="field">
-      <label>Retirement System</label>
-      <select id="retSystem">
-        <option value="legacy">Legacy High-3</option>
-        <option value="brs" selected>Blended Retirement System (BRS)</option>
-      </select>
+  <div class="switch-row">
+    <div class="switch-label">Military Pension
+      <span class="sub2">Only about 1 in 6 who serve reach the 20 years needed for a pension — leave this off if that doesn’t apply to you.</span>
     </div>
-    <div class="field">
-      <label>Current Pay Grade</label>
-      <select id="gradeNow"></select>
+    <label class="switch"><input type="checkbox" id="pensionToggle"><span class="slider-toggle"></span></label>
+  </div>
+  <div id="pensionFields" style="display:none;margin-top:1rem">
+    <div class="toggle-row" id="pensionModeToggle" style="margin-bottom:1rem">
+      <div class="toggle-btn active" data-val="active">Active Duty — Project My Pension</div>
+      <div class="toggle-btn" data-val="retired">Already Retired — Enter My Actual Pension</div>
     </div>
-    <div class="field">
-      <label>Pay Grade at Retirement</label>
-      <select id="gradeRet"></select>
+    <div class="grid3" id="pensionActiveFields">
+      <div class="field">
+        <label>Retirement System</label>
+        <select id="retSystem">
+          <option value="legacy">Legacy High-3</option>
+          <option value="brs" selected>Blended Retirement System (BRS)</option>
+        </select>
+      </div>
+      <div class="field">
+        <label>Current Pay Grade</label>
+        <select id="gradeNow"></select>
+      </div>
+      <div class="field">
+        <label>Pay Grade at Retirement</label>
+        <select id="gradeRet"></select>
+      </div>
+      <div class="field">
+        <label>Years of Service at Retirement</label>
+        <input type="number" id="yosRet" value="20" min="20" max="40">
+      </div>
     </div>
-    <div class="field">
-      <label>Years of Service at Retirement</label>
-      <input type="number" id="yosRet" value="20" min="20" max="40">
+    <div class="grid2" id="pensionRetiredFields" style="display:none">
+      <div class="field">
+        <label>Current Annual Pension Amount</label>
+        <div class="prefix-wrap"><span class="prefix">$</span><input type="text" inputmode="numeric" id="pensionRetiredAmt" value="30000"></div>
+      </div>
     </div>
   </div>
 </div>
 
 <div class="card">
-  <div class="card-title">VA Disability Compensation</div>
-  <div class="grid2">
+  <div class="switch-row">
+    <div class="switch-label">VA Disability Compensation
+      <span class="sub2">Leave this off if you don’t have (or don’t expect) a VA disability rating.</span>
+    </div>
+    <label class="switch"><input type="checkbox" id="vaToggle"><span class="slider-toggle"></span></label>
+  </div>
+  <div class="grid2" id="vaFields" style="display:none;margin-top:1rem">
     <div class="field">
       <label>Projected VA Disability Rating</label>
       <select id="vaRating">
-        <option value="0">0% (none)</option>
         <option value="10">10%</option><option value="20">20%</option><option value="30">30%</option>
         <option value="40">40%</option><option value="50">50%</option><option value="60">60%</option>
         <option value="70" selected>70%</option><option value="80">80%</option><option value="90">90%</option><option value="100">100%</option>
@@ -358,7 +390,8 @@ input[type=range]::-moz-range-thumb{width:20px;height:20px;border-radius:50%;bac
       </select>
     </div>
   </div>
-  <div class="disclosure">VA disability compensation is federally tax-exempt and grows with the same COLA assumption as your expenses. This tool assumes full concurrent receipt of pension and VA disability regardless of rating (a simplification of the Concurrent Retirement and Disability Pay rule — in reality, ratings under 50% can trigger a dollar-for-dollar offset against retired pay).</div>
+  <div class="disclosure" id="vaDisclosure" style="display:none">VA disability compensation is federally tax-exempt and grows with the same COLA assumption as your expenses.</div>
+  <div class="disclosure" id="concurrentDisclosure" style="display:none">Because you’ve enabled both a pension and VA disability, this tool assumes full concurrent receipt regardless of rating (a simplification of the Concurrent Retirement and Disability Pay rule — in reality, ratings under 50% can trigger a dollar-for-dollar offset against retired pay).</div>
 </div>
 
 <div class="card">
@@ -633,6 +666,32 @@ document.getElementById('secondCareerToggle').addEventListener('change', e=>{
   document.getElementById('secondCareerFields').style.display = e.target.checked ? 'grid' : 'none';
 });
 
+function updateConcurrentDisclosure(){
+  const bothOn = document.getElementById('pensionToggle').checked && document.getElementById('vaToggle').checked;
+  document.getElementById('concurrentDisclosure').style.display = bothOn ? 'block' : 'none';
+}
+
+document.getElementById('pensionToggle').addEventListener('change', e=>{
+  document.getElementById('pensionFields').style.display = e.target.checked ? 'block' : 'none';
+  updateConcurrentDisclosure();
+});
+
+document.querySelectorAll('#pensionModeToggle .toggle-btn').forEach(btn=>{
+  btn.addEventListener('click', ()=>{
+    document.querySelectorAll('#pensionModeToggle .toggle-btn').forEach(b=>b.classList.remove('active'));
+    btn.classList.add('active');
+    const retired = btn.dataset.val === 'retired';
+    document.getElementById('pensionActiveFields').style.display = retired ? 'none' : 'grid';
+    document.getElementById('pensionRetiredFields').style.display = retired ? 'grid' : 'none';
+  });
+});
+
+document.getElementById('vaToggle').addEventListener('change', e=>{
+  document.getElementById('vaFields').style.display = e.target.checked ? 'grid' : 'none';
+  document.getElementById('vaDisclosure').style.display = e.target.checked ? 'block' : 'none';
+  updateConcurrentDisclosure();
+});
+
 document.getElementById('advBridge').addEventListener('change', e=>{
   document.getElementById('bridgeDisclosure').style.display = e.target.checked ? 'block' : 'none';
 });
@@ -728,10 +787,14 @@ function readInputs(){
     inflation: num('inflation'),
     lifestylePct: lifestyleBtn ? parseFloat(lifestyleBtn.dataset.val) : 0,
 
+    pensionOn: document.getElementById('pensionToggle').checked,
+    pensionMode: document.querySelector('#pensionModeToggle .toggle-btn.active').dataset.val,
+    pensionRetiredAmt: num('pensionRetiredAmt'),
     retSystem: document.getElementById('retSystem').value,
     gradeNow: document.getElementById('gradeNow').value,
     gradeRet: document.getElementById('gradeRet').value,
     yosRet: num('yosRet'),
+    vaOn: document.getElementById('vaToggle').checked,
     vaRating: parseInt(document.getElementById('vaRating').value,10),
     vaDependency: document.getElementById('vaDependency').value,
     secondCareerOn: document.getElementById('secondCareerToggle').checked,
@@ -747,8 +810,8 @@ function readInputs(){
   };
 }
 
-function runDeterministicModel(){
-  const IN = readInputs();
+function computeModel(overrides){
+  const IN = Object.assign(readInputs(), overrides || {});
   const yearsToRetirement = Math.max(0, IN.retAge - IN.curAge);
   const monthsToRetirement = Math.round(yearsToRetirement*12);
 
@@ -796,9 +859,16 @@ function runDeterministicModel(){
 
   // --- Phase 3: Income Stack (real, year-1-of-retirement dollars in nominal-at-retirement terms) ---
   const yearsUntilRet = yearsToRetirement;
-  const high3 = calcHigh3Monthly(IN.gradeRet, IN.yosRet, yearsUntilRet, IN.inflation);
-  const pensionAnnual = calcPensionAnnual(IN.retSystem, high3, IN.yosRet);
-  const vaAnnualToday = lookupVaAnnual(IN.vaRating, IN.vaDependency);
+  let pensionAnnual = 0;
+  if (IN.pensionOn){
+    if (IN.pensionMode === 'retired'){
+      pensionAnnual = IN.pensionRetiredAmt * Math.pow(1+IN.inflation/100, yearsUntilRet);
+    } else {
+      const high3 = calcHigh3Monthly(IN.gradeRet, IN.yosRet, yearsUntilRet, IN.inflation);
+      pensionAnnual = calcPensionAnnual(IN.retSystem, high3, IN.yosRet);
+    }
+  }
+  const vaAnnualToday = IN.vaOn ? lookupVaAnnual(IN.vaRating, IN.vaDependency) : 0;
   const vaAnnual = vaAnnualToday * Math.pow(1+IN.inflation/100, yearsUntilRet);
   const secondCareerAnnual = IN.secondCareerOn ? IN.secondCareerAmt * Math.pow(1+IN.inflation/100, yearsUntilRet) : 0;
   const secondCareerStartsImmediately = IN.secondCareerOn && IN.secondCareerAge <= IN.retAge;
@@ -827,16 +897,58 @@ function runDeterministicModel(){
   const totalIncomeAfterTax = swrAfterTax + afterTaxGuaranteedYr1;
   const surplus = totalIncomeAfterTax - yr1CostAnnual;
 
-  STATE = {
+  // Bridge monthly draw: what the Bridge (brokerage/HYSA) must supply per month, net of guaranteed
+  // income already active during the bridge years. Blank/dash in the UI when there's no bridge.
+  const bridgeMonthlyDraw = bridgeYears > 0 ? Math.max(0, yr1CostAnnual - afterTaxGuaranteedYr1) / 12 : null;
+
+  return {
     IN, yearsToRetirement, retirementBalance, spouseRetirementBalance, totalRetirementBalance,
     hysaAtRetirement, brokAtRetirement, nonRetirementBalance, totalBalance,
-    accessAge, bridgeYears, bridgeSufficiency,
+    accessAge, bridgeYears, bridgeSufficiency, bridgeMonthlyDraw,
     yr1CostAnnual, pensionAnnual, vaAnnual, secondCareerAnnual, secondCareerStartsImmediately,
     spousePensionAnnual, guaranteedIncomeYr1, deferredIncomeEvents,
     marginalRate, afterTaxGuaranteedYr1, tradShare,
     swrAnnual, swrMonthly, swrAfterTax, totalIncomeAfterTax, surplus
   };
+}
+
+function runDeterministicModel(){
+  STATE = computeModel({});
   return STATE;
+}
+
+// Sinking-fund payment: monthly savings needed, starting now, to accumulate `target` by retirement,
+// growing at the retirement portfolio's own expected return.
+function requiredMonthlySavings(target, annualRatePct, months){
+  if (months <= 0 || target <= 0) return null;
+  const r = annualRatePct/100/12;
+  if (r === 0) return target / months;
+  return target * r / (Math.pow(1+r, months) - 1);
+}
+
+// How many more years of delay (in 0.5yr steps, capped at the retirement-age slider's max of 74)
+// would close a shortfall, holding every other input fixed. Returns null if 74 isn't enough.
+function findDelayYearsNeeded(){
+  const baseRetAge = STATE.IN.retAge;
+  for (let delay=0.5; delay<=24; delay+=0.5){
+    const candidateAge = baseRetAge + delay;
+    if (candidateAge > 74) return null;
+    if (computeModel({retAge: candidateAge}).surplus >= 0) return delay;
+  }
+  return null;
+}
+
+// How many years earlier (in 0.5yr steps, floored at the slider's min of 50) retirement could move
+// while keeping surplus >= 0, holding every other input fixed. Returns 0 if no room to move earlier.
+function findEarlierRetirementYears(){
+  const baseRetAge = STATE.IN.retAge;
+  let lastGood = 0;
+  for (let earlier=0.5; earlier<=24; earlier+=0.5){
+    const candidateAge = baseRetAge - earlier;
+    if (candidateAge < 50) break;
+    if (computeModel({retAge: candidateAge}).surplus >= 0) lastGood = earlier; else break;
+  }
+  return lastGood;
 }
 
 function calcYear1CostOfLiving(IN){
@@ -855,17 +967,53 @@ function renderStandardPlan(S){
   const longevityNote = LONGEVITY[LONGEVITY.length-1];
   let html = '';
 
-  html += '<div class="dark-panel" style="margin-bottom:1.1rem">';
-  html += '<div class="dp-label">The 4% Rule</div>';
-  html += '<div class="dp-num">' + fmt$(S.swrMonthly) + '/mo</div>';
-  html += '<div class="dp-sub">' + fmt$(S.swrAnnual) + '/yr — 4% of your ' + fmt$(S.totalBalance) + ' total investable balance (' + fmt$(S.totalRetirementBalance) + ' retirement + ' + fmt$(S.nonRetirementBalance) + ' non-retirement)</div>';
+  html += '<div class="stat-grid">';
+
+  html += '<div class="stat-card full"><div class="sc-label">Your Real Cost of Living in Retirement</div><div class="sc-num">' + fmt$(S.yr1CostAnnual/12) + '/mo</div><div class="sc-sub">(' + fmt$(S.yr1CostAnnual) + '/yr, inflation and 70%-Rule adjusted)</div></div>';
+
+  html += '<div class="stat-card full"><div class="sc-label">Guaranteed Income (Pension + Disability, After Tax)</div><div class="sc-num">' + fmt$(S.afterTaxGuaranteedYr1/12) + '/mo</div><div class="sc-sub">(' + fmt$(S.afterTaxGuaranteedYr1) + '/yr' + (!S.IN.pensionOn && !S.IN.vaOn ? ' — none enabled in Section 3' : '') + ')</div></div>';
+
+  html += '<div class="stat-card">';
+  if (S.bridgeMonthlyDraw !== null){
+    html += '<div class="sc-label">Bridge Draw (Retirement → ' + S.accessAge + ')</div><div class="sc-num">' + fmt$(S.bridgeMonthlyDraw) + '/mo</div><div class="sc-sub">(' + fmt$(S.bridgeMonthlyDraw*12) + '/yr from HYSA/brokerage)</div>';
+  } else {
+    html += '<div class="sc-label">Bridge Draw</div><div class="sc-num dash">—</div><div class="sc-sub">No bridge — retiring at or after ' + S.accessAge + '</div>';
+  }
   html += '</div>';
+
+  html += '<div class="stat-card"><div class="sc-label">4% SWR from Age ' + S.accessAge + '</div><div class="sc-num">' + fmt$(S.swrMonthly) + '/mo</div><div class="sc-sub">(' + fmt$(S.swrAnnual) + '/yr, ' + fmt$(S.totalBalance) + ' total balance)</div></div>';
+
+  html += '</div>'; // /stat-grid
 
   html += '<div class="callout ' + (S.surplus>=0?'win':'loss') + '">';
   html += '<h3>' + (S.surplus>=0 ? 'You’re running a surplus' : 'You’re running a shortfall') + '</h3>';
-  html += '<p>Following the 4% Rule (after tax) plus your after-tax guaranteed income (pension, VA disability' + (S.IN.spouseOn?', spouse pension':'') + (S.IN.secondCareerOn?', second career':'') + '), against your real, inflation-adjusted, after-tax cost of living at retirement:</p>';
-  html += '<div class="big">' + (S.surplus>=0?'+':'') + fmt$(S.surplus) + '/yr (' + (S.surplus>=0?'+':'') + fmt$(S.surplus/12) + '/mo)</div>';
-  html += '<p style="margin-top:.5rem">Guaranteed income (after tax): ' + fmt$(S.afterTaxGuaranteedYr1) + '/yr &middot; 4% Rule (after tax): ' + fmt$(S.swrAfterTax) + '/yr &middot; Your real cost of living: ' + fmt$(S.yr1CostAnnual) + '/yr</p>';
+  html += '<div class="big">' + (S.surplus>=0?'+':'') + fmt$(S.surplus/12) + '/mo</div>';
+  html += '<div class="sc-sub">(' + (S.surplus>=0?'+':'') + fmt$(S.surplus) + '/yr)</div>';
+
+  if (S.surplus < 0){
+    const shortfallAnnual = -S.surplus;
+    const additionalBalanceNeeded = shortfallAnnual / 0.04;
+    const monthsToRet = Math.round(Math.max(0, S.IN.retAge - S.IN.curAge) * 12);
+    const reqMonthly = requiredMonthlySavings(additionalBalanceNeeded, S.IN.retReturn, monthsToRet);
+    const delayYears = findDelayYearsNeeded();
+
+    html += '<div class="reco-box">';
+    html += 'You’re projected to come up <b>' + fmt$(shortfallAnnual) + '/yr short</b>. Closing that gap (using the same 4% withdrawal framework) takes about <b>' + fmt$(additionalBalanceNeeded) + '</b> more invested by retirement — which means saving an additional <b>' + (reqMonthly!==null ? fmt$(reqMonthly)+'/mo starting now' : 'N/A — you’re already at your planned retirement age') + '</b>.';
+    html += '<span class="reco-or">Or</span>';
+    html += delayYears !== null
+      ? 'Delay retirement by <b>' + delayYears + ' year' + (delayYears===1?'':'s') + '</b> (to age ' + (S.IN.retAge+delayYears) + ') to reach the required balance and income on your current savings rate — no change to your contributions needed.'
+      : 'Even delaying to age 74 doesn’t fully close this gap on your current savings rate — increasing how much you save each month is likely necessary.';
+    html += '</div>';
+  } else {
+    const earlierYears = findEarlierRetirementYears();
+    html += '<div class="reco-box">';
+    html += 'You can retire on your current timeline and withdraw <b>' + fmt$(S.totalIncomeAfterTax/12) + '/mo</b> (' + fmt$(S.totalIncomeAfterTax) + '/yr) after tax.';
+    html += '<span class="reco-or">Or</span>';
+    html += earlierYears > 0
+      ? 'Your current savings plan and target lifestyle would allow you to retire <b>' + earlierYears + ' year' + (earlierYears===1?'':'s') + ' earlier</b>, at age ' + (S.IN.retAge-earlierYears) + '.'
+      : 'Your numbers don’t leave room to retire any earlier than planned without adjusting your lifestyle or savings rate.';
+    html += '</div>';
+  }
   html += '</div>';
 
   if (S.bridgeYears > 0){
@@ -1121,6 +1269,9 @@ function renderTiles(R, S){
     html += '<div class="t-prob ' + probClass(t.key==='aggressive' ? 100-Math.abs(probVal-num('aggProb')) : probVal) + '">' + fmtPct(probVal,0) + '</div>';
     html += '<div class="t-prob-label">' + probLabel + '</div>';
     html += '<div class="t-prob-label" style="margin-top:.35rem;font-style:italic">' + (d.method==='rolling-historical' ? 'Tested against every real ' + S.mcYears + '-year period since 1928 (' + d.windowCount + ' windows)' : 'Modeled across 10,000 simulated market scenarios') + '</div>';
+    if (t.key==='actual' && d.rate < 1){
+      html += '<div class="t-prob-label" style="margin-top:.5rem">Your guaranteed income already covers nearly all of your retirement need — this plan barely touches your portfolio.</div>';
+    }
     html += '</div>';
   });
   document.getElementById('tilesOutput').innerHTML = html;
