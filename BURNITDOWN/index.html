@@ -133,11 +133,9 @@ input[type=range]::-moz-range-thumb{width:20px;height:20px;border-radius:50%;bac
 #phase7-lock .insight{background:var(--bg-2);border:1px dashed var(--border);border-radius:2px;padding:1.25rem;text-align:center;color:var(--muted);font-size:.92rem}
 #phase7{display:none}
 
-.tiles{display:grid;grid-template-columns:repeat(4,1fr);gap:.85rem;margin-top:1rem}
-@media (max-width:900px){.tiles{grid-template-columns:1fr 1fr}}
-@media (max-width:480px){.tiles{grid-template-columns:1fr}}
+.tiles{display:grid;grid-template-columns:repeat(3,1fr);gap:.85rem;margin-top:1rem}
+@media (max-width:640px){.tiles{grid-template-columns:1fr}}
 .tile{background:var(--card);border:1px solid var(--border);border-radius:2px;padding:1.1rem;text-align:center}
-.tile.recommended{border-color:var(--gold);box-shadow:0 0 0 1px var(--gold)}
 .tile .t-name{font-family:'JetBrains Mono',monospace;text-transform:uppercase;letter-spacing:.05em;font-size:.7rem;color:var(--muted);margin-bottom:.6rem}
 .tile .t-amt{font-family:'Newsreader',serif;font-size:1.5rem;color:var(--mid)}
 .tile .t-amt-sub{font-size:.72rem;color:var(--muted);margin-bottom:.6rem}
@@ -183,7 +181,7 @@ input[type=range]::-moz-range-thumb{width:20px;height:20px;border-radius:50%;bac
   <ul>
     <li>Federal tax only — no state income tax modeled</li>
     <li>Pension and VA disability are both optional — enable only what applies to you</li>
-    <li>Social Security is not modeled (deliberately excluded)</li>
+    <li>Social Security is not modeled — the SS Trust Fund Reserve's liquidity beyond 2032 is uncertain, and your projected benefit could end up reduced or delayed</li>
     <li>Retirement accounts assumed penalty-free at 59½ unless Advanced Bridge is enabled</li>
     <li>Spending stays flat in real (inflation-adjusted) terms after retirement</li>
     <li>All figures are modeled estimates, not guarantees or financial advice</li>
@@ -507,13 +505,14 @@ input[type=range]::-moz-range-thumb{width:20px;height:20px;border-radius:50%;bac
     <div class="field">
       <label>Aggressive: Probability of Hitting $0 By That Age</label>
       <div class="prefix-wrap"><input type="text" inputmode="numeric" id="aggProb" value="50" style="padding-left:.75rem"><span class="prefix" style="left:auto;right:11px">%</span></div>
-      <div class="field-note">"A 50% chance my portfolio hits zero before age 95, and a 50% chance it doesn’t" — the Die-With-Zero philosophy, with an actual probabilistic bound instead of a guess.</div>
+      <div class="field-note">"A 50% chance my portfolio hits zero before age 95, and a 50% chance it doesn’t" — the Die-With-Zero philosophy, with an actual probabilistic bound instead of a guess. <b>If you want to die with zero, set this to 100.</b></div>
     </div>
-    <button class="btn btn-block" id="runMcBtn">Run My Four Scenarios</button>
+    <button class="btn btn-block" id="runMcBtn">Run My Three Scenarios</button>
     <div id="mcStatus" style="text-align:center;margin-top:.75rem;font-size:.85rem;color:var(--muted)"></div>
   </div>
   <div class="tiles" id="tilesOutput"></div>
-  <div class="disclosure" style="margin-top:.75rem">Every probability shown is a modeled estimate from a Monte Carlo simulation over historical market return sequences — not a guarantee or a prediction. Conservative, Standard, and Actual differ only in withdrawal amount, not investment allocation, so you can see exactly what one variable costs you in risk.</div>
+  <div id="interpretationBox"></div>
+  <div class="disclosure" style="margin-top:.75rem">Every probability shown is a modeled estimate from a Monte Carlo simulation over historical market return sequences — not a guarantee or a prediction. Conservative, Standard, and Aggressive differ only in withdrawal amount, not investment allocation, so you can see exactly what one variable costs you in risk.</div>
 </div>
 
 <div class="footer-cta">
@@ -1109,17 +1108,16 @@ function simulateTrial(portfolioStart, bufferStart, years, baseNeed, events, buc
   };
 }
 
-function runBootstrapTrials(withdrawalAnnual, portfolioTotal, years, baseNeedYr1, events, bucketOn, bufferYears, bufferYieldPct, targetAgeOffset, trials){
-  const scale = withdrawalAnnual / baseNeedYr1;
-  const scaledEvents = events.map(e => ({yearOffset:e.yearOffset, amount:e.amount*scale}));
+function runBootstrapTrials(withdrawalAnnual, portfolioTotal, years, events, bucketOn, bufferYears, bufferYieldPct, targetAgeOffset, trials){
   const bufferTargetYr1 = bucketOn ? bufferYears * withdrawalAnnual : 0;
   const portfolioStart = Math.max(0, portfolioTotal - bufferTargetYr1);
-  let successCount=0, ruinCount=0;
+  let successCount=0, ruinCount=0, aboveStartCount=0;
   const endBalances = [];
   for (let t=0;t<trials;t++){
-    const r = simulateTrial(portfolioStart, bufferTargetYr1, years, withdrawalAnnual, scaledEvents, bucketOn, bufferYears, bufferYieldPct, targetAgeOffset, buildBootstrapPath(years));
+    const r = simulateTrial(portfolioStart, bufferTargetYr1, years, withdrawalAnnual, events, bucketOn, bufferYears, bufferYieldPct, targetAgeOffset, buildBootstrapPath(years));
     if (r.success) successCount++;
     if (r.ruinByTarget) ruinCount++;
+    if (r.endBalance > portfolioStart + bufferTargetYr1) aboveStartCount++;
     endBalances.push(r.endBalance);
   }
   endBalances.sort((a,b)=>a-b);
@@ -1127,6 +1125,7 @@ function runBootstrapTrials(withdrawalAnnual, portfolioTotal, years, baseNeedYr1
   return {
     successProb: successCount/trials*100,
     ruinByTargetProb: ruinCount/trials*100,
+    aboveStartProb: aboveStartCount/trials*100,
     p10: pct(0.10), p50: pct(0.50), p90: pct(0.90),
     portfolioStart, method:'bootstrap'
   };
@@ -1135,17 +1134,16 @@ function runBootstrapTrials(withdrawalAnnual, portfolioTotal, years, baseNeedYr1
 // STANDARD tile only — literally replicates Bengen/Trinity methodology: test every real,
 // chronologically-ordered N-year window that has actually occurred in market history (1928-2025),
 // not invented recombinations of it. No bucket (bucketOn is always false here).
-function runRollingHistoricalTrials(withdrawalAnnual, portfolioTotal, years, baseNeedYr1, events){
-  const scale = withdrawalAnnual / baseNeedYr1;
-  const scaledEvents = events.map(e => ({yearOffset:e.yearOffset, amount:e.amount*scale}));
+function runRollingHistoricalTrials(withdrawalAnnual, portfolioTotal, years, events){
   const portfolioStart = portfolioTotal;
   const maxStart = Math.max(0, HIST.length - years);
-  let successCount = 0;
+  let successCount = 0, aboveStartCount = 0;
   const endBalances = [];
   for (let start=0; start<=maxStart; start++){
     const path = HIST.slice(start, start+years);
-    const r = simulateTrial(portfolioStart, 0, years, withdrawalAnnual, scaledEvents, false, 0, 0, null, path);
+    const r = simulateTrial(portfolioStart, 0, years, withdrawalAnnual, events, false, 0, 0, null, path);
     if (r.success) successCount++;
+    if (r.endBalance > portfolioStart) aboveStartCount++;
     endBalances.push(r.endBalance);
   }
   endBalances.sort((a,b)=>a-b);
@@ -1153,6 +1151,7 @@ function runRollingHistoricalTrials(withdrawalAnnual, portfolioTotal, years, bas
   return {
     successProb: successCount/endBalances.length*100,
     ruinByTargetProb: 0,
+    aboveStartProb: aboveStartCount/endBalances.length*100,
     p10: pct(0.10), p50: pct(0.50), p90: pct(0.90),
     portfolioStart, method:'rolling-historical', windowCount: endBalances.length
   };
@@ -1175,30 +1174,25 @@ onmessage = function(e){
 
   // STANDARD tile — no bucket, straight 4% of total balance. Replicates the literal Bengen/Trinity
   // methodology: every real rolling historical window, not bootstrapped recombinations of it.
-  results.standard = runRollingHistoricalTrials(P.swrAnnual, P.totalBalance, P.years, P.baseNeedYr1, P.events);
+  results.standard = runRollingHistoricalTrials(P.swrAnnual, P.totalBalance, P.years, P.events);
   results.standard.withdrawal = P.swrAnnual;
   results.standard.rate = P.swrAnnual / P.totalBalance * 100;
 
-  // ACTUAL tile — direct calc, bucket on, bootstrapped (tests our strategy, not a named study)
-  results.actual = runBootstrapTrials(P.actualNeedAnnual, P.totalBalance, P.years, P.baseNeedYr1, P.events, true, P.bufferYears, P.bufferYieldPct, null, trials);
-  results.actual.withdrawal = P.actualNeedAnnual;
-  results.actual.rate = P.actualNeedAnnual / results.actual.portfolioStart * 100;
-
   // CONSERVATIVE tile — solve for withdrawal hitting consTarget% success, bucket on, bootstrapped
   const consW = solve(
-    w => runBootstrapTrials(w, P.totalBalance, P.years, P.baseNeedYr1, P.events, true, P.bufferYears, P.bufferYieldPct, null, Math.max(300,trials/6)).successProb,
+    w => runBootstrapTrials(w, P.totalBalance, P.years, P.events, true, P.bufferYears, P.bufferYieldPct, null, Math.max(300,trials/6)).successProb,
     P.consTarget, 0, P.totalBalance*0.15, true, 18
   );
-  results.conservative = runBootstrapTrials(consW, P.totalBalance, P.years, P.baseNeedYr1, P.events, true, P.bufferYears, P.bufferYieldPct, null, trials);
+  results.conservative = runBootstrapTrials(consW, P.totalBalance, P.years, P.events, true, P.bufferYears, P.bufferYieldPct, null, trials);
   results.conservative.withdrawal = consW;
   results.conservative.rate = consW / results.conservative.portfolioStart * 100;
 
   // AGGRESSIVE tile — solve for withdrawal hitting aggProb% chance of ruin by aggAge, bucket on, bootstrapped
   const aggW = solve(
-    w => runBootstrapTrials(w, P.totalBalance, P.years, P.baseNeedYr1, P.events, true, P.bufferYears, P.bufferYieldPct, P.aggAgeOffset, Math.max(300,trials/6)).ruinByTargetProb,
+    w => runBootstrapTrials(w, P.totalBalance, P.years, P.events, true, P.bufferYears, P.bufferYieldPct, P.aggAgeOffset, Math.max(300,trials/6)).ruinByTargetProb,
     P.aggProb, 0, P.totalBalance*0.30, false, 18
   );
-  results.aggressive = runBootstrapTrials(aggW, P.totalBalance, P.years, P.baseNeedYr1, P.events, true, P.bufferYears, P.bufferYieldPct, P.aggAgeOffset, trials);
+  results.aggressive = runBootstrapTrials(aggW, P.totalBalance, P.years, P.events, true, P.bufferYears, P.bufferYieldPct, P.aggAgeOffset, trials);
   results.aggressive.withdrawal = aggW;
   results.aggressive.rate = aggW / results.aggressive.portfolioStart * 100;
 
@@ -1220,16 +1214,11 @@ function runMonteCarlo(){
   const payload = {
     totalBalance: S.totalBalance,
     years, trials: 10000,
-    baseNeedYr1: S.yr1CostAnnual - S.guaranteedIncomeYr1 > 0 ? S.yr1CostAnnual : S.yr1CostAnnual,
     swrAnnual: S.swrAnnual,
-    actualNeedAnnual: Math.max(0, S.yr1CostAnnual - S.afterTaxGuaranteedYr1),
     events: S.deferredIncomeEvents,
     bufferYears, bufferYieldPct,
     consTarget, aggProb, aggAgeOffset
   };
-  // baseNeedYr1 used only to scale deferred-income events proportionally when solving different
-  // withdrawal levels; anchor it to the Actual tile's real residual need.
-  payload.baseNeedYr1 = payload.actualNeedAnnual > 0 ? payload.actualNeedAnnual : 1;
 
   const blob = new Blob([WORKER_SRC], {type:'application/javascript'});
   const worker = new Worker(URL.createObjectURL(blob));
@@ -1253,7 +1242,6 @@ function renderTiles(R, S){
   const tiles = [
     {key:'conservative', name:'Conservative', desc:'Maximum caution'},
     {key:'standard', name:'Standard (4% Rule)', desc:'The conventional baseline'},
-    {key:'actual', name:'Actual', desc:'Funds your real plan', recommended:true},
     {key:'aggressive', name:'Aggressive (Burn It Down)', desc:'Die with zero, on purpose'}
   ];
   let html = '';
@@ -1261,7 +1249,7 @@ function renderTiles(R, S){
     const d = R[t.key];
     const probLabel = t.key==='aggressive' ? 'Chance of Hitting $0 by Target Age' : 'Modeled Probability of Success';
     const probVal = t.key==='aggressive' ? d.ruinByTargetProb : d.successProb;
-    html += '<div class="tile' + (t.recommended?' recommended':'') + '">';
+    html += '<div class="tile">';
     html += '<div class="t-name">' + t.name + '</div>';
     html += '<div class="t-amt">' + fmt$(d.withdrawal/12) + '</div>';
     html += '<div class="t-amt-sub">per month (' + fmt$(d.withdrawal) + '/yr)</div>';
@@ -1269,12 +1257,30 @@ function renderTiles(R, S){
     html += '<div class="t-prob ' + probClass(t.key==='aggressive' ? 100-Math.abs(probVal-num('aggProb')) : probVal) + '">' + fmtPct(probVal,0) + '</div>';
     html += '<div class="t-prob-label">' + probLabel + '</div>';
     html += '<div class="t-prob-label" style="margin-top:.35rem;font-style:italic">' + (d.method==='rolling-historical' ? 'Tested against every real ' + S.mcYears + '-year period since 1928 (' + d.windowCount + ' windows)' : 'Modeled across 10,000 simulated market scenarios') + '</div>';
-    if (t.key==='actual' && d.rate < 1){
-      html += '<div class="t-prob-label" style="margin-top:.5rem">Your guaranteed income already covers nearly all of your retirement need — this plan barely touches your portfolio.</div>';
-    }
     html += '</div>';
   });
   document.getElementById('tilesOutput').innerHTML = html;
+  renderInterpretation(R, S);
+}
+
+function renderInterpretation(R, S){
+  const cons = R.conservative, std = R.standard, agg = R.aggressive;
+  const consTarget = num('consTarget');
+  const stdFailProb = Math.max(0, 100 - std.successProb);
+  const aggAge = num('aggAge');
+  const horizonAge = num('horizonAge');
+
+  let html = '<div class="reco-box">';
+  html += '<h3 class="serif" style="font-size:1.1rem;margin-bottom:.6rem">What these numbers actually mean for your money</h3>';
+
+  html += '<p><b>Conservative</b> is calibrated to keep your probability of never running out of money at <b>' + fmtPct(consTarget,0) + '</b> through age ' + horizonAge + '. This is the number that shows how much margin gets built into "safe" advice — most of it goes unspent.</p>';
+
+  html += '<p style="margin-top:.65rem"><b>Standard (the 4% Rule)</b> carries roughly a <b>' + fmtPct(stdFailProb,0) + ' chance of running out</b> of money before age ' + horizonAge + '. But that risk is only half the story: it also carries roughly an <b>' + fmtPct(std.aboveStartProb,0) + ' chance you end up with more money than you started with</b> — history shows the 4% Rule is far more likely to leave a growing balance than an empty one. Whatever isn’t spent in your lifetime becomes the legacy you leave behind.</p>';
+
+  html += '<p style="margin-top:.65rem"><b>Aggressive (Burn It Down)</b> lets you withdraw up to <b>' + fmt$(agg.withdrawal/12) + '/mo</b> — and carries roughly a <b>' + fmtPct(agg.ruinByTargetProb,0) + ' chance of running your accounts to zero by age ' + aggAge + '</b>, the target you set above. That is the Die-With-Zero philosophy backed by an actual number instead of a guess.</p>';
+
+  html += '</div>';
+  document.getElementById('interpretationBox').innerHTML = html;
 }
 </script>
 </body>
