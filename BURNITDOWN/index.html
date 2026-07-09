@@ -42,9 +42,9 @@ h1{font-family:'Newsreader',serif;font-weight:600;letter-spacing:-0.01em;font-si
 
 .assumptions-banner{background:var(--bg-2);border:1px solid var(--border);border-radius:2px;padding:1rem 1.25rem;margin-bottom:1.75rem;font-size:.85rem;color:var(--ink-2)}
 .assumptions-banner .ab-title{font-family:'JetBrains Mono',monospace;text-transform:uppercase;letter-spacing:.06em;color:var(--mid);font-size:.72rem;margin-bottom:.5rem;display:block}
-.assumptions-banner ul{list-style:none;display:grid;grid-template-columns:1fr 1fr;gap:.35rem .1rem}
+.assumptions-banner ul{list-style:none;display:flex;flex-direction:column;gap:.4rem}
+.assumptions-banner li{line-height:1.5}
 .assumptions-banner li::before{content:'\2014  ';color:var(--muted)}
-@media (max-width:640px){.assumptions-banner ul{grid-template-columns:1fr}}
 
 .sec-label{font-family:'JetBrains Mono',monospace;color:var(--mid);text-transform:uppercase;letter-spacing:.06em;font-size:.78rem;display:flex;align-items:center;gap:.75rem;margin:2.25rem 0 1rem}
 .sec-label::after{content:'';flex:1;height:1px;background:var(--border)}
@@ -54,12 +54,12 @@ h1{font-family:'Newsreader',serif;font-weight:600;letter-spacing:-0.01em;font-si
 .card-title{font-family:'JetBrains Mono',monospace;color:var(--mid);text-transform:uppercase;letter-spacing:.05em;font-size:.75rem;display:flex;align-items:center;gap:.6rem;margin-bottom:1.1rem}
 .card-title::after{content:'';flex:1;height:1px;background:var(--border)}
 
-.grid2{display:grid;grid-template-columns:1fr 1fr;gap:1rem}
-.grid3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:1rem}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:1rem;align-items:start}
+.grid3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:1rem;align-items:start}
 @media (max-width:640px){.grid2,.grid3{grid-template-columns:1fr}}
 
-.field{margin-bottom:1rem}
-.field label{display:block;font-family:'JetBrains Mono',monospace;font-size:.72rem;text-transform:uppercase;letter-spacing:.04em;color:var(--muted);margin-bottom:.4rem}
+.field{margin-bottom:1rem;display:flex;flex-direction:column;height:100%}
+.field label{display:flex;align-items:flex-end;min-height:2.5em;font-family:'JetBrains Mono',monospace;font-size:.72rem;text-transform:uppercase;letter-spacing:.04em;color:var(--muted);margin-bottom:.4rem;line-height:1.25}
 .field input[type=text],.field input[type=number],.field select{width:100%;padding:.65rem .75rem;border:1px solid var(--border);border-radius:2px;font-family:'Manrope',sans-serif;font-size:.95rem;background:#fff;color:var(--text)}
 .field input:focus,.field select:focus{outline:none;border-color:var(--mid);box-shadow:0 0 0 3px rgba(166,24,44,.12)}
 .prefix-wrap{position:relative}
@@ -81,18 +81,26 @@ h1{font-family:'Newsreader',serif;font-weight:600;letter-spacing:-0.01em;font-si
 input:checked + .slider-toggle{background:var(--mid)}
 input:checked + .slider-toggle::before{transform:translateX(19px)}
 
-input[type=range]{width:100%;height:4px;padding:0;border:none;border-radius:2px;background:var(--border);appearance:none;-webkit-appearance:none;cursor:pointer}
-input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:20px;height:20px;border-radius:50%;background:var(--mid);border:3px solid #fff;box-shadow:0 1px 4px rgba(26,26,26,.28)}
-input[type=range]::-moz-range-thumb{width:20px;height:20px;border-radius:50%;background:var(--mid);border:3px solid #fff}
+input[type=range]{width:100%;height:6px;padding:0;border:none;border-radius:3px;background:var(--border);appearance:none;-webkit-appearance:none;cursor:pointer;transition:box-shadow .15s}
+input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:22px;height:22px;border-radius:50%;background:var(--mid);border:3px solid #fff;box-shadow:0 2px 6px rgba(26,26,26,.35);cursor:grab;transition:transform .15s}
+input[type=range]::-webkit-slider-thumb:active{cursor:grabbing;transform:scale(1.12)}
+input[type=range]::-moz-range-thumb{width:22px;height:22px;border-radius:50%;background:var(--mid);border:3px solid #fff;box-shadow:0 2px 6px rgba(26,26,26,.35);cursor:grab}
 
 .age-slider-wrap{padding:.5rem 0 0}
-.age-slider-readout{font-family:'Newsreader',serif;font-size:1.6rem;color:var(--mid);text-align:center;margin-bottom:.6rem}
+.age-slider-readout{font-family:'Newsreader',serif;font-size:1.6rem;color:var(--mid);text-align:center;margin-bottom:.9rem}
 .age-slider-readout span{font-size:1rem;color:var(--muted);font-family:'Manrope',sans-serif}
-.milestone-ticks{position:relative;height:14px;margin:.4rem 0 .2rem}
-.milestone-tick{position:absolute;top:0;width:2px;height:8px;background:var(--border)}
-.milestone-callout{background:var(--bg-2);border-left:3px solid var(--gold);border-radius:2px;padding:.85rem 1rem;margin-top:.85rem;font-size:.88rem;color:var(--ink-2)}
+.milestone-ticks{position:relative;height:34px;margin:.85rem .01rem .1rem}
+.milestone-tick{position:absolute;top:0;width:2px;height:8px;background:var(--border);transform:translateX(-50%);transition:background .15s}
+.milestone-tick.past{background:var(--mid)}
+.milestone-tick-label{position:absolute;top:12px;transform:translateX(-50%);font-family:'JetBrains Mono',monospace;font-size:.64rem;letter-spacing:.02em;color:var(--muted);white-space:nowrap;cursor:pointer;transition:color .15s,font-weight .15s}
+.milestone-tick-label:hover{color:var(--mid)}
+.milestone-tick-label.past{color:var(--dark);font-weight:700}
+.milestone-tick-label.current{color:var(--mid);font-weight:700}
+.milestone-callout{background:var(--bg-2);border-left:3px solid var(--gold);border-radius:2px;padding:.85rem 1rem;margin-top:.6rem;font-size:.88rem;color:var(--ink-2);transition:box-shadow .2s}
 .milestone-callout b{color:var(--dark)}
 .milestone-next{font-size:.78rem;color:var(--muted);margin-top:.4rem}
+.ssa-link{display:inline-block;margin-left:.15rem;font-family:'JetBrains Mono',monospace;font-size:.72rem;font-weight:600;letter-spacing:.02em;color:var(--mid);text-decoration:none;border-bottom:1px solid currentColor;white-space:nowrap}
+.ssa-link:hover{color:var(--dark)}
 
 .accordion-toggle{cursor:pointer;display:flex;justify-content:space-between;align-items:center}
 .accordion-body{display:none;margin-top:1.25rem;padding-top:1.25rem;border-top:1px dashed var(--border)}
@@ -133,9 +141,10 @@ input[type=range]::-moz-range-thumb{width:20px;height:20px;border-radius:50%;bac
 #phase7-lock .insight{background:var(--bg-2);border:1px dashed var(--border);border-radius:2px;padding:1.25rem;text-align:center;color:var(--muted);font-size:.92rem}
 #phase7{display:none}
 
-.tiles{display:grid;grid-template-columns:repeat(3,1fr);gap:.85rem;margin-top:1rem}
+.tiles{display:grid;grid-template-columns:repeat(3,1fr);gap:.85rem;margin-top:1rem;perspective:1400px}
 @media (max-width:640px){.tiles{grid-template-columns:1fr}}
-.tile{background:var(--card);border:1px solid var(--border);border-radius:2px;padding:1.1rem;text-align:center}
+.tile{background:var(--card);border:1px solid var(--border);border-radius:2px;padding:1.1rem;text-align:center;transition:transform .28s cubic-bezier(.2,.8,.2,1),box-shadow .28s cubic-bezier(.2,.8,.2,1),border-color .28s;transform-style:preserve-3d;position:relative;will-change:transform}
+.tile:hover{transform:translateY(-10px) scale(1.045) rotateX(3deg);box-shadow:0 28px 45px -16px rgba(26,26,26,.28),0 10px 18px -6px rgba(166,24,44,.18);border-color:var(--mid);z-index:2}
 .tile .t-name{font-family:'JetBrains Mono',monospace;text-transform:uppercase;letter-spacing:.05em;font-size:.7rem;color:var(--muted);margin-bottom:.6rem}
 .tile .t-amt{font-family:'Newsreader',serif;font-size:1.5rem;color:var(--mid)}
 .tile .t-amt-sub{font-size:.72rem;color:var(--muted);margin-bottom:.6rem}
@@ -148,6 +157,7 @@ input[type=range]::-moz-range-thumb{width:20px;height:20px;border-radius:50%;bac
 
 .disclosure{font-size:.76rem;color:var(--muted);margin-top:.5rem;line-height:1.5}
 .disclosure b{color:var(--ink-2)}
+.pending-flag{background:rgba(201,162,75,.15);border:1px solid var(--gold);border-radius:2px;padding:.5rem .75rem;font-size:.78rem;color:#8a6d1f;margin-top:.5rem}
 
 .footer-cta{background:var(--dark);color:#fff;border-radius:2px;padding:2rem;margin:2.5rem 0;text-align:center}
 .footer-cta h3{font-family:'Newsreader',serif;font-size:1.5rem;color:var(--gold);margin-bottom:.6rem}
@@ -246,6 +256,17 @@ input[type=range]::-moz-range-thumb{width:20px;height:20px;border-radius:50%;bac
     </div>
     <label class="switch"><input type="checkbox" id="growContrib"><span class="slider-toggle"></span></label>
   </div>
+  <div class="grid2" style="margin-top:.75rem">
+    <div class="field">
+      <label>Current Years of Service</label>
+      <input type="number" id="curYos" value="4" min="0" max="40">
+    </div>
+    <div class="field">
+      <label>Projected Years of Service at Separation</label>
+      <input type="number" id="yosSeparation" value="20" min="0" max="40">
+    </div>
+  </div>
+  <div class="field-note">Contributions and any match stop when you separate from the military — if the two YOS numbers are equal, you’re modeled as separating today. If you plan to keep saving into a civilian 401(k) afterward, this tool doesn’t model that separately; consider increasing your Brokerage contribution below as a rough stand-in.</div>
 </div>
 
 <div class="card">
@@ -283,6 +304,7 @@ input[type=range]::-moz-range-thumb{width:20px;height:20px;border-radius:50%;bac
   <div class="age-slider-wrap">
     <div class="age-slider-readout" id="ageReadout">59.5 <span>years old</span></div>
     <input type="range" id="retAge" min="50" max="74" step="0.5" value="59.5">
+    <div class="milestone-ticks" id="milestoneTicks"></div>
     <div class="milestone-callout" id="milestoneCallout"></div>
   </div>
   <div class="switch-row" style="margin-top:1rem">
@@ -349,11 +371,9 @@ input[type=range]::-moz-range-thumb{width:20px;height:20px;border-radius:50%;bac
         <label>Pay Grade at Retirement</label>
         <select id="gradeRet"></select>
       </div>
-      <div class="field">
-        <label>Years of Service at Retirement</label>
-        <input type="number" id="yosRet" value="20" min="20" max="40">
-      </div>
     </div>
+    <div class="field-note">Uses the Years of Service at Separation from Section 1 above (currently <span id="pensionYosEcho">20</span>) for the pension formula — change it there if it needs updating.</div>
+    <div class="pending-flag" id="yosVestingWarning" style="display:none">A military pension requires 20 years of service — your Years of Service at Separation in Section 1 is currently below that, so this pension figure won’t be valid unless you raise it to 20+.</div>
     <div class="grid2" id="pensionRetiredFields" style="display:none">
       <div class="field">
         <label>Current Annual Pension Amount</label>
@@ -624,9 +644,9 @@ const AGE_MILESTONES = [
   {age:50, label:'Retire Early', detail:'No guaranteed retirement income yet — the Bridge (your HYSA + brokerage) has to cover everything.'},
   {age:55, label:'Retire Early from Federal Service', detail:'Early withdrawal eligibility if you enable Advanced Bridge (Rule of 55 / 72(t)).'},
   {age:59.5, label:'Full Access to Retirement Accounts', detail:'Traditional and Roth TSP/401(k)/IRA withdrawals are penalty-free.'},
-  {age:62, label:'Partial Social Security Benefit', detail:'Earliest Social Security claiming age (reduced benefit). Not modeled in this tool’s income stack.'},
-  {age:67, label:'Current Full Retirement Age', detail:'100% Social Security benefit at today’s Full Retirement Age. Not modeled in this tool’s income stack.'},
-  {age:70, label:'Maximum Social Security Benefit', detail:'Delayed claiming boosts Social Security to roughly 125% of the full benefit. Not modeled in this tool’s income stack.'},
+  {age:62, label:'Partial Social Security Benefit', detail:'Earliest Social Security claiming age (reduced benefit). Not modeled in this tool’s income stack. <a href="https://www.ssa.gov/benefits/retirement/estimator.html" target="_blank" rel="noopener" class="ssa-link">Check your projected benefit at SSA.gov \u2192</a>'},
+  {age:67, label:'Current Full Retirement Age', detail:'100% Social Security benefit at today’s Full Retirement Age. Not modeled in this tool’s income stack. <a href="https://www.ssa.gov/benefits/retirement/estimator.html" target="_blank" rel="noopener" class="ssa-link">Check your projected benefit at SSA.gov \u2192</a>'},
+  {age:70, label:'Maximum Social Security Benefit', detail:'Delayed claiming boosts Social Security to roughly 125% of the full benefit. Not modeled in this tool’s income stack. <a href="https://www.ssa.gov/benefits/retirement/estimator.html" target="_blank" rel="noopener" class="ssa-link">Check your projected benefit at SSA.gov \u2192</a>'},
   {age:74, label:'Late Retirement', detail:'Required Minimum Distributions are active on Traditional retirement accounts.'}
 ];
 
@@ -670,9 +690,19 @@ function updateConcurrentDisclosure(){
   document.getElementById('concurrentDisclosure').style.display = bothOn ? 'block' : 'none';
 }
 
+function updateYosEcho(){
+  const yos = num('yosSeparation');
+  document.getElementById('pensionYosEcho').textContent = yos;
+  const pensionOn = document.getElementById('pensionToggle').checked;
+  const activeMode = document.querySelector('#pensionModeToggle .toggle-btn.active').dataset.val === 'active';
+  document.getElementById('yosVestingWarning').style.display = (pensionOn && activeMode && yos < 20) ? 'block' : 'none';
+}
+document.getElementById('yosSeparation').addEventListener('input', updateYosEcho);
+
 document.getElementById('pensionToggle').addEventListener('change', e=>{
   document.getElementById('pensionFields').style.display = e.target.checked ? 'block' : 'none';
   updateConcurrentDisclosure();
+  updateYosEcho();
 });
 
 document.querySelectorAll('#pensionModeToggle .toggle-btn').forEach(btn=>{
@@ -682,8 +712,10 @@ document.querySelectorAll('#pensionModeToggle .toggle-btn').forEach(btn=>{
     const retired = btn.dataset.val === 'retired';
     document.getElementById('pensionActiveFields').style.display = retired ? 'none' : 'grid';
     document.getElementById('pensionRetiredFields').style.display = retired ? 'grid' : 'none';
+    updateYosEcho();
   });
 });
+updateYosEcho();
 
 document.getElementById('vaToggle').addEventListener('change', e=>{
   document.getElementById('vaFields').style.display = e.target.checked ? 'grid' : 'none';
@@ -706,9 +738,46 @@ document.getElementById('spouseAccordionToggle').addEventListener('click', ()=>{
   chevron.classList.toggle('open');
 });
 
+function renderMilestoneTicks(){
+  const slider = document.getElementById('retAge');
+  const min = parseFloat(slider.min), max = parseFloat(slider.max);
+  const wrap = document.getElementById('milestoneTicks');
+  let html = '';
+  AGE_MILESTONES.forEach(m=>{
+    const pct = (m.age-min)/(max-min)*100;
+    html += '<div class="milestone-tick" data-age="'+m.age+'" style="left:'+pct+'%"></div>';
+    html += '<div class="milestone-tick-label" data-age="'+m.age+'" style="left:'+pct+'%" title="'+m.label+'">'+ (Number.isInteger(m.age)?m.age:m.age.toFixed(1).replace('.0','')) +'</div>';
+  });
+  wrap.innerHTML = html;
+  wrap.querySelectorAll('.milestone-tick-label').forEach(lbl=>{
+    lbl.addEventListener('click', ()=>{
+      slider.value = lbl.dataset.age;
+      renderMilestoneCallout();
+    });
+  });
+}
+renderMilestoneTicks();
+
 function renderMilestoneCallout(){
-  const val = parseFloat(document.getElementById('retAge').value);
+  const slider = document.getElementById('retAge');
+  const val = parseFloat(slider.value);
+  const min = parseFloat(slider.min), max = parseFloat(slider.max);
   document.getElementById('ageReadout').innerHTML = val.toFixed(1).replace('.0','') + ' <span>years old</span>';
+
+  // Fill the slider track up to the current value for a clearer visual read
+  const fillPct = (val-min)/(max-min)*100;
+  slider.style.background = 'linear-gradient(to right, var(--mid) ' + fillPct + '%, var(--border) ' + fillPct + '%)';
+
+  // Highlight ticks/labels at or before the current age
+  document.querySelectorAll('.milestone-tick').forEach(t=>{
+    t.classList.toggle('past', parseFloat(t.dataset.age) <= val);
+  });
+  document.querySelectorAll('.milestone-tick-label').forEach(l=>{
+    const age = parseFloat(l.dataset.age);
+    l.classList.toggle('past', age < val);
+    l.classList.toggle('current', Math.abs(age-val) < 0.01 || (AGE_MILESTONES.filter(m=>m.age<=val).slice(-1)[0] && Math.abs(AGE_MILESTONES.filter(m=>m.age<=val).slice(-1)[0].age-age)<0.01));
+  });
+
   let current = AGE_MILESTONES[0], next = null;
   for (let i=0;i<AGE_MILESTONES.length;i++){
     if (AGE_MILESTONES[i].age <= val) current = AGE_MILESTONES[i];
@@ -726,13 +795,14 @@ renderMilestoneCallout();
    ============================================================ */
 // Monthly compounding loop so fractional retirement ages (e.g. 59.5) and growing contributions
 // (pay-raise toggle) both work without needing a closed-form growing-annuity formula.
-function projectPool(startBalance, monthlyContrib, annualReturnPct, months, growAnnually, growRatePct){
+function projectPool(startBalance, monthlyContrib, annualReturnPct, months, growAnnually, growRatePct, contribMonths){
+  if (contribMonths === undefined) contribMonths = months;
   let bal = startBalance;
   let contrib = monthlyContrib;
   const mRate = annualReturnPct/100/12;
   for (let m=0; m<months; m++){
     bal += bal * mRate;
-    bal += contrib;
+    if (m < contribMonths) bal += contrib;
     if (growAnnually && (m+1)%12===0) contrib *= (1+growRatePct/100);
   }
   return bal;
@@ -779,6 +849,8 @@ function readInputs(){
     hysaContrib: num('hysaContrib'), brokContrib: num('brokContrib'),
     hysaReturn: num('hysaReturn'), brokReturn: num('brokReturn'),
 
+    curYos: num('curYos'), yosSeparation: num('yosSeparation'),
+
     retAge: parseFloat(document.getElementById('retAge').value),
     advBridge: document.getElementById('advBridge').checked,
 
@@ -792,7 +864,6 @@ function readInputs(){
     retSystem: document.getElementById('retSystem').value,
     gradeNow: document.getElementById('gradeNow').value,
     gradeRet: document.getElementById('gradeRet').value,
-    yosRet: num('yosRet'),
     vaOn: document.getElementById('vaToggle').checked,
     vaRating: parseInt(document.getElementById('vaRating').value,10),
     vaDependency: document.getElementById('vaDependency').value,
@@ -815,7 +886,11 @@ function computeModel(overrides){
   const monthsToRetirement = Math.round(yearsToRetirement*12);
 
   // --- Phase 1: Savings Stack ---
-  const retirementBalance = projectPool(IN.tradBal+IN.rothBal, IN.retContrib, IN.retReturn, monthsToRetirement, IN.growContrib, IN.inflation);
+  // TSP/401k contributions (and any match) stop at military separation, not at the planned
+  // retirement age — those can be years apart for anyone separating before 20 YOS.
+  const monthsToSeparation = Math.max(0, Math.round((IN.yosSeparation - IN.curYos) * 12));
+  const retContribMonths = Math.min(monthsToRetirement, monthsToSeparation);
+  const retirementBalance = projectPool(IN.tradBal+IN.rothBal, IN.retContrib, IN.retReturn, monthsToRetirement, IN.growContrib, IN.inflation, retContribMonths);
   const hysaAtRetirement = projectPool(IN.hysaBal, IN.hysaContrib, IN.hysaReturn, monthsToRetirement, false, 0);
   const brokAtRetirement = projectPool(IN.brokBal, IN.brokContrib, IN.brokReturn, monthsToRetirement, false, 0);
   const nonRetirementBalance = hysaAtRetirement + brokAtRetirement;
@@ -863,8 +938,8 @@ function computeModel(overrides){
     if (IN.pensionMode === 'retired'){
       pensionAnnual = IN.pensionRetiredAmt * Math.pow(1+IN.inflation/100, yearsUntilRet);
     } else {
-      const high3 = calcHigh3Monthly(IN.gradeRet, IN.yosRet, yearsUntilRet, IN.inflation);
-      pensionAnnual = calcPensionAnnual(IN.retSystem, high3, IN.yosRet);
+      const high3 = calcHigh3Monthly(IN.gradeRet, IN.yosSeparation, yearsUntilRet, IN.inflation);
+      pensionAnnual = calcPensionAnnual(IN.retSystem, high3, IN.yosSeparation);
     }
   }
   const vaAnnualToday = IN.vaOn ? lookupVaAnnual(IN.vaRating, IN.vaDependency) : 0;
